@@ -64,18 +64,20 @@ app.post("/api/contact", async (req, res) => {
 
   try {
     // 1. Save to MySQL
+    console.log("Attempting to save to MySQL...");
     const [result] = await pool.execute(
       "INSERT INTO messages (fullName, emailAddress, contactNumber, emailSubject, message) VALUES (?, ?, ?, ?, ?)",
       [fullName, emailAddress, contactNumber, emailSubject, message]
     );
-    console.log("Message saved to MySQL with ID:", result.insertId);
+    console.log("Message successfully saved to MySQL, ID:", result.insertId);
 
     // 2. Send Email
+    console.log("Attempting to send email via Nodemailer...");
     const transporter = nodemailer.createTransport({
       service: "gmail",
       auth: {
         user: process.env.EMAIL_USER,
-        pass: process.env.EMAIL_PASS, // Use Google App Password
+        pass: process.env.EMAIL_PASS,
       },
     });
 
@@ -83,21 +85,17 @@ app.post("/api/contact", async (req, res) => {
       from: emailAddress,
       to: process.env.RECEIVER_EMAIL || "sadqq.salman@gmail.com",
       subject: `New Portfolio Contact: ${emailSubject}`,
-      text: `
-        Name: ${fullName}
-        Email: ${emailAddress}
-        Phone: ${contactNumber || "N/A"}
-        
-        Message:
-        ${message}
-      `,
+      text: `Name: ${fullName}\nEmail: ${emailAddress}\nPhone: ${contactNumber || "N/A"}\n\nMessage:\n${message}`,
     };
 
-    await transporter.sendMail(mailOptions);
+    const info = await transporter.sendMail(mailOptions);
+    console.log("Email sent successfully:", info.messageId);
+
     res.status(200).json({ success: "Message sent and stored successfully!" });
   } catch (error) {
-    console.error("Error processing contact form:", error);
-    res.status(500).json({ error: "Failed to process message. Please try again later." });
+    console.error("CRITICAL ERROR during contact POST:", error.message);
+    console.error(error.stack);
+    res.status(500).json({ error: `Internal Server Error: ${error.message}` });
   }
 });
 

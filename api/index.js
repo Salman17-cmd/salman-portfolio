@@ -55,7 +55,7 @@ const initDB = async () => {
 initDB();
 
 // Routes
-app.post("/api/contact", async (req, res) => {
+app.post("/contact", async (req, res) => {
   const { fullName, emailAddress, contactNumber, emailSubject, message } = req.body;
 
   if (!fullName || !emailAddress || !emailSubject || !message) {
@@ -66,7 +66,7 @@ app.post("/api/contact", async (req, res) => {
     // 1. Save to MySQL
     const [result] = await pool.execute(
       "INSERT INTO messages (fullName, emailAddress, contactNumber, emailSubject, message) VALUES (?, ?, ?, ?, ?)",
-      [fullName, emailAddress, contactNumber, emailSubject, message]
+      [fullName, emailAddress, contactNumber, contactNumber, emailSubject, message]
     );
     console.log("Message saved to MySQL with ID:", result.insertId);
 
@@ -102,7 +102,7 @@ app.post("/api/contact", async (req, res) => {
 });
 
 // Admin Route to view messages
-app.get("/api/messages", async (req, res) => {
+app.get("/messages", async (req, res) => {
   try {
     const [rows] = await pool.execute("SELECT * FROM messages ORDER BY createdAt DESC");
     res.status(200).json(rows);

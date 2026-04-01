@@ -52,8 +52,6 @@ const initDB = async () => {
   }
 };
 
-initDB();
-
 // Routes
 app.post("/api/contact", async (req, res) => {
   const { fullName, emailAddress, contactNumber, emailSubject, message } = req.body;
@@ -63,6 +61,9 @@ app.post("/api/contact", async (req, res) => {
   }
 
   try {
+    // Ensure DB is initialized
+    await initDB();
+
     // 1. Save to MySQL
     console.log("Attempting to save to MySQL...");
     const [result] = await pool.execute(

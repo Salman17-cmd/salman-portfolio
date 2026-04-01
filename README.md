@@ -1,89 +1,131 @@
-# 🌟 Salman Portfolio - Full Stack Project
+# 🚀 Salman Sadiq - Full Stack & Game Development Portfolio
 
-A modern, professional full-stack portfolio website built to showcase work experience, projects, and enable direct communication through a custom backend integration.
+![Portfolio Banner](public/images/readme_banner.png)
 
----
-
-## 🏛️ Project Architecture
-
-This project is divided into three main components: a **React Frontend**, a **Node.js Backend**, and a **MySQL Database**.
-
-### 1. 🎨 Frontend (Client Side)
-The frontend is the visual interface of the portfolio, designed for high performance and smooth user experience.
-
-*   **Technology Stack**:
-    *   **React 19**: The core library for building the UI components.
-    *   **Vite**: A lightning-fast build tool and development server.
-    *   **React Router 7**: Manages navigation between pages.
-    *   **ScrollReveal**: Used for smooth entry animations when scrolling.
-    *   **Swiper**: Powers the interactive project carousels and sliders.
-    *   **Vanilla CSS**: Custom styling for unique, premium aesthetics.
-*   **Purpose**:
-    *   Displays professional experience and project gallery.
-    *   Provides a responsive mobile-first design.
-    *   Handles the **Contact Form** UI and sends data to the Backend API.
+A high-performance, immersive, and fully responsive personal portfolio designed to showcase a diverse range of projects—from **Unity Game Development (PC, Android, XR)** to **Modern Full-Stack Web Applications**.
 
 ---
 
-### 2. ⚙️ Backend (Server Side)
-The backend acts as the bridge between the frontend and the database, handling security and communication.
+## 🌟 Key Features
 
-*   **Technology Stack**:
-    *   **Node.js**: The JavaScript runtime environment.
-    *   **Express 5**: A fast, unopinionated web framework for building APIs.
-    *   **Nodemailer**: Handles sending automated emails when a user submits the contact form.
-    *   **MySQL2**: The driver used to connect and communicate with the MySQL database.
-    *   **CORS & Dotenv**: Manages security permissions and environment variables.
-*   **Purpose**:
-    *   **API Endpoint (`/api/contact`)**: Receives form data from the frontend.
-    *   **Email Notification**: Sends a copy of the message directly to the owner's Gmail.
-    *   **Database Management**: Automatically initializes the database tables and stores every message for permanent record keeping.
-
----
-
-### 3. 🗄️ Database (Persistence Layer)
-We use a **Relational Database Management System (RDBMS)** to ensure all user inquiries are stored securely and can be queried easily.
-
-*   **Technology Stack**:
-    *   **MySQL 8.0**: A robust, industry-standard SQL database.
-    *   **MySQL Workbench**: The graphical tool used for managing and viewing data.
-*   **How it Works**:
-    *   **Storage**: Messages are stored in a table named `messages`.
-    *   **Data Integrity**: Every record includes a unique `id`, `fullName`, `email`, `contactNumber`, `subject`, `message`, and a `timestamp`.
-    *   **Local Setup**: To bypass system permissions, the database is initialized in a custom user-writable directory (`D:\mysql_data`).
+- **🎮 Comprehensive Project Gallery**: Filterable showcase of WebGL, Android, PC, AR, VR, and AI/ML projects.
+- **🎨 Modern Professional UI**:
+    - Built with **React 19** and **Vite** for lightning-fast performance.
+    - **ScrollReveal** for smooth, interactive entry animations.
+    - **Swiper.js** for touch-responsive project sliders and testimonials.
+    - **Dark/Light Mode** support with dynamic theme switching.
+- **📧 Integrated Contact System**:
+    - Custom **Node.js/Express** backend.
+    - **MySQL** database for permanent message storage.
+    - **Nodemailer** for instant email notifications on form submissions.
+- **📱 Fully Responsive**: Optimized for everything from ultra-wide monitors to mobile devices.
+- **🛠️ Service Showcases**: Dedicated pages for Game Development, Web Development, and Graphic Design.
 
 ---
 
-## 🚀 Getting Started
+## 🛠️ Technical Stack
 
-### Prerequisites
--   **Node.js** installed.
--   **MySQL Server 8.0** installed.
+### Frontend (Client)
+| Technology | Description |
+| :--- | :--- |
+| **React 19** | Modern UI library for high-performance components. |
+| **Vite** | Next-generation frontend tooling for rapid development. |
+| **React Router 7** | Seamless client-side navigation. |
+| **Vanilla CSS** | Custom styling with modern techniques (CSS Variables, Flexbox, Grid). |
+| **ScrollReveal** | Smooth scroll animations for a premium feel. |
+| **Swiper.js** | Advanced touch sliders and carousels. |
 
-### Installation
-1.  Navigate to the root directory.
-2.  Install all dependencies:
-    ```bash
-    npm install
-    cd server && npm install
-    ```
+### Backend (Server)
+| Technology | Description |
+| :--- | :--- |
+| **Node.js** | JavaScript runtime for scalable server-side applications. |
+| **Express 5** | Minimalist web framework for building robust APIs. |
+| **MySQL2** | Fast MySQL driver with Promise support. |
+| **Nodemailer** | Secure and reliable email handling. |
+| **CORS / Dotenv** | Security and environment management. |
 
-### Running the Project
-1.  **Start MySQL Server**:
-    ```powershell
-    & "C:\Program Files\MySQL\MySQL Server 8.0\bin\mysqld.exe" --datadir="D:\mysql_data" --console
-    ```
-2.  **Start the Web Project**:
-    ```bash
-    npm run dev:all
-    ```
-
-### Viewing Data
--   **Browser API**: [http://localhost:5000/api/messages](http://localhost:5000/api/messages)
--   **Frontend**: [http://localhost:5173](http://localhost:5173)
+### Database
+| Technology | Description |
+| :--- | :--- |
+| **MySQL 8.0** | Industry-standard relational database for inquiry storage. |
+| **Aiven DB Integration** | Production-ready cloud database support. |
 
 ---
 
-## 🛠️ Developed By
-**Salman**
+## 📂 Project Structure
+
+```text
+salman-portfolio/
+├── 📁 api/             # Node.js/Express Backend
+│   ├── index.js        # Main API entry & Database init
+│   └── .env            # Environment variables (DB, Email)
+├── 📁 public/          # Static Assets
+│   ├── 📁 images/      # Project screenshots & Banners
+│   └── 📁 Files/       # Resume & downloadable documents
+├── 📁 src/             # React Frontend
+│   ├── 📁 components/  # Reusable UI (Header, Footer, Theme)
+│   ├── 📁 pages/       # Page components (Home, Experience)
+│   ├── 📁 css/         # Global & component-specific styles
+│   ├── App.jsx         # Main Routing logic
+│   └── main.jsx        # App entry point
+├── vercel.json         # Vercel Deployment configuration
+└── package.json        # Unified scripts and dependencies
+```
+
+---
+
+## 🚀 Local Development
+
+### 1. Prerequisites
+- **Node.js** (v18+)
+- **MySQL Server** (Running locally or in the cloud)
+
+### 2. Installation
+Clone the repository and install dependencies:
+```bash
+npm install
+```
+
+### 3. Environment Setup
+Create a `.env` file in the `api/` directory (referencing `api/.env.example` if available):
+```env
+DB_HOST=localhost
+DB_PORT=3306
+DB_USER=your_user
+DB_PASSWORD=your_password
+DB_NAME=portfolio
+EMAIL_USER=your_gmail@gmail.com
+EMAIL_PASS=your_app_password
+RECEIVER_EMAIL=your_email@gmail.com
+```
+
+### 4. Running the Project
+The project uses `concurrently` to run both the Vite frontend and Express backend with a single command:
+```bash
+npm run dev:all
+```
+- **Frontend**: [http://localhost:5173](http://localhost:5173)
+- **Backend API**: [http://localhost:5000/api](http://localhost:5000/api)
+
+---
+
+## 🔗 Live API Endpoints
+
+| Method | Endpoint | Description |
+| :--- | :--- | :--- |
+| `POST` | `/api/contact` | Submit a contact form inquiry. |
+| `GET` | `/api/messages` | (Admin) View all stored messages. |
+
+---
+
+## 🛡️ License
+This project is for personal use and portfolio representation.
+
+## 👨‍💻 Developed By
+**Salman Sadiq**
 *Associate Software Engineer at Ilmversity by Da1Ilmverse*
+
+[![LinkedIn](https://img.shields.io/badge/LinkedIn-Connect-blue?style=flat&logo=linkedin)](https://linkedin.com/in/salman-sadiq-ab58a4248)
+[![YouTube](https://img.shields.io/badge/YouTube-Subscribe-red?style=flat&logo=youtube)](https://www.youtube.com/@ss.entertainment1717)
+[![WhatsApp](https://img.shields.io/badge/WhatsApp-Chat-green?style=flat&logo=whatsapp)](https://wa.me/923034736071)
+

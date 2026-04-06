@@ -9,6 +9,7 @@ import WebDevExperience from "./pages/WebDevExperience";
 import Testimonials from "./pages/Testimonials";
 import GameDevExperience from "./pages/GameDevExperience";
 import ThemeSettings from "./components/ThemeSettings";
+import ChatBot from "./components/ChatBot";
 
 export default function App() {
   console.log("APP LOADED");
@@ -28,6 +29,7 @@ export default function App() {
 
       <Footer />
       <ThemeSettings />
+      <ChatBot />
     </>
   );
 }

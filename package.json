@@ -7,7 +7,7 @@
     "build": "vite build",
     "lint": "eslint .",
     "preview": "vite preview",
-    "server": "cd server && npm start",
+    "server": "cd api && npm run dev",
     "dev:all": "concurrently \"npm run dev\" \"npm run server\""
   },
   "dependencies": {

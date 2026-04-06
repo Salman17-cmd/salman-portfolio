@@ -138,7 +138,7 @@ app.post("/api/chat", async (req, res) => {
     // 0. Ensure Database is initialized (Production fix)
     await initDB();
 
-    const genAI = new GoogleGenerativeAI(apiKey, { apiVersion: "v1" });
+    const genAI = new GoogleGenerativeAI(apiKey);
     
     const safetySettings = [
       { category: "HARM_CATEGORY_HARASSMENT", threshold: "BLOCK_NONE" },
@@ -148,7 +148,7 @@ app.post("/api/chat", async (req, res) => {
     ];
 
     const model = genAI.getGenerativeModel({ 
-      model: "gemini-1.5-flash",
+      model: "gemini-2.5-flash",
       systemInstruction: `You are the personal AI assistant for Salman Sadiq's portfolio. 
       Your personality is professional, friendly, and enthusiastic about game development and XR technology.
       

@@ -10,7 +10,7 @@ export default function ChatBot() {
     return saved ? JSON.parse(saved) : [
       {
         role: "bot",
-        content: "Hi! I'm Salman's AI assistant. I can tell you about his projects, skills, and experience as a Game Developer. How can I help you today?",
+        content: "Welcome! I'm Salman's AI assistant. I'm here to help you explore his work in Game Development and XR. What would you like to know today?",
       },
     ];
   });
@@ -34,7 +34,7 @@ export default function ChatBot() {
       const initialMessage = [
         {
           role: "bot",
-          content: "Hi again! Chat history cleared. How else can I assist you?",
+          content: "Fresh start! I've cleared our previous chat. How can I help you explore Salman's portfolio today?",
         },
       ];
       setMessages(initialMessage);

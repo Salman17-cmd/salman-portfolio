@@ -8,6 +8,7 @@ import Home from "./pages/Home";
 import WebDevExperience from "./pages/WebDevExperience";
 import Testimonials from "./pages/Testimonials";
 import GameDevExperience from "./pages/GameDevExperience";
+import Resume from "./pages/Resume";
 import ThemeSettings from "./components/ThemeSettings";
 import ChatBot from "./components/ChatBot";
 
@@ -22,6 +23,7 @@ export default function App() {
         <Route path="/web-dev-experience" element={<WebDevExperience />} />
         <Route path="/testimonials" element={<Testimonials />} />
         <Route path="/game-dev-experience" element={<GameDevExperience />} />
+        <Route path="/resume" element={<Resume />} />
 
         {/* fallback route */}
         <Route path="*" element={<div>Page Not Found</div>} />

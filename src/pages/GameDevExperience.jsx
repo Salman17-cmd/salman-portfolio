@@ -43,7 +43,7 @@ export default function GameDevExperience() {
         <div className="timeline-event" data-vtdate="October 2025 - Present">
           <h3>Associate Software Engineer @ DA1Ilmverse by Ilmversity</h3>
           <p>
-            Working on high-level enterprise VR projects targeting the Oculus Quest 3. My responsibilities emphasize
+            Working on high-level enterprise VR projects targeting the Oculus Quest 3. Implemented robust bidirectional <span>Unity Render Streaming (WebRTC)</span> pipelines connecting VR environments to web clients. My responsibilities emphasize
             technical 3D art and advanced optimization techniques, including <span>LODs, Batching</span>, and resolving VR flickering.
             I also develop custom <span>shaders</span> and implement real-time <span>character lip-syncing</span> using JSON data, Azure, and blendshapes.
           </p>
@@ -109,6 +109,7 @@ export default function GameDevExperience() {
           <p>
             Working on high-level enterprise VR projects:
             <ul>
+              <li><span>Unity Render Streaming (WebRTC)</span>: Developed a stable, high-performance bidirectional VR screen-sharing pipeline. Configured signaling servers, stabilized multiplayer connections, handled resource cleanup on teardown, and built React stream controls.</li>
               <li><span>Expo Hall (Quest 3)</span>: Focused on high-end optimization using <span>LODs, Batching</span>, and flicker reduction techniques.</li>
               <li><span>Technical Art</span>: Custom <span>Shader work</span> and <span>Character Lip-sync</span> integration using JSON files, Azure, and blendshapes.</li>
             </ul>

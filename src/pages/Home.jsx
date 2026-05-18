@@ -326,7 +326,7 @@ export default function Home() {
                 <strong>Started Development Journey</strong> – University of Okara (2023)
               </li>
               <li>
-                Expertise: Optimization (LODs/Batching), Multiplayer (Photon), Opsive CC, XR Toolkit, MRTK.
+                Expertise: Optimization (LODs/Batching), Multiplayer (Photon), Unity Render Streaming (WebRTC), Opsive CC, XR Toolkit, MRTK.
               </li>
             </ul>
 
@@ -334,7 +334,7 @@ export default function Home() {
               <div>
                 <h3>Core Skills</h3>
                 <p>
-                  Unity, C#, C++, Node.js, Express.js, Databases, Photon, XR 
+                  Unity, C#, WebRTC, C++, Node.js, Express.js, Databases, Photon, XR 
                   Toolkit, RCC, Git, Vercel.
                 </p>
               </div>

@@ -1,166 +1,242 @@
 // src/pages/Resume.jsx
 import React, { useEffect } from "react";
+import { Link } from "react-router-dom";
 import ScrollReveal from "scrollreveal";
+
+import {
+  profile,
+  stats,
+  experience,
+  education,
+  skillGroups,
+  flagships,
+  projects,
+} from "../data/portfolio";
 
 export default function Resume() {
   useEffect(() => {
-    ScrollReveal().reveal(".resume-section", {
-      distance: "60px",
-      duration: 1000,
+    const sr = ScrollReveal();
+    sr.reveal(".sr-up", {
+      distance: "50px",
+      duration: 900,
       origin: "bottom",
-      interval: 150,
+      interval: 90,
       cleanup: true,
     });
-
-    ScrollReveal().reveal(".heading", {
-      distance: "40px",
-      duration: 1000,
-      origin: "top",
-    });
+    sr.reveal(".sr-top", { distance: "40px", duration: 900, origin: "top", cleanup: true });
   }, []);
 
-  return (
-    <main style={{ padding: "120px 20px 40px" }}>
-      <div className="container">
-        <h2 className="heading text-center" style={{ marginBottom: "50px" }}>
-          My Professional <span>Resume</span>
-        </h2>
+  const earlierProjects = projects.filter((p) => !p.featured).slice(0, 8);
 
-        <div className="cta text-center" style={{ marginBottom: "40px", display: "flex", justifyContent: "center", gap: "20px" }}>
-          <a
-            href="/Files/Salman_Sadiq_Game_Dev.pdf"
-            className="btn"
-            download
-            style={{ display: "inline-flex", alignItems: "center", gap: "8px" }}
-          >
-            <i className="bi bi-download"></i> Download PDF Resume
-          </a>
-          <a
-            href="mailto:sadqq.salman@gmail.com"
-            className="btn ghost"
-            style={{ display: "inline-flex", alignItems: "center", gap: "8px" }}
-          >
-            <i className="bi bi-envelope"></i> Contact Me
-          </a>
+  return (
+    <main className="page resume-page">
+      <div className="container">
+        {/* ── Header card ── */}
+        <header className="resume-hero sr-top">
+          <img src="/images/salman.png" alt={profile.name} />
+          <div>
+            <h1>
+              {profile.name.split(" ")[0]}{" "}
+              <span className="gradient-text">{profile.name.split(" ")[1]}</span>
+            </h1>
+            <p className="resume-role">
+              {profile.title} — {profile.subtitle}
+            </p>
+            <ul className="resume-contact">
+              <li><i className="bx bx-map"></i> {profile.location}</li>
+              <li>
+                <i className="bx bx-envelope"></i>
+                <a href={`mailto:${profile.email}`}>{profile.email}</a>
+              </li>
+              <li>
+                <i className="bx bxl-whatsapp"></i>
+                <a href={profile.socials.whatsapp} target="_blank" rel="noopener noreferrer">
+                  {profile.phone}
+                </a>
+              </li>
+              <li>
+                <i className="bx bxl-linkedin"></i>
+                <a href={profile.socials.linkedin} target="_blank" rel="noopener noreferrer">
+                  LinkedIn
+                </a>
+              </li>
+              <li>
+                <i className="bx bxl-github"></i>
+                <a href={profile.socials.github} target="_blank" rel="noopener noreferrer">
+                  GitHub
+                </a>
+              </li>
+            </ul>
+
+            <div className="cta">
+              <a href={profile.cv} className="btn" download>
+                <i className="bi bi-download"></i> Download PDF
+              </a>
+              <a href={`mailto:${profile.email}`} className="btn ghost">
+                <i className="bi bi-envelope"></i> Contact Me
+              </a>
+              <Link to="/#projects" className="btn link-btn">
+                <i className="bi bi-collection"></i> See Projects
+              </Link>
+            </div>
+          </div>
+        </header>
+
+        {/* ── Stats ── */}
+        <div className="stat-strip sr-up">
+          {stats.map((s) => (
+            <div className="stat-item" key={s.label}>
+              <i className={s.icon}></i>
+              <div>
+                <strong>{s.value}</strong>
+                <span>{s.label}</span>
+              </div>
+            </div>
+          ))}
         </div>
 
-        <div style={{
-          display: "grid",
-          gridTemplateColumns: "repeat(auto-fit, minmax(300px, 1fr))",
-          gap: "30px",
-          marginTop: "20px"
-        }}>
-          {/* Left Column - Experience */}
-          <div className="resume-section card">
-            <h3 style={{ display: "flex", alignItems: "center", gap: "10px", color: "var(--main-color)", fontSize: "1.8rem", marginBottom: "20px" }}>
-              <i className="bx bx-briefcase"></i> Work Experience
-            </h3>
+        {/* ── Profile ── */}
+        <section className="resume-block sr-up">
+          <h2 className="block-title">
+            <i className="bx bx-user-voice"></i> Profile
+          </h2>
+          <p>{profile.summary}</p>
+          <p className="subtle">{profile.summaryLong}</p>
+        </section>
 
-            <div style={{ borderLeft: "2px solid var(--main-color)", paddingLeft: "20px", marginLeft: "10px" }}>
-              <div style={{ position: "relative", marginBottom: "30px" }}>
-                <span style={{
-                  position: "absolute",
-                  left: "-26px",
-                  top: "6px",
-                  width: "10px",
-                  height: "10px",
-                  borderRadius: "50%",
-                  backgroundColor: "var(--main-color)",
-                  border: "2px solid var(--bg-color)"
-                }}></span>
-                <span className="tag" style={{ fontSize: "0.8rem", padding: "4px 8px" }}>Oct 2025 - Present</span>
-                <h4 style={{ fontSize: "1.3rem", marginTop: "10px" }}>Associate Software Engineer</h4>
-                <strong style={{ color: "var(--text-color)", opacity: 0.85 }}>DA1Ilmverse by Ilmversity</strong>
-                <p style={{ marginTop: "10px", fontSize: "0.95rem", lineHeight: "1.6" }}>
-                  Developing enterprise VR projects for Oculus Quest 3 and backend systems.
-                </p>
-                <ul style={{ paddingLeft: "20px", marginTop: "10px", fontSize: "0.9rem", lineHeight: "1.6" }}>
-                  <li>Developed high-performance <strong>Unity Render Streaming (WebRTC)</strong> bidirectional screen-sharing pipelines for VR-to-web communication.</li>
-                  <li>Engineered custom <strong>Character Lip-Sync</strong> driven by JSON and Azure speech services.</li>
-                  <li>Optimized complex environments using <strong>LODs, Batching, and VR flickering reduction</strong>.</li>
-                  <li>Built reliable Node.js API services for the VR portal platform.</li>
-                </ul>
-              </div>
+        {/* ── Experience ── */}
+        <section className="resume-block sr-up">
+          <h2 className="block-title">
+            <i className="bx bx-briefcase"></i> Experience
+          </h2>
 
-              <div style={{ position: "relative", marginBottom: "20px" }}>
-                <span style={{
-                  position: "absolute",
-                  left: "-26px",
-                  top: "6px",
-                  width: "10px",
-                  height: "10px",
-                  borderRadius: "50%",
-                  backgroundColor: "var(--main-color)",
-                  border: "2px solid var(--bg-color)"
-                }}></span>
-                <span className="tag" style={{ fontSize: "0.8rem", padding: "4px 8px" }}>Apr 2024 - Sept 2025</span>
-                <h4 style={{ fontSize: "1.3rem", marginTop: "10px" }}>Games & VR Developer</h4>
-                <strong style={{ color: "var(--text-color)", opacity: 0.85 }}>UET Game Studio</strong>
-                <p style={{ marginTop: "10px", fontSize: "0.95rem", lineHeight: "1.6" }}>
-                  Collaborated on multiplayer games, AR apps, and educational virtual simulations.
-                </p>
-                <ul style={{ paddingLeft: "20px", marginTop: "10px", fontSize: "0.9rem", lineHeight: "1.6" }}>
-                  <li>Built multiplayer systems using <strong>Photon PUN</strong> and Opsive Character Controller.</li>
-                  <li>Developed immersive applications leveraging <strong>XR Toolkit, MRTK, Vuforia, and RCC</strong>.</li>
-                  <li>Led cross-platform deployment, porting WebGL, Android, and PC builds.</li>
-                </ul>
-              </div>
-            </div>
-          </div>
-
-          {/* Right Column - Skills & Education */}
-          <div style={{ display: "flex", flexDirection: "column", gap: "30px" }}>
-            {/* Education Card */}
-            <div className="resume-section card">
-              <h3 style={{ display: "flex", alignItems: "center", gap: "10px", color: "var(--main-color)", fontSize: "1.8rem", marginBottom: "20px" }}>
-                <i className="bx bx-book-reader"></i> Education
-              </h3>
-
-              <div style={{ borderLeft: "2px solid var(--main-color)", paddingLeft: "20px", marginLeft: "10px" }}>
-                <div style={{ position: "relative", marginBottom: "10px" }}>
-                  <span style={{
-                    position: "absolute",
-                    left: "-26px",
-                    top: "6px",
-                    width: "10px",
-                    height: "10px",
-                    borderRadius: "50%",
-                    backgroundColor: "var(--main-color)",
-                    border: "2px solid var(--bg-color)"
-                  }}></span>
-                  <span className="tag" style={{ fontSize: "0.8rem", padding: "4px 8px" }}>2021 - 2023</span>
-                  <h4 style={{ fontSize: "1.3rem", marginTop: "10px" }}>MSc in Computer Science</h4>
-                  <strong style={{ color: "var(--text-color)", opacity: 0.85 }}>University of Okara</strong>
-                  <p style={{ marginTop: "10px", fontSize: "0.95rem", lineHeight: "1.6" }}>
-                    Completed coursework with a focus on advanced computing, software engineering, and a graduation project in vehicle physics simulation.
-                  </p>
+          <div className="timeline">
+            {experience.map((job) => (
+              <div className="timeline-item" key={job.role + job.company}>
+                <span className="timeline-dot" />
+                <div className="timeline-card">
+                  <div className="timeline-top">
+                    <span className="tag">{job.period}</span>
+                    {job.current && <span className="live-pill">Current</span>}
+                  </div>
+                  <h3>{job.role}</h3>
+                  <strong className="timeline-org">
+                    {job.company} · {job.location}
+                  </strong>
+                  <ul>
+                    {job.points.map((pt, i) => (
+                      <li key={i}>{pt}</li>
+                    ))}
+                  </ul>
+                  <div className="chip-row">
+                    {job.stack.map((s) => (
+                      <span className="mini-tag" key={s}>{s}</span>
+                    ))}
+                  </div>
                 </div>
               </div>
-            </div>
+            ))}
+          </div>
+        </section>
 
-            {/* Core Skills Card */}
-            <div className="resume-section card">
-              <h3 style={{ display: "flex", alignItems: "center", gap: "10px", color: "var(--main-color)", fontSize: "1.8rem", marginBottom: "20px" }}>
-                <i className="bx bx-code-block"></i> Core Competencies
+        {/* ── Skills ── */}
+        <section className="resume-block sr-up">
+          <h2 className="block-title">
+            <i className="bx bx-code-block"></i> Skills
+          </h2>
+          <div className="skill-table">
+            {skillGroups.map((g) => (
+              <div className="skill-row" key={g.title}>
+                <div className="skill-row-label">
+                  <i className={g.icon}></i> {g.title}
+                </div>
+                <div className="chip-row">
+                  {g.skills.map((s) => (
+                    <span className="mini-tag" key={s}>{s}</span>
+                  ))}
+                </div>
+              </div>
+            ))}
+          </div>
+        </section>
+
+        {/* ── Education ── */}
+        <section className="resume-block sr-up">
+          <h2 className="block-title">
+            <i className="bx bx-book-reader"></i> Education
+          </h2>
+          <div className="edu-grid">
+            {education.map((ed) => (
+              <div className="edu-card" key={ed.degree}>
+                <span className="tag">{ed.period}</span>
+                <h3>{ed.degree}</h3>
+                <strong className="timeline-org">{ed.school}</strong>
+                <p className="subtle">{ed.note}</p>
+              </div>
+            ))}
+          </div>
+        </section>
+
+        {/* ── Key projects ── */}
+        <section className="resume-block sr-up">
+          <h2 className="block-title">
+            <i className="bx bx-cube-alt"></i> Key Projects
+          </h2>
+
+          {flagships.map((f) => (
+            <div className="resume-project" key={f.title}>
+              <h3>
+                {f.title} <span className="org-note">| {f.org}</span>
               </h3>
-
-              <div style={{ display: "flex", flexWrap: "wrap", gap: "10px" }}>
-                <span className="tag">Unity 3D/2D</span>
-                <span className="tag">C#</span>
-                <span className="tag">WebRTC</span>
-                <span className="tag">Photon Multiplayer</span>
-                <span className="tag">XR Toolkit & MRTK</span>
-                <span className="tag">Node.js & Express.js</span>
-                <span className="tag">Custom Shader Work</span>
-                <span className="tag">LODs & VR Optimization</span>
-                <span className="tag">AR Foundation & Vuforia</span>
-                <span className="tag">React & JavaScript</span>
-                <span className="tag">Databases (MySQL/NoSQL)</span>
-                <span className="tag">C++ & DSA</span>
-                <span className="tag">Git & CI/CD</span>
+              {f.status && <span className="wip-pill">{f.status}</span>}
+              <p className="subtle">{f.tagline}</p>
+              <ul>
+                {f.highlights.map((h) => (
+                  <li key={h.name}>
+                    <strong>{h.name}</strong> — {h.text}
+                  </li>
+                ))}
+              </ul>
+              <div className="chip-row">
+                {f.stack.map((s) => (
+                  <span className="mini-tag" key={s}>{s}</span>
+                ))}
+                {f.links &&
+                  f.links.map((l) => (
+                    <a
+                      key={l.label}
+                      href={l.url}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="mini-tag is-link"
+                    >
+                      <i className={l.icon}></i> {l.label}
+                    </a>
+                  ))}
               </div>
             </div>
+          ))}
+
+          <h3 className="sub-heading">Earlier Projects · UET Game Studio</h3>
+          <div className="mini-project-grid">
+            {earlierProjects.map((p) => (
+              <div className="mini-project" key={p.title}>
+                <h4>{p.title}</h4>
+                <p className="subtle">{p.description}</p>
+                <div className="chip-row">
+                  {p.stack.map((s) => (
+                    <span className="mini-tag" key={s}>{s}</span>
+                  ))}
+                </div>
+              </div>
+            ))}
           </div>
+        </section>
+
+        <div className="text-center mt-3">
+          <a href={profile.cv} className="btn" download>
+            <i className="bi bi-download"></i> Download the PDF version
+          </a>
         </div>
       </div>
     </main>

@@ -10,6 +10,8 @@ import "./css/App.css";
 import "./css/style.css";
 import "./css/lightbox.min.css";
 import "./css/vertical-timeline.css";
+import "./css/portfolio.css";
+import "./css/gaming.css";
 
 ReactDOM.createRoot(document.getElementById('root')).render(
   <React.StrictMode>

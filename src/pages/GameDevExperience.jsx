@@ -1,134 +1,138 @@
 // src/pages/GameDevExperience.jsx
 import React, { useEffect } from "react";
+import { Link } from "react-router-dom";
 import ScrollReveal from "scrollreveal";
-import "../css/vertical-timeline.css";
+
+import { experience, stats, profile } from "../data/portfolio";
+
+const journey = [
+  {
+    date: "2023 · University of Okara",
+    title: "Where it started",
+    body: "Began game development in the final semester of my MCS with a dedicated Unity course, building a car racing game on the Realistic Car Controller package as a first taste of physics-based vehicle mechanics.",
+    tags: ["Unity", "RCC", "Vehicle Physics"],
+  },
+  {
+    date: "2024 · 3-month internship",
+    title: "Game Developer Intern - UET Game Studio",
+    body: "First professional exposure: cinematic scenes for Police Cop Simulator, my first VR client project in VR Bio Lab (MRTK), and cinematic sequences for Horror Survival, which shipped on the Play Store.",
+    tags: ["Timeline", "MRTK", "VR"],
+  },
+  {
+    date: "2024 — 2025 · Full time",
+    title: "Games & VR Developer - UET Game Studio",
+    body: "Promoted to handle client projects and the studio portal. Led Waste Land of Living Dead (pathfinding, wave spawning, ragdolls, Photon PUN multiplayer on Opsive Character Controller), shipped Letter Cascade and Quiz the Globe to WebGL, and built Christmas VR, Car VR Simulation and ARPlace. Also mentored VR interns and rolled out Plastic SCM branching.",
+    tags: ["Photon PUN", "Opsive CC", "WebGL", "XR Toolkit", "AR Foundation"],
+  },
+  {
+    date: "Oct 2025 - Present · Ilmversity",
+    title: "Associate Software Engineer - Da1Ilmverse",
+    body: "Enterprise VR for Meta Quest 3. Built AI teachers and expo robot guides that lip-sync to Azure TTS through a JSON-driven viseme-to-blendshape framework, a 10-user multiplayer meeting room on UGS Lobby & Relay with Netcode, and a Unity Render Streaming pipeline that puts a presenter's browser screen inside VR — while holding 72/90 FPS with LODs, batching, occlusion culling and baked lightmaps.",
+    tags: ["Meta Quest 3", "Azure TTS", "UGS Lobby & Relay", "Netcode", "WebRTC", "MCP", "DVC"],
+  },
+  {
+    date: "Ongoing",
+    title: "Web, tooling & AI on the side",
+    body: "Node.js and Express services for the VR portal, this React portfolio with its Gemini-powered assistant, MCP tooling inside the Unity Editor for automated scene inspection, and DVC for versioning AI datasets and model artifacts.",
+    tags: ["Node.js", "React", "Gemini", "MCP", "DVC"],
+  },
+];
 
 export default function GameDevExperience() {
   useEffect(() => {
-    ScrollReveal().reveal(".timeline-event", {
-      distance: "60px",
-      duration: 1000,
+    const sr = ScrollReveal();
+    sr.reveal(".sr-up", {
+      distance: "50px",
+      duration: 900,
       origin: "bottom",
-      interval: 120,
+      interval: 90,
+      cleanup: true,
     });
-
-    ScrollReveal().reveal(".heading", {
-      distance: "60px",
-      duration: 1000,
-      origin: "top",
-    });
+    sr.reveal(".sr-top", { distance: "40px", duration: 900, origin: "top", cleanup: true });
   }, []);
 
   return (
-    <main style={{ padding: "120px 0 40px" }}>
-      <h2 className="heading title-experience">
-        Game Development <span>Experience</span>
-      </h2>
+    <main className="page">
+      <div className="container">
+        <h1 className="heading sr-top">
+          Game &amp; XR <span className="gradient-text">Experience</span>
+        </h1>
+        <p className="section-lede sr-top">
+          From a university racing prototype to enterprise VR on Meta Quest 3 —
+          here is how the work has built up.
+        </p>
 
-      <div
-        id="vt6"
-        style={{
-          height: "auto",
-          overflowY: "auto",
-          margin: "0 40px",
-        }}
-      >
-        <h3
-          className="mlsa-timeline"
-          style={{ marginTop: "40px", marginBottom: "65px" }}
-        >
-          <span>Professional</span> Roles
-        </h3>
-
-        <div className="timeline-event" data-vtdate="October 2025 - Present">
-          <h3>Associate Software Engineer @ DA1Ilmverse by Ilmversity</h3>
-          <p>
-            Working on high-level enterprise VR projects targeting the Oculus Quest 3. Implemented robust bidirectional <span>Unity Render Streaming (WebRTC)</span> pipelines connecting VR environments to web clients. My responsibilities emphasize
-            technical 3D art and advanced optimization techniques, including <span>LODs, Batching</span>, and resolving VR flickering.
-            I also develop custom <span>shaders</span> and implement real-time <span>character lip-syncing</span> using JSON data, Azure, and blendshapes.
-          </p>
+        <div className="stat-strip sr-up" style={{ marginTop: 0 }}>
+          {stats.map((s) => (
+            <div className="stat-item" key={s.label}>
+              <i className={s.icon}></i>
+              <div>
+                <strong>{s.value}</strong>
+                <span>{s.label}</span>
+              </div>
+            </div>
+          ))}
         </div>
 
-        <div className="timeline-event" data-vtdate="April 2024 - September 2025">
-          <h3>Games & VR Developer @ UET Game Studio</h3>
-          <p>
-            Started as an intern and was promoted to a full-time role. I was deeply involved in building immersive, performant, and polished interactive experiences.
-            I gained hands-on experience and delivered products using <span>XR Toolkit, MRTK, Photon PUN, Vuforia, Opsive Character Controller, and RCC</span>.
-            I led the development of various client projects, porting WebGL games, and mentoring VR interns.
-          </p>
+        {/* ── Professional roles ── */}
+        <h2 className="sub-heading sr-top">Professional Roles</h2>
+        <div className="timeline">
+          {experience.map((job) => (
+            <div className="timeline-item sr-up" key={job.role + job.company}>
+              <span className="timeline-dot" />
+              <div className="timeline-card">
+                <div className="timeline-top">
+                  <span className="tag">{job.period}</span>
+                  {job.current && <span className="live-pill">Current</span>}
+                </div>
+                <h3>{job.role}</h3>
+                <strong className="timeline-org">
+                  {job.company} · {job.location}
+                </strong>
+                <p className="subtle">{job.summary}</p>
+                <ul>
+                  {job.points.map((pt, i) => (
+                    <li key={i}>{pt}</li>
+                  ))}
+                </ul>
+                <div className="chip-row">
+                  {job.stack.map((s) => (
+                    <span className="mini-tag" key={s}>{s}</span>
+                  ))}
+                </div>
+              </div>
+            </div>
+          ))}
         </div>
 
-        <h3
-          className="mlsa-timeline"
-          style={{ marginTop: "40px", marginBottom: "65px" }}
-        >
-          <span>Key</span> Projects & Journey
-        </h3>
-
-        {/* University Section */}
-        <div className="timeline-event" data-vtdate="2023 - Graduation">
-          <h3>University of Okara — Final Projects</h3>
-          <p>
-            Started my game development journey in my last semester of MSc with a dedicated course.
-            Developed a <span>Car Racing Game</span> using the <span>RCC package</span> as a foundation for physics-based vehicle mechanics.
-          </p>
+        {/* ── The journey ── */}
+        <h2 className="sub-heading sr-top">The Journey</h2>
+        <div className="timeline">
+          {journey.map((step) => (
+            <div className="timeline-item sr-up" key={step.title}>
+              <span className="timeline-dot edu" />
+              <div className="timeline-card">
+                <span className="tag">{step.date}</span>
+                <h3>{step.title}</h3>
+                <p className="subtle">{step.body}</p>
+                <div className="chip-row">
+                  {step.tags.map((t) => (
+                    <span className="mini-tag" key={t}>{t}</span>
+                  ))}
+                </div>
+              </div>
+            </div>
+          ))}
         </div>
 
-        {/* Internship Section */}
-        <div className="timeline-event" data-vtdate="3 Months Internship">
-          <h3>Game Developer Intern @ UET Game Studio</h3>
-          <p>
-            Gained my first professional industry exposure. Worked on:
-            <ul>
-              <li><span>Police Cop Simulator</span>: Created cinematic scenes for this Frag Game Studio title.</li>
-              <li><span>VR Bio Lab</span>: My first VR client project, using Unity to build interactive educational lab simulations.</li>
-              <li><span>Horror Survival</span>: Developed immersive cinematic sequences for this VR title available on the Play Store.</li>
-            </ul>
-          </p>
+        <div className="text-center mt-3">
+          <Link to="/resume" className="btn">
+            <i className="bi bi-file-earmark-person"></i> Full Resume
+          </Link>{" "}
+          <a href={`mailto:${profile.email}`} className="btn ghost">
+            <i className="bi bi-envelope"></i> Work With Me
+          </a>
         </div>
-
-        {/* Promotion - Full-time */}
-        <div className="timeline-event" data-vtdate="2024 - 2025">
-          <h3>Game Developer @ UET Game Studio</h3>
-          <p>
-            Promoted after a successful internship to handle client projects and core lab games for the portal:
-            <ul>
-              <li><span>Wasteland of Living Dead</span>: Lead developer on this Android zombie shooter. Implemented pathfinding, core mechanics, and <span>multiplayer support using Photon</span> with the <span>Opsive Character Controller</span>.</li>
-              <li><span>WebGL Portal Games</span>: Developed <span>Letter Cascade</span> and <span>Global The Quiz</span> for the studio's game portal.</li>
-              <li><span>VR/AR Portfolio</span>: Created the <span>Christmas VR Simulation</span> (Quest 2), <span>Car VR Simulation</span> (Quest 2), and <span>AR Place</span> (Furniture placement).</li>
-              <li><span>Mentorship</span>: Assisted and guided interns on VR development workflows.</li>
-              <li><span>Client Games</span>: <span>Yanch e Shilock</span> (PC), <span>Color Hunt</span>, and <span>Fly Simulation</span>.</li>
-              <li><span>AR Fighting Game</span>: Developed a Tekken 3 style AR fighting experience.</li>
-            </ul>
-          </p>
-        </div>
-
-        {/* Current Role */}
-        <div className="timeline-event" data-vtdate="October 2025 - Present">
-          <h3>Associate Software Engineer @ DA1Ilverse by Ilmversity</h3>
-          <p>
-            Working on high-level enterprise VR projects:
-            <ul>
-              <li><span>Unity Render Streaming (WebRTC)</span>: Developed a stable, high-performance bidirectional VR screen-sharing pipeline. Configured signaling servers, stabilized multiplayer connections, handled resource cleanup on teardown, and built React stream controls.</li>
-              <li><span>Expo Hall (Quest 3)</span>: Focused on high-end optimization using <span>LODs, Batching</span>, and flicker reduction techniques.</li>
-              <li><span>Technical Art</span>: Custom <span>Shader work</span> and <span>Character Lip-sync</span> integration using JSON files, Azure, and blendshapes.</li>
-            </ul>
-          </p>
-        </div>
-
-        {/* Web Dev Shift */}
-        <div className="timeline-event" data-vtdate="Current Focus">
-          <h3>Full-Stack Web Development & AI</h3>
-          <p>
-            Currently shifting my stack to modern web technologies. Mastering <span>Node.js, Express.js, and Database management</span>.
-            <ul>
-              <li><span>Personal Portfolio</span>: Built this entire portfolio using <span>React</span> for the frontend and <span>Node.js</span> backend.</li>
-              <li><span>Live Weather Forecaster</span>: Developed a functional web application integrating OpenWeather API and Streamlit UI.</li>
-              <li><span>Face Recognition</span>: Created an AI-driven project using OpenCV for real-time face detection.</li>
-            </ul>
-          </p>
-        </div>
-
       </div>
     </main>
   );

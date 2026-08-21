@@ -1,12 +1,59 @@
 // src/pages/Home.jsx
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useMemo, useState } from "react";
+import { Link } from "react-router-dom";
 import ScrollReveal from "scrollreveal";
-import Swiper from "swiper";
-import "swiper/css";
-import "swiper/css/navigation";
-import "swiper/css/pagination";
+
+import {
+  profile,
+  stats,
+  experience,
+  education,
+  skillGroups,
+  proficiencies,
+  flagships,
+  filters,
+  projects,
+  services,
+  techMarquee,
+} from "../data/portfolio";
+
+/* ── Rotating role headline ── */
+function useTypedRole(words, typeSpeed = 90, pause = 1600) {
+  const [text, setText] = useState("");
+  const [wordIndex, setWordIndex] = useState(0);
+  const [deleting, setDeleting] = useState(false);
+
+  useEffect(() => {
+    const word = words[wordIndex % words.length];
+    let delay = deleting ? typeSpeed / 2 : typeSpeed;
+
+    if (!deleting && text === word) {
+      delay = pause;
+    } else if (deleting && text === "") {
+      delay = 200;
+    }
+
+    const timer = setTimeout(() => {
+      if (!deleting && text === word) {
+        setDeleting(true);
+      } else if (deleting && text === "") {
+        setDeleting(false);
+        setWordIndex((i) => (i + 1) % words.length);
+      } else {
+        setText(
+          deleting ? word.slice(0, text.length - 1) : word.slice(0, text.length + 1)
+        );
+      }
+    }, delay);
+
+    return () => clearTimeout(timer);
+  }, [text, deleting, wordIndex, words, typeSpeed, pause]);
+
+  return text;
+}
 
 export default function Home() {
+  /* ── Contact form ── */
   const [formData, setFormData] = useState({
     fullName: "",
     emailAddress: "",
@@ -20,19 +67,12 @@ export default function Home() {
     info: { error: false, msg: null },
   });
 
-  const handleInputChange = (e) => {
-    setFormData({
-      ...formData,
-      [e.target.name]: e.target.value,
-    });
-  };
+  const handleInputChange = (e) =>
+    setFormData({ ...formData, [e.target.name]: e.target.value });
 
-  const handleResponse = (status, msg) => {
-    if (status === 200) {
-      setStatus({
-        submitting: false,
-        info: { error: false, msg: msg },
-      });
+  const handleResponse = (code, msg) => {
+    if (code === 200) {
+      setStatus({ submitting: false, info: { error: false, msg } });
       setFormData({
         fullName: "",
         emailAddress: "",
@@ -41,108 +81,60 @@ export default function Home() {
         message: "",
       });
     } else {
-      setStatus({
-        submitting: false,
-        info: { error: true, msg: msg },
-      });
+      setStatus({ submitting: false, info: { error: true, msg } });
     }
   };
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    setStatus((prevStatus) => ({ ...prevStatus, submitting: true }));
+    setStatus((prev) => ({ ...prev, submitting: true }));
     try {
       const res = await fetch("/api/contact", {
         method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
+        headers: { "Content-Type": "application/json" },
         body: JSON.stringify(formData),
       });
       const data = await res.json();
       handleResponse(res.status, data.success || data.error);
-    } catch (error) {
+    } catch {
       handleResponse(500, "Something went wrong. Please try again later.");
     }
   };
 
-  // =======================
-  // THEME MANAGED BY GLOBAL CONTEXT
-  // =======================
+  /* ── Project filtering + search ── */
+  const [activeFilter, setActiveFilter] = useState("all");
+  const [query, setQuery] = useState("");
 
-  // =======================
-  // MOBILE MENU HANDLED IN HEADER.JSX
-  // =======================
-
-  // =======================
-  // PROJECT FILTER
-  // =======================
-  useEffect(() => {
-    const list = document.querySelectorAll(".project-filter li");
-    const boxes = document.querySelectorAll(".project-boxes .box");
-
-    list.forEach((el) => {
-      el.addEventListener("click", () => {
-        list.forEach((li) => li.classList.remove("project-filter-active"));
-        el.classList.add("project-filter-active");
-
-        const filterValue = el.getAttribute("data-filter");
-
-        boxes.forEach((box) => {
-          if (filterValue === "all") {
-            box.style.display = "block";
-          } else {
-            if (box.classList.contains(filterValue)) {
-              box.style.display = "block";
-            } else {
-              box.style.display = "none";
-            }
-          }
-        });
-      });
+  const visibleProjects = useMemo(() => {
+    const q = query.trim().toLowerCase();
+    return projects.filter((p) => {
+      const matchesFilter =
+        activeFilter === "all" || p.tags.includes(activeFilter);
+      const matchesQuery =
+        !q ||
+        p.title.toLowerCase().includes(q) ||
+        p.description.toLowerCase().includes(q) ||
+        p.stack.some((s) => s.toLowerCase().includes(q));
+      return matchesFilter && matchesQuery;
     });
-  }, []);
+  }, [activeFilter, query]);
 
-  // =======================
-  // TESTIMONIAL SWIPER
-  // =======================
-  useEffect(() => {
-    new Swiper("#testimonialSwiper", {
-      loop: true,
-      slidesPerView: 1,
-      spaceBetween: 16,
-      autoplay: { delay: 3500 },
-      navigation: {
-        nextEl: ".swiper-button-next",
-        prevEl: ".swiper-button-prev",
-      },
-      pagination: { el: ".swiper-pagination", clickable: true },
-      breakpoints: {
-        860: { slidesPerView: 2 },
-        1100: { slidesPerView: 3 },
-      },
-    });
-  }, []);
+  const typedRole = useTypedRole(profile.roles);
 
-  // =======================
-  // SCROLL REVEAL EFFECTS
-  // =======================
+  /* ── Reveal animations ── */
   useEffect(() => {
-    ScrollReveal().reveal(".hero, .heading", {
-      distance: "60px",
-      duration: 1000,
-      origin: "top",
-    });
-    ScrollReveal().reveal(".card, .projects .box", {
-      distance: "60px",
-      duration: 1000,
+    const sr = ScrollReveal();
+    sr.reveal(".sr-top", { distance: "50px", duration: 900, origin: "top", cleanup: true });
+    sr.reveal(".sr-up", {
+      distance: "50px",
+      duration: 900,
       origin: "bottom",
+      interval: 90,
+      cleanup: true,
     });
   }, []);
 
-  // =======================
-  // SCROLL SPY (Active Link)
-  // =======================
+  /* ── Scroll spy for the header nav ── */
   useEffect(() => {
     const sections = document.querySelectorAll("section[id]");
     const navLinks = document.querySelectorAll("header nav a");
@@ -150,22 +142,20 @@ export default function Home() {
     const handleScroll = () => {
       let current = "";
       sections.forEach((section) => {
-        const sectionTop = section.offsetTop;
-        const sectionHeight = section.clientHeight;
-        if (window.scrollY >= sectionTop - 150) {
+        if (window.scrollY >= section.offsetTop - 160) {
           current = section.getAttribute("id");
         }
       });
-
       navLinks.forEach((link) => {
-        link.classList.remove("active");
-        const href = link.getAttribute("href");
-        if (href === `#${current}` || href === `/#${current}`) {
-          link.classList.add("active");
-        }
+        const href = link.getAttribute("href") || "";
+        link.classList.toggle(
+          "active",
+          href === `#${current}` || href === `/#${current}`
+        );
       });
     };
 
+    handleScroll();
     window.addEventListener("scroll", handleScroll);
     return () => window.removeEventListener("scroll", handleScroll);
   }, []);
@@ -173,170 +163,237 @@ export default function Home() {
   return (
     <main>
       {/* ==========================================================
-          HERO SECTION
+          HERO
       ========================================================== */}
       <section className="hero" id="home">
+        <div className="hero-aurora" aria-hidden="true">
+          <span className="orb orb-1" />
+          <span className="orb orb-2" />
+          <span className="orb orb-3" />
+        </div>
+
         <div className="container hero-grid">
-          <div>
-            <div className="badge-row">
-              <span className="tag">PC</span>
-              <span className="tag">Android</span>
-              <span className="tag">WebGL</span>
-              <span className="tag">AR / VRI (Quest 2/3)</span>
-            </div>
+          <div className="hero-copy">
+            <span className="status-pill">
+              <span className="dot" /> Available for XR &amp; Unity work
+            </span>
 
             <h1 className="title">
-              Hello, I am{" "}
-              <span className="gradient-text">Salman Sadiq</span>
+              Hi, I&apos;m <span className="gradient-text">{profile.name}</span>
             </h1>
 
-            <p className="roles">
-              Game Developer <span>•</span> AR/VR Developer{" "}
-              <span>•</span> Game Designer <span>•</span> C#
-              Developer
+            <p className="typed-line">
+              <span className="typed-text">{typedRole}</span>
+              <span className="caret" />
             </p>
 
-            <p className="subtle">
-              Currently an Associate Software Engineer at{" "}
-              <strong>Ilmversity by Da1Ilmverse</strong>
-              . I build immersive, performant, and polished interactive
-              experiences.
-            </p>
+            <p className="hero-lede">{profile.summary}</p>
+
+            <div className="hero-chips">
+              <span className="tag">Meta Quest 2/3</span>
+              <span className="tag">Multiplayer</span>
+              <span className="tag">WebRTC</span>
+              <span className="tag">Azure TTS</span>
+              <span className="tag">WebGL</span>
+            </div>
+
+            {/* ── Player card: HUD readout of the stack ── */}
+            <div className="hero-player">
+              <div className="hero-player-top">
+                <span className="lvl">LVL 02</span>
+                <span>Class <b>Unity / XR Engineer</b></span>
+                <span className="sep">/</span>
+                <span>Region <b>{profile.location.split(",")[0]}, PK</b></span>
+                <span className="sep">/</span>
+                <span>Status <b>Online</b></span>
+              </div>
+
+              <div className="xp-row">
+                <div className="xp-label">
+                  <span>XP · Shipped VR &amp; multiplayer builds</span>
+                  <span>15 / 20</span>
+                </div>
+                <div className="xp-bar">
+                  <div className="xp-fill" style={{ width: "75%" }} />
+                </div>
+              </div>
+
+              <div className="hero-perks">
+                <span className="perk"><i className="bx bxl-unity" /> Unity Mastery</span>
+                <span className="perk"><i className="bx bx-vr" /> Quest 3 Native</span>
+                <span className="perk"><i className="bx bx-group" /> 10-Player Co-op</span>
+                <span className="perk"><i className="bx bx-tachometer" /> 90 FPS Locked</span>
+              </div>
+            </div>
 
             <div className="cta">
-              <a
-                id="downloadLink"
-                href="/Files/Salman_Sadiq_Game_Dev.pdf"
-                className="btn"
-                download
-              >
+              <a href={profile.cv} className="btn" download>
                 <i className="bi bi-download"></i> Download CV
               </a>
-
-              <a
-                href="mailto:sadqq.salman@gmail.com?subject=Interested%20in%20Hiring%20You&body=Hi,%20I%20came%20across%20your%20portfolio..."
-                className="btn ghost"
-              >
+              <Link to="/resume" className="btn ghost">
+                <i className="bi bi-file-earmark-person"></i> View Resume
+              </Link>
+              <a href="#contact" className="btn link-btn">
                 <i className="bi bi-envelope"></i> Hire Me
               </a>
             </div>
 
             <div className="social-media">
-              <a href="https://www.facebook.com/salman.sadiq.7923" target="_blank" rel="noopener noreferrer"><i className='bx bxl-facebook'></i></a>
-              <a href="https://www.youtube.com/@ss.entertainment1717" target="_blank" rel="noopener noreferrer"><i className='bx bxl-youtube'></i></a>
-              <a href="https://www.instagram.com/salmansadiq12/?hl=en" target="_blank" rel="noopener noreferrer"><i className='bx bxl-instagram'></i></a>
-              <a href="https://linkedin.com/in/salman-sadiq-ab58a4248" target="_blank" rel="noopener noreferrer"><i className='bx bxl-linkedin'></i></a>
-              <a href="https://wa.me/923034736071" target="_blank" rel="noopener noreferrer"><i className='bx bxl-whatsapp'></i></a>
+              <a href={profile.socials.github} target="_blank" rel="noopener noreferrer" aria-label="GitHub"><i className="bx bxl-github"></i></a>
+              <a href={profile.socials.linkedin} target="_blank" rel="noopener noreferrer" aria-label="LinkedIn"><i className="bx bxl-linkedin"></i></a>
+              <a href={profile.socials.youtube} target="_blank" rel="noopener noreferrer" aria-label="YouTube"><i className="bx bxl-youtube"></i></a>
+              <a href={profile.socials.instagram} target="_blank" rel="noopener noreferrer" aria-label="Instagram"><i className="bx bxl-instagram"></i></a>
+              <a href={profile.socials.whatsapp} target="_blank" rel="noopener noreferrer" aria-label="WhatsApp"><i className="bx bxl-whatsapp"></i></a>
             </div>
           </div>
 
           <div className="bento-container">
-            <span className="tag">My Profession</span>
+            <span className="tag">What I build</span>
             <div className="bento-grid">
               <div className="bento-item large glass">
-                <i className="bx bx-game"></i>
+                <i className="bx bx-vr"></i>
                 <div className="bento-info">
-                  <h3>Game Developer</h3>
-                  <p>Building immersive 3D/2D games with Unity & C#.</p>
+                  <h3>VR Systems</h3>
+                  <p>
+                    Standalone Quest 3 experiences that hold 72/90 FPS - AI
+                    classrooms, expo halls, and explorable campuses.
+                  </p>
                 </div>
               </div>
               <div className="bento-item glass">
-                <i className="bx bx-vr"></i>
-                <span>AR/VR Dev</span>
+                <i className="bx bx-group"></i>
+                <span>Multiplayer</span>
               </div>
               <div className="bento-item glass">
-                <i className="bx bx-code-alt"></i>
-                <span>Web Dev</span>
+                <i className="bx bx-broadcast"></i>
+                <span>WebRTC</span>
               </div>
               <div className="bento-item glass">
-                <i className="bx bx-palette"></i>
-                <span>UI Designer</span>
+                <i className="bx bx-bot"></i>
+                <span>AI Avatars</span>
               </div>
               <div className="bento-item medium glass">
-                <i className="bx bx-unite"></i>
+                <i className="bx bx-tachometer"></i>
                 <div className="bento-info">
-                  <h3>XR Specialist</h3>
-                  <p>Expertise in XR Toolkit, MRTK & Vuforia.</p>
+                  <h3>Optimization</h3>
+                  <p>LODs, batching, occlusion culling &amp; baked lighting.</p>
                 </div>
               </div>
               <div className="bento-item glass">
-                <i className="bx bx-cloud"></i>
-                <span>PUN Admin</span>
+                <i className="bx bx-cube-alt"></i>
+                <span>AR Apps</span>
               </div>
               <div className="bento-item glass">
                 <i className="bx bx-server"></i>
-                <span>Backend Dev</span>
+                <span>Node APIs</span>
               </div>
               <div className="bento-item glass">
                 <i className="bx bxl-unity"></i>
-                <span>Unity Pro</span>
+                <span>Unity / C#</span>
               </div>
             </div>
           </div>
         </div>
+
+        <div className="container">
+          <div className="stat-strip sr-up">
+            {stats.map((s) => (
+              <div className="stat-item" key={s.label}>
+                <i className={s.icon}></i>
+                <div>
+                  <strong>{s.value}</strong>
+                  <span>{s.label}</span>
+                </div>
+              </div>
+            ))}
+          </div>
+        </div>
       </section>
 
+      {/* ── Tech marquee ── */}
+      <div className="marquee" aria-hidden="true">
+        <div className="marquee-track">
+          {[...techMarquee, ...techMarquee].map((tech, i) => (
+            <span className="marquee-item" key={`${tech}-${i}`}>
+              {tech}
+            </span>
+          ))}
+        </div>
+      </div>
+
       {/* ==========================================================
-          ABOUT SECTION
+          ABOUT
       ========================================================== */}
       <section id="about">
-        <div className="container grid cols-2">
-          <div className="card">
-            <img
-              src="/images/salman.png"
-              alt="Salman portrait"
-              style={{
-                width: "120px",
-                height: "120px",
-                borderRadius: "20px",
-                objectFit: "cover",
-              }}
-            />
-            <h2 className="heading">
-              About <span className="gradient-text">Me</span>
-            </h2>
-            <p>
-              Hi! I'm Salman, a passionate Unity game developer who loves
-              turning ideas into playable experiences.
-            </p>
-            <p className="subtle">
-              This portfolio highlights work across VR, AR, WebGL, and mobile
-              – with a focus on performance, usability, and art direction.
-            </p>
+        <div className="container">
+          <h2 className="heading sr-top">
+            About <span className="gradient-text">Me</span>
+          </h2>
+          <p className="section-lede sr-top">
+            Unity Developer based in {profile.location}, focused on VR, AR,
+            multiplayer and AI-driven applications.
+          </p>
 
-            <div className="mt-2">
-              <a href="/testimonials" className="btn">
-                Read More
-              </a>
+          <div className="about-grid">
+            <div className="card sr-up about-intro">
+              <img src="/images/salman.png" alt="Salman Sadiq" />
+              <h3>{profile.title} — {profile.subtitle}</h3>
+              <p className="subtle">{profile.summaryLong}</p>
+              <p className="subtle">
+                Day to day that means shipping to Meta Quest 3 against a strict
+                frame budget, wiring sessions over Unity Gaming Services, and
+                turning speech into believable facial animation.
+              </p>
+              <div className="mt-2 about-actions">
+                <Link to="/resume" className="btn">Full Resume</Link>
+                <a href={`mailto:${profile.email}`} className="btn ghost">Email Me</a>
+              </div>
             </div>
-          </div>
 
-          <div className="card">
-            <h2 className="heading">
-              Resume <span className="gradient-text">Highlights</span>
-            </h2>
-            <ul>
-              <li>
-                <strong>Associate Software Engineer</strong> – Ilmversity by Da1Ilmverse (Oct 2025 - Present)
-              </li>
-              <li>
-                <strong>Games & VR Developer</strong> – UET Game Studio (Apr 2024 - Sept 2025)
-              </li>
-              <li>
-                <strong>Started Development Journey</strong> – University of Okara (2023)
-              </li>
-              <li>
-                Expertise: Optimization (LODs/Batching), Multiplayer (Photon), Unity Render Streaming (WebRTC), Opsive CC, XR Toolkit, MRTK.
-              </li>
-            </ul>
-
-            <div className="grid cols-2 mt-2">
-              <div>
-                <h3>Core Skills</h3>
-                <p>
-                  Unity, C#, WebRTC, C++, Node.js, Express.js, Databases, Photon, XR 
-                  Toolkit, RCC, Git, Vercel.
-                </p>
+            <div className="about-facts sr-up">
+              <div className="fact-card">
+                <i className="bx bx-briefcase-alt-2"></i>
+                <div>
+                  <strong>Now</strong>
+                  <span>Associate Software Engineer @ Ilmversity</span>
+                </div>
+              </div>
+              <div className="fact-card">
+                <i className="bx bx-map"></i>
+                <div>
+                  <strong>Based in</strong>
+                  <span>{profile.location}</span>
+                </div>
+              </div>
+              <div className="fact-card">
+                <i className="bx bx-headphone"></i>
+                <div>
+                  <strong>Primary target</strong>
+                  <span>Meta Quest 2 / 3 standalone VR</span>
+                </div>
+              </div>
+              <div className="fact-card">
+                <i className="bx bx-graduation"></i>
+                <div>
+                  <strong>Education</strong>
+                  <span>MCS, University of Okara</span>
+                </div>
+              </div>
+              <div className="fact-card">
+                <i className="bx bx-envelope"></i>
+                <div>
+                  <strong>Email</strong>
+                  <a href={`mailto:${profile.email}`}>{profile.email}</a>
+                </div>
+              </div>
+              <div className="fact-card">
+                <i className="bx bx-phone"></i>
+                <div>
+                  <strong>Phone</strong>
+                  <a href={profile.socials.whatsapp} target="_blank" rel="noopener noreferrer">
+                    {profile.phone}
+                  </a>
+                </div>
               </div>
             </div>
           </div>
@@ -344,619 +401,392 @@ export default function Home() {
       </section>
 
       {/* ==========================================================
-          SERVICES SECTION
+          FLAGSHIP WORK
+      ========================================================== */}
+      <section id="work" className="flagship">
+        <div className="container">
+          <h2 className="heading sr-top">
+            Flagship <span className="gradient-text">Work</span>
+          </h2>
+          <p className="section-lede sr-top">
+            The two enterprise VR products I build at Ilmversity, plus the
+            multiplayer board game I build on my own time.
+          </p>
+
+          {flagships.map((f, index) => (
+            <article
+              className={`spotlight sr-up ${index % 2 ? "reverse" : ""}`}
+              key={f.title}
+            >
+              <div className={`spotlight-media ${f.logo ? "is-logo" : ""}`}>
+                <img src={f.image} alt={f.title} loading="lazy" />
+                <span className="spotlight-org">{f.org}</span>
+              </div>
+
+              <div className="spotlight-body">
+                <h3>{f.title}</h3>
+                {f.status && <span className="wip-pill">{f.status}</span>}
+                <p className="subtle">{f.tagline}</p>
+
+                <ul className="spotlight-points">
+                  {f.highlights.map((h) => (
+                    <li key={h.name}>
+                      <i className="bx bx-check-circle"></i>
+                      <span>
+                        <strong>{h.name}</strong> — {h.text}
+                      </span>
+                    </li>
+                  ))}
+                </ul>
+
+                <div className="chip-row">
+                  {f.stack.map((s) => (
+                    <span className="tag" key={s}>{s}</span>
+                  ))}
+                </div>
+
+                {f.links && (
+                  <div className="spotlight-links">
+                    {f.links.map((l) => (
+                      <a
+                        key={l.label}
+                        href={l.url}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        className="btn ghost"
+                      >
+                        <i className={l.icon}></i> {l.label}
+                      </a>
+                    ))}
+                  </div>
+                )}
+              </div>
+            </article>
+          ))}
+        </div>
+      </section>
+
+      {/* ==========================================================
+          SERVICES
       ========================================================== */}
       <section id="services" className="services">
         <div className="container">
-          <h2 className="heading">
-            My <span className="gradient-text">Services</span>
+          <h2 className="heading sr-top">
+            What I <span className="gradient-text">Do</span>
           </h2>
+          <p className="section-lede sr-top">
+            Four areas I am hired for most often.
+          </p>
 
-          <div className="grid cols-1 mt-3">
-            <div className="card">
-              <i className="bx bx-code-alt"></i>
-              <h3>Game Development</h3>
-              <p className="subtle">
-                High-quality gameplay and systems with Unity & C#.
-              </p>
-              <a href="/game-dev-experience" className="btn mt-2">
-                Experience
-              </a>
-            </div>
+          <div className="service-grid">
+            {services.map((s) => (
+              <div className="service-card sr-up" key={s.title}>
+                <i className={s.icon}></i>
+                <h3>{s.title}</h3>
+                <p className="subtle">{s.text}</p>
+                <Link to={s.link} className="btn ghost mt-2">
+                  Learn more
+                </Link>
+              </div>
+            ))}
           </div>
         </div>
       </section>
 
       {/* ==========================================================
-          PROJECTS SECTION
+          PROJECTS
       ========================================================== */}
       <section id="projects" className="projects">
         <div className="container">
-          <h2 className="heading text-center">
-            Latest <span className="gradient-text">Projects</span>
+          <h2 className="heading sr-top">
+            Selected <span className="gradient-text">Projects</span>
           </h2>
+          <p className="section-lede sr-top">
+            {projects.length} shipped builds across VR, AR, mobile, PC, WebGL and the web.
+          </p>
 
-          <ul className="project-filter">
-            <li className="list project-filter-active" data-filter="all">All</li>
-            <li className="list" data-filter="webgl">WebGl Games</li>
-            <li className="list" data-filter="android">Android Games</li>
-            <li className="list" data-filter="pc">PC games</li>
-            <li className="list" data-filter="ar">AR app</li>
-            <li className="list" data-filter="vr">VR app</li>
-            <li className="list" data-filter="web">Websites</li>
-            <li className="list" data-filter="ai">AI/ML</li>
-            <li className="list" data-filter="design">Design</li>
-          </ul>
+          <div className="project-toolbar sr-top">
+            <ul className="project-filter">
+              {filters.map((f) => (
+                <li
+                  key={f.key}
+                  className={activeFilter === f.key ? "project-filter-active" : ""}
+                  onClick={() => setActiveFilter(f.key)}
+                >
+                  {f.label}
+                </li>
+              ))}
+            </ul>
 
-          <div className="project-boxes">
-            {/* Box 1 - WebGL */}
-            <div className="box webgl">
-              <div className="project-box">
-                <a href="/images/LC4.PNG" data-lightbox="work">
-                  <img className="thumb" src="/images/LC4.PNG" alt="Letter Cascade Game" />
-                </a>
-                <div className="details-container">
-                  <div className="detail-head">
-                    <h4>Letter Cascade Game</h4>
-                  </div>
-                  <div className="detail-description">
-                    This is a word puzzle game with real-time word validation and physics-based letter collisions.
-                  </div>
-                  <div className="icon-container">
-                    <a href="https://github.com/Salman17-cmd/LetterCasade" target="_blank" rel="noopener noreferrer" className="i"><i className="bi bi-github"></i></a>
-                    <a href="https://www.youtube.com/@ss.entertainment1717" target="_blank" rel="noopener noreferrer" className="i"><i className="bi bi-youtube"></i></a>
-                    <a href="https://portal.uetgamestudio.com/games/lettercascade" target="_blank" rel="noopener noreferrer" className="i"><i className="bi bi-play-circle-fill"></i></a>
-                  </div>
-                </div>
-              </div>
+            <div className="project-search">
+              <i className="bx bx-search"></i>
+              <input
+                type="search"
+                value={query}
+                placeholder="Search projects or tech…"
+                onChange={(e) => setQuery(e.target.value)}
+                aria-label="Search projects"
+              />
             </div>
-            {/* Box 2 - WebGL */}
-            <div className="box webgl">
-              <div className="project-box">
-                <a href="/images/QTG4.PNG" data-lightbox="work">
-                  <img className="thumb" src="/images/QTG4.PNG" alt="Quiz The Global" />
-                </a>
-                <div className="details-container">
-                  <div className="detail-head">
-                    <h4>Quiz The Global</h4>
-                  </div>
-                  <div className="detail-description">
-                    This is a educational game focused on identifying country flags across six continents. Features Time Trial and Survival modes.
-                  </div>
-                  <div className="icon-container">
-                    <a href="https://github.com/APRUN/Snake_Game" target="_blank" rel="noopener noreferrer" className="i"><i className="bi bi-github"></i></a>
-                    <a href="https://www.youtube.com/@ss.entertainment1717" target="_blank" rel="noopener noreferrer" className="i"><i className="bi bi-youtube"></i></a>
-                    <a href="https://portal.uetgamestudio.com/games/quizglobe" className="i"><i className="bi bi-play-circle-fill"></i></a>
-                  </div>
-                </div>
-              </div>
-            </div>
+          </div>
 
-            {/* Box 16 - Android */}
-            <div className="box android">
-              <div className="project-box">
-                <a href="/images/FS.png" data-lightbox="work">
-                  <img className="thumb" src="/images/FS.png" alt="Fly Simulation" />
-                </a>
-                <div className="details-container">
-                  <div className="detail-head">
-                    <h4>Fly Simulation</h4>
-                  </div>
-                  <div className="detail-description">
-                    Android game with multiple selectable planes, physics-based rope drag mechanics, and coin-based upgrades.
-                  </div>
-                  <div className="icon-container">
-                    <a href="https://www.youtube.com/@ss.entertainment1717" target="_blank" rel="noopener noreferrer" className="i"><i className="bi bi-play-circle-fill"></i></a>
-                    <a href="#" className="i"><i className="bi bi-info-circle-fill"></i></a>
-                  </div>
+          <div className="project-grid">
+            {visibleProjects.map((p) => (
+              <article className="project-card" key={p.title}>
+                <div className={`project-thumb ${p.logo ? "is-logo" : ""}`}>
+                  <img src={p.image} alt={p.title} loading="lazy" />
+                  {p.featured && <span className="featured-badge">Featured</span>}
                 </div>
-              </div>
-            </div>
-            {/* Box 17 - Android */}
-            <div className="box android">
-              <div className="project-box">
-                <a href="/images/CH3.PNG" data-lightbox="work">
-                  <img className="thumb" src="/images/CH3.PNG" alt="Color Hunt" />
-                </a>
-                <div className="details-container">
-                  <div className="detail-head">
-                    <h4>Color Hunt</h4>
-                  </div>
-                  <div className="detail-description">
-                    3D open-world survival game with physics-based player controls, AI bots, and color hierarchy mechanics.
-                  </div>
-                  <div className="icon-container">
-                    <a href="https://www.youtube.com/@ss.entertainment1717" target="_blank" rel="noopener noreferrer" className="i"><i className="bi bi-play-circle-fill"></i></a>
-                    <a href="#" className="i"><i className="bi bi-info-circle-fill"></i></a>
-                  </div>
-                </div>
-              </div>
-            </div>
-            {/* Box 20 - Android */}
-            <div className="box android">
-              <div className="project-box">
-                <a href="/images/zs2.PNG" data-lightbox="work">
-                  <img className="thumb" src="/images/zs2.PNG" alt="Waste Land Of Living Dead" />
-                </a>
-                <div className="details-container">
-                  <div className="detail-head">
-                    <h4>Waste Land Of Living Dead</h4>
-                  </div>
-                  <div className="detail-description">
-                    3D zombie survival shooter. Features multiplayer support with Photon including lobby and wave spawning.
-                  </div>
-                  <div className="icon-container">
-                    <a href="https://www.youtube.com/@ss.entertainment1717" target="_blank" rel="noopener noreferrer" className="i"><i className="bi bi-play-circle-fill"></i></a>
-                    <a href="#" className="i"><i className="bi bi-info-circle-fill"></i></a>
-                  </div>
-                </div>
-              </div>
-            </div>
-            {/* Box 22 - Android/VR */}
-            <div className="box vr android">
-              <div className="project-box">
-                <a href="/images/HS1.PNG" data-lightbox="work">
-                  <img className="thumb" src="/images/HS1.PNG" alt="Horror Survival" />
-                </a>
-                <div className="details-container">
-                  <div className="detail-head">
-                    <h4>Horror Survival</h4>
-                  </div>
-                  <div className="detail-description">
-                    VR zombie shooter featuring cinematic sequences, particle effects, and immersive environment design.
-                  </div>
-                  <div className="icon-container">
-                    <a href="https://www.youtube.com/@ss.entertainment1717" target="_blank" rel="noopener noreferrer" className="i"><i className="bi bi-play-circle-fill"></i></a>
-                    <a href="https://play.google.com/store/apps/details?id=com.uetgs.halloweenSurvival" target="_blank" rel="noopener noreferrer" className="i"><i className="bi bi-google-play"></i></a>
-                  </div>
-                </div>
-              </div>
-            </div>
-            {/* Box 23 - Android */}
-            <div className="box android">
-              <div className="project-box">
-                <a href="/images/PCS1.PNG" data-lightbox="work">
-                  <img className="thumb" src="/images/PCS1.PNG" alt="Police Cop Simulator" />
-                </a>
-                <div className="details-container">
-                  <div className="detail-head">
-                    <h4>Police Cop Simulator</h4>
-                  </div>
-                  <div className="detail-description">
-                    Simulation experience with cinematic scenes using Animator, Timeline, and custom UI systems.
-                  </div>
-                  <div className="icon-container">
-                    <a href="https://www.youtube.com/@ss.entertainment1717" target="_blank" rel="noopener noreferrer" className="i"><i className="bi bi-play-circle-fill"></i></a>
-                    <a href="https://play.google.com/store/apps/details?id=com.DefaultCompany.PoliceCOPSimulator" target="_blank" rel="noopener noreferrer" className="i"><i className="bi bi-google-play"></i></a>
-                  </div>
-                </div>
-              </div>
-            </div>
 
-            {/* Box 14 - PC */}
-            <div className="box pc">
-              <div className="project-box">
-                <a href="/images/YS.png" data-lightbox="work">
-                  <img className="thumb" src="/images/YS.png" alt="Yanch e Shilock" />
-                </a>
-                <div className="details-container">
-                  <div className="detail-head">
-                    <h4>Yanch e Shilock</h4>
-                  </div>
-                  <div className="detail-description">
-                    Dynamic encounters using melee, magic, and AI coordination. Interactive rooftop combat and emotional storytelling.
-                  </div>
-                  <div className="icon-container">
-                    <a href="https://www.youtube.com/@ss.entertainment1717" target="_blank" rel="noopener noreferrer" className="i"><i className="bi bi-play-circle-fill"></i></a>
-                    <a href="#" className="i"><i className="bi bi-info-circle-fill"></i></a>
-                  </div>
-                </div>
-              </div>
-            </div>
+                <div className="project-body">
+                  <h4>{p.title}</h4>
+                  {p.status && <span className="wip-pill">{p.status}</span>}
+                  <p>{p.description}</p>
 
-            {/* Box 15 - AR */}
-            <div className="box ar">
-              <div className="project-box">
-                <a href="/images/LROP4.PNG" data-lightbox="work">
-                  <img className="thumb" src="/images/LROP4.PNG" alt="ARPlace" />
-                </a>
-                <div className="details-container">
-                  <div className="detail-head">
-                    <h4>ARPlace</h4>
+                  <div className="chip-row">
+                    {p.stack.map((s) => (
+                      <span className="mini-tag" key={s}>{s}</span>
+                    ))}
                   </div>
-                  <div className="detail-description">
-                    AR Simulation app to place and interact with furniture in real-world environments using AR Foundation.
-                  </div>
-                  <div className="icon-container">
-                    <a href="https://www.linkedin.com/feed/update/urn:li:activity:7358807205472579585/" target="_blank" rel="noopener noreferrer" className="i"><i className="bi bi-play-circle-fill"></i></a>
-                    <a href="#" className="i"><i className="bi bi-info-circle-fill"></i></a>
-                  </div>
-                </div>
-              </div>
-            </div>
 
-            {/* Box 18 - VR */}
-            <div className="box vr">
-              <div className="project-box">
-                <a href="/images/DCS4.PNG" data-lightbox="work">
-                  <img className="thumb" src="/images/DCS4.PNG" alt="Car VR Simulation" />
-                </a>
-                <div className="details-container">
-                  <div className="detail-head">
-                    <h4>Car VR Simulation</h4>
-                  </div>
-                  <div className="detail-description">
-                    Immersive Car VR Simulation. Integrated RCC for realistic car control with VR hand interaction.
-                  </div>
                   <div className="icon-container">
-                    <a href="https://www.linkedin.com/feed/update/urn:li:activity:7358770508215046145/" target="_blank" rel="noopener noreferrer" className="i"><i className="bi bi-play-circle-fill"></i></a>
-                    <a href="#" className="i"><i className="bi bi-info-circle-fill"></i></a>
+                    {p.links.map((l) => (
+                      <a
+                        key={l.label}
+                        href={l.url}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        title={l.label}
+                        aria-label={`${p.title} — ${l.label}`}
+                      >
+                        <i className={l.icon}></i>
+                      </a>
+                    ))}
                   </div>
                 </div>
-              </div>
-            </div>
-            {/* Box 19 - VR */}
-            <div className="box vr">
-              <div className="project-box">
-                <a href="/images/Christmas4.PNG" data-lightbox="work">
-                  <img className="thumb" src="/images/Christmas4.PNG" alt="Christmas VR Simulation" />
-                </a>
-                <div className="details-container">
-                  <div className="detail-head">
-                    <h4>Christmas VR Simulation</h4>
-                  </div>
-                  <div className="detail-description">
-                    Festive VR game where players search for hidden objects. Features seamless controller navigation.
-                  </div>
-                  <div className="icon-container">
-                    <a href="https://www.linkedin.com/feed/update/urn:li:activity:7300796441571049472/" target="_blank" rel="noopener noreferrer" className="i"><i className="bi bi-play-circle-fill"></i></a>
-                    <a href="#" className="i"><i className="bi bi-info-circle-fill"></i></a>
-                  </div>
-                </div>
-              </div>
-            </div>
-            {/* Box 21 - VR */}
-            <div className="box vr">
-              <div className="project-box">
-                <a href="/images/BioLab4.PNG" data-lightbox="work">
-                  <img className="thumb" src="/images/BioLab4.PNG" alt="VR Bio Lab" />
-                </a>
-                <div className="details-container">
-                  <div className="detail-head">
-                    <h4>VR Bio Lab</h4>
-                  </div>
-                  <div className="detail-description">
-                    Interactive educational VR simulator using MRTK for navigating and interacting with anatomical models.
-                  </div>
-                  <div className="icon-container">
-                    <a href="https://www.linkedin.com/feed/update/urn:li:activity:7274653702395699200/" target="_blank" rel="noopener noreferrer" className="i"><i className="bi bi-play-circle-fill"></i></a>
-                    <a href="#" className="i"><i className="bi bi-info-circle-fill"></i></a>
-                  </div>
-                </div>
-              </div>
-            </div>
-            {/* Box 24 - VR */}
-            <div className="box vr">
-              <div className="project-box">
-                <a href="/images/EH.png" data-lightbox="work">
-                  <img className="thumb" src="/images/EH.png" alt="Realtime ExpoHall VR" />
-                </a>
-                <div className="details-container">
-                  <div className="detail-head">
-                    <h4>Realtime ExpoHall VR</h4>
-                  </div>
-                  <div className="detail-description">
-                    Oculus Quest 3 VR project featuring real-time character lip-syncing driven by JSON files.
-                  </div>
-                  <div className="icon-container">
-                    <a href="https://www.youtube.com/@ss.entertainment1717" target="_blank" rel="noopener noreferrer" className="i"><i className="bi bi-play-circle-fill"></i></a>
-                    <a href="#" className="i"><i className="bi bi-info-circle-fill"></i></a>
-                  </div>
-                </div>
-              </div>
-            </div>
+              </article>
+            ))}
 
-            {/* Box 4 - Website */}
-            <div className="box web">
-              <div className="project-box">
-                <a href="/images/LWF.png" data-lightbox="work">
-                  <img className="thumb" src="/images/LWF.png" alt="Live Weather Forecaster" />
-                </a>
-                <div className="details-container">
-                  <div className="detail-head">
-                    <h4>Live Weather Forecaster</h4>
-                  </div>
-                  <div className="detail-description">
-                    A web app developed with Streamlit UI and OpenWeather API that tells the live temprature for a city by taking input for the city and state of weather.
-                  </div>
-                  <div className="icon-container">
-                    <a href="https://github.com/Salman17-cmd/Live-Weather-Forecaster" target="_blank" rel="noopener noreferrer" className="i"><i className="bi bi-github"></i></a>
-                    <a href="https://www.youtube.com/@ss.entertainment1717" target="_blank" rel="noopener noreferrer" className="i"><i className="bi bi-play-circle-fill"></i></a>
-                    <a href="#" className="i"><i className="bi bi-info-circle-fill"></i></a>
-                  </div>
-                </div>
-              </div>
-            </div>
-            {/* Box 25 - Website */}
-            <div className="box web">
-              <div className="project-box">
-                <a href="/images/salman.png" data-lightbox="work">
-                  <img className="thumb" src="/images/salman.png" alt="Personal Portfolio" />
-                </a>
-                <div className="details-container">
-                  <div className="detail-head">
-                    <h4>Personal Portfolio</h4>
-                  </div>
-                  <div className="detail-description">
-                    A performant, responsive personal portfolio built with React and Vite. Features dark mode, project filtering, and smooth animations.
-                  </div>
-                  <div className="icon-container">
-                    <a href="https://github.com/Salman17-cmd/salman-portfolio" target="_blank" rel="noopener noreferrer" className="i"><i className="bi bi-github"></i></a>
-                    <a href="https://www.youtube.com/@ss.entertainment1717" target="_blank" rel="noopener noreferrer" className="i"><i className="bi bi-play-circle-fill"></i></a>
-                    <a href="#" className="i"><i className="bi bi-info-circle-fill"></i></a>
-                  </div>
-                </div>
-              </div>
-            </div>
-
-            {/* Box 3 - AI/ML */}
-            <div className="box ai">
-              <div className="project-box">
-                <a href="/images/b3.jpg" data-lightbox="work">
-                  <img className="thumb" src="/images/b3.jpg" alt="Face Recognition" />
-                </a>
-                <div className="details-container">
-                  <div className="detail-head">
-                    <h4>Face Recognition</h4>
-                  </div>
-                  <div className="detail-description">
-                    This is a face recognition program that detects the face of a person using your web cam. It uses OpenCV for the detection.
-                  </div>
-                  <div className="icon-container">
-                    <a href="https://github.com/Salman17-cmd/FaceRecogination" target="_blank" rel="noopener noreferrer" className="i"><i className="bi bi-github"></i></a>
-                    <a href="https://www.youtube.com/@ss.entertainment1717" target="_blank" rel="noopener noreferrer" className="i"><i className="bi bi-play-circle-fill"></i></a>
-                    <a href="#" className="i"><i className="bi bi-info-circle-fill"></i></a>
-                  </div>
-                </div>
-              </div>
-            </div>
+            {visibleProjects.length === 0 && (
+              <p className="empty-state">
+                No projects match that search. Try another keyword.
+              </p>
+            )}
           </div>
         </div>
       </section>
 
       {/* ==========================================================
-          SKILLS SECTION — Circular Progress Rings in Box
+          SKILLS
       ========================================================== */}
-      <section className="proficiencies-section" id="skills">
+      <section id="skills" className="skills-section">
         <div className="container">
-          <h2 className="heading">My <span className="gradient-text">Proficiencies</span></h2>
+          <h2 className="heading sr-top">
+            Skills &amp; <span className="gradient-text">Toolset</span>
+          </h2>
+          <p className="section-lede sr-top">
+            The stack I work in, grouped the way I use it.
+          </p>
 
-          <div className="prof-box">
-            <div className="prof-grid">
-
-              <div className="prof-card">
-                <div className="ring" style={{ "--percent": 95 }}>
-                  <svg viewBox="0 0 120 120"><circle cx="60" cy="60" r="52" /><circle cx="60" cy="60" r="52" /></svg>
-                  <span className="ring-val">95%</span>
+          <div className="skill-grid">
+            {skillGroups.map((g) => (
+              <div className="skill-card sr-up" key={g.title}>
+                <div className="skill-head">
+                  <i className={g.icon}></i>
+                  <h3>{g.title}</h3>
                 </div>
-                <h4>Unity</h4>
-                <p>2D/3D games, AR/VR &amp; cross-platform builds</p>
-              </div>
-
-              <div className="prof-card">
-                <div className="ring" style={{ "--percent": 90 }}>
-                  <svg viewBox="0 0 120 120"><circle cx="60" cy="60" r="52" /><circle cx="60" cy="60" r="52" /></svg>
-                  <span className="ring-val">90%</span>
+                <div className="chip-row">
+                  {g.skills.map((s) => (
+                    <span className="mini-tag" key={s}>{s}</span>
+                  ))}
                 </div>
-                <h4>C#</h4>
-                <p>Game logic, .NET apps &amp; backend systems</p>
               </div>
+            ))}
+          </div>
 
-
-
-              <div className="prof-card">
-                <div className="ring" style={{ "--percent": 90 }}>
-                  <svg viewBox="0 0 120 120"><circle cx="60" cy="60" r="52" /><circle cx="60" cy="60" r="52" /></svg>
-                  <span className="ring-val">90%</span>
+          <h3 className="sub-heading sr-top">Proficiency</h3>
+          <div className="prof-grid">
+            {proficiencies.map((p) => (
+              <div className="prof-card sr-up" key={p.name}>
+                <div className="ring" style={{ "--percent": p.percent }}>
+                  <svg viewBox="0 0 120 120">
+                    <circle cx="60" cy="60" r="52" />
+                    <circle cx="60" cy="60" r="52" />
+                  </svg>
+                  <span className="ring-val">{p.percent}%</span>
                 </div>
-                <h4>Project Management</h4>
-                <p>Agile, Jira, Trello &amp; team collaboration</p>
+                <h4>{p.name}</h4>
+                <p>{p.note}</p>
               </div>
-
-              <div className="prof-card">
-                <div className="ring" style={{ "--percent": 85 }}>
-                  <svg viewBox="0 0 120 120"><circle cx="60" cy="60" r="52" /><circle cx="60" cy="60" r="52" /></svg>
-                  <span className="ring-val">85%</span>
-                </div>
-                <h4>Design Tools</h4>
-                <p>Photoshop, Illustrator &amp; Canva</p>
-              </div>
-
-              <div className="prof-card">
-                <div className="ring" style={{ "--percent": 80 }}>
-                  <svg viewBox="0 0 120 120"><circle cx="60" cy="60" r="52" /><circle cx="60" cy="60" r="52" /></svg>
-                  <span className="ring-val">80%</span>
-                </div>
-                <h4>Figma</h4>
-                <p>UI/UX design &amp; prototyping</p>
-              </div>
-
-              <div className="prof-card">
-                <div className="ring" style={{ "--percent": 75 }}>
-                  <svg viewBox="0 0 120 120"><circle cx="60" cy="60" r="52" /><circle cx="60" cy="60" r="52" /></svg>
-                  <span className="ring-val">75%</span>
-                </div>
-                <h4>C++</h4>
-                <p>Systems programming, DSA &amp; optimization</p>
-              </div>
-
-              <div className="prof-card">
-                <div className="ring" style={{ "--percent": 60 }}>
-                  <svg viewBox="0 0 120 120"><circle cx="60" cy="60" r="52" /><circle cx="60" cy="60" r="52" /></svg>
-                  <span className="ring-val">60%</span>
-                </div>
-                <h4>Flask</h4>
-                <p>Python web framework for APIs</p>
-              </div>
-
-
-
-            </div>
+            ))}
           </div>
         </div>
       </section>
 
       {/* ==========================================================
-          TESTIMONIALS SECTION
+          EXPERIENCE & EDUCATION
       ========================================================== */}
-      <section id="testimonials" className="testimonials">
+      <section id="experience" className="experience-section">
         <div className="container">
-          <div
-            className="section-header"
-            style={{
-              display: "flex",
-              justifyContent: "space-between",
-              alignItems: "center",
-              marginBottom: 10,
-            }}
-          >
-            <h2 className="heading">
-              Our <span className="gradient-text">Testimonials</span>
-            </h2>
-            <button className="btn" disabled>
-              Add Testimonial (Disabled)
-            </button>
+          <h2 className="heading sr-top">
+            Experience &amp; <span className="gradient-text">Education</span>
+          </h2>
+          <p className="section-lede sr-top">
+            Two years of shipping, and the degrees behind it.
+          </p>
+
+          <div className="timeline">
+            {experience.map((job) => (
+              <div className="timeline-item sr-up" key={job.role + job.company}>
+                <span className="timeline-dot" />
+                <div className="timeline-card">
+                  <div className="timeline-top">
+                    <span className="tag">{job.period}</span>
+                    {job.current && <span className="live-pill">Current</span>}
+                  </div>
+                  <h3>{job.role}</h3>
+                  <strong className="timeline-org">
+                    {job.company} · {job.location}
+                  </strong>
+                  <p className="subtle">{job.summary}</p>
+                  <ul>
+                    {job.points.slice(0, 4).map((pt, i) => (
+                      <li key={i}>{pt}</li>
+                    ))}
+                  </ul>
+                  <div className="chip-row">
+                    {job.stack.map((s) => (
+                      <span className="mini-tag" key={s}>{s}</span>
+                    ))}
+                  </div>
+                </div>
+              </div>
+            ))}
+
+            {education.map((ed) => (
+              <div className="timeline-item sr-up" key={ed.degree}>
+                <span className="timeline-dot edu" />
+                <div className="timeline-card">
+                  <span className="tag">{ed.period}</span>
+                  <h3>{ed.degree}</h3>
+                  <strong className="timeline-org">{ed.school}</strong>
+                  <p className="subtle">{ed.note}</p>
+                </div>
+              </div>
+            ))}
           </div>
 
-          <div className="swiper" id="testimonialSwiper">
-            <div className="swiper-wrapper">
-              {/* THREE TESTIMONIAL SLIDES HERE (same as HTML) */}
-              <div className="swiper-slide">
-                <div className="t-card">
-                  <img src="/images/raven.png" alt="Avatar" />
-                  <div>
-                    <strong>Salman</strong>
-                    <div className="subtle">Web Developer</div>
-                    <p className="mt-2">
-                      This section is under development.
-                    </p>
-                    <div className="stars">★★★★★</div>
-                  </div>
-                </div>
-              </div>
-              <div className="swiper-slide">
-                <div className="t-card">
-                  <img src="/images/raven.png" alt="Avatar" />
-                  <div>
-                    <strong>Salman</strong>
-                    <div className="subtle">.NET Developer</div>
-                    <p className="mt-2">
-                      This section is under development.
-                    </p>
-                    <div className="stars">★★★★★</div>
-                  </div>
-                </div>
-              </div>
-              <div className="swiper-slide">
-                <div className="t-card">
-                  <img src="/images/raven.png" alt="Avatar" />
-                  <div>
-                    <strong>Salman</strong>
-                    <div className="subtle">UI/UX Designer</div>
-                    <p className="mt-2">
-                      This section is under development.
-                    </p>
-                    <div className="stars">★★★★★</div>
-                  </div>
-                </div>
-              </div>
-            </div>
-
-            <div className="swiper-pagination"></div>
-            <div className="swiper-button-prev"></div>
-            <div className="swiper-button-next"></div>
+          <div className="text-center mt-3">
+            <Link to="/resume" className="btn">
+              <i className="bi bi-file-earmark-person"></i> See the full resume
+            </Link>
           </div>
         </div>
       </section>
 
       {/* ==========================================================
-          CONTACT SECTION
+          CONTACT
       ========================================================== */}
       <section id="contact">
         <div className="container">
-          <h2 className="heading text-center">
-            Contact <span className="gradient-text">Me!</span>
+          <h2 className="heading sr-top">
+            Let&apos;s <span className="gradient-text">Work Together</span>
           </h2>
+          <p className="section-lede sr-top">
+            Got a VR, AR or multiplayer idea? Tell me about it and I will reply.
+          </p>
 
-          <form className="contact" onSubmit={handleSubmit}>
-            <div className="row-2">
-              <input
-                type="text"
-                name="fullName"
-                placeholder="Full Name"
-                value={formData.fullName}
-                onChange={handleInputChange}
-                required
-              />
-              <input
-                type="email"
-                name="emailAddress"
-                placeholder="Email Address"
-                value={formData.emailAddress}
-                onChange={handleInputChange}
-                required
-              />
+          <div className="contact-grid">
+            <div className="contact-info sr-up">
+              <a className="fact-card" href={`mailto:${profile.email}`}>
+                <i className="bx bx-envelope"></i>
+                <div>
+                  <strong>Email</strong>
+                  <span>{profile.email}</span>
+                </div>
+              </a>
+              <a className="fact-card" href={profile.socials.whatsapp} target="_blank" rel="noopener noreferrer">
+                <i className="bx bxl-whatsapp"></i>
+                <div>
+                  <strong>WhatsApp</strong>
+                  <span>{profile.phone}</span>
+                </div>
+              </a>
+              <a className="fact-card" href={profile.socials.linkedin} target="_blank" rel="noopener noreferrer">
+                <i className="bx bxl-linkedin"></i>
+                <div>
+                  <strong>LinkedIn</strong>
+                  <span>Salman Sadiq</span>
+                </div>
+              </a>
+              <a className="fact-card" href={profile.socials.github} target="_blank" rel="noopener noreferrer">
+                <i className="bx bxl-github"></i>
+                <div>
+                  <strong>GitHub</strong>
+                  <span>Salman17-cmd</span>
+                </div>
+              </a>
             </div>
 
-            <div className="row-2">
-              <input
-                type="tel"
-                name="contactNumber"
-                placeholder="Mobile Number"
-                value={formData.contactNumber}
-                onChange={handleInputChange}
-              />
-              <input
-                type="text"
-                name="emailSubject"
-                placeholder="Email Subject"
-                value={formData.emailSubject}
-                onChange={handleInputChange}
-                required
-              />
-            </div>
-
-            <textarea
-              name="message"
-              placeholder="Your Message"
-              value={formData.message}
-              onChange={handleInputChange}
-              required
-            ></textarea>
-
-            <button
-              type="submit"
-              className="btn"
-              disabled={status.submitting}
-            >
-              {status.submitting ? "Sending..." : "Send Message"}
-            </button>
-
-            {status.info.msg && (
-              <div
-                className={`form-message ${
-                  status.info.error ? "error" : "success"
-                }`}
-                style={{
-                  marginTop: "1rem",
-                  color: status.info.error ? "#ff4d4d" : "#00ff88",
-                  textAlign: "center",
-                }}
-              >
-                {status.info.msg}
+            <form className="contact sr-up" onSubmit={handleSubmit}>
+              <div className="row-2">
+                <input
+                  type="text"
+                  name="fullName"
+                  placeholder="Full Name"
+                  value={formData.fullName}
+                  onChange={handleInputChange}
+                  required
+                />
+                <input
+                  type="email"
+                  name="emailAddress"
+                  placeholder="Email Address"
+                  value={formData.emailAddress}
+                  onChange={handleInputChange}
+                  required
+                />
               </div>
-            )}
-          </form>
+
+              <div className="row-2">
+                <input
+                  type="tel"
+                  name="contactNumber"
+                  placeholder="Mobile Number"
+                  value={formData.contactNumber}
+                  onChange={handleInputChange}
+                />
+                <input
+                  type="text"
+                  name="emailSubject"
+                  placeholder="Subject"
+                  value={formData.emailSubject}
+                  onChange={handleInputChange}
+                  required
+                />
+              </div>
+
+              <textarea
+                name="message"
+                placeholder="Your Message"
+                value={formData.message}
+                onChange={handleInputChange}
+                required
+              ></textarea>
+
+              <button type="submit" className="btn" disabled={status.submitting}>
+                {status.submitting ? "Sending…" : "Send Message"}
+              </button>
+
+              {status.info.msg && (
+                <div
+                  className={`form-message ${status.info.error ? "error" : "success"}`}
+                >
+                  {status.info.msg}
+                </div>
+              )}
+            </form>
+          </div>
         </div>
       </section>
     </main>

@@ -1,0 +1,781 @@
+/* ===================================================================
+   SALMAN SADIQ — GAME / HUD SKIN
+   Loaded last. Purely a look-and-feel layer on top of portfolio.css:
+   arcade display type, HUD corner brackets, notched neon buttons,
+   scanlines and a player-card hero. Every colour reads the accent
+   variables, so it still follows the theme picker and dark mode.
+   =================================================================== */
+
+@import url('https://fonts.googleapis.com/css2?family=Orbitron:wght@500;600;700;800;900&family=Share+Tech+Mono&display=swap');
+
+:root {
+    --font-display: 'Orbitron', 'Poppins', sans-serif;
+    --font-hud: 'Share Tech Mono', ui-monospace, monospace;
+    --hud-notch: 10px;
+    --hud-line: rgba(117, 78, 249, .55);
+    --scanline: rgba(0, 0, 0, .045);
+}
+
+:root.dark-mode {
+    --hud-line: var(--accent);
+    --scanline: rgba(0, 0, 0, .35);
+}
+
+/* ─── Neon accent theme (added by ThemeSettings) ─── */
+:root.theme-neon {
+    --accent: #00e5ff;
+    --accent-secondary: #ff2fd6;
+    --accent-glow: rgba(0, 229, 255, .38);
+    --accent-faded: rgba(0, 229, 255, .12);
+    --border: rgba(0, 229, 255, .3);
+    --border-light: rgba(0, 229, 255, .25);
+}
+
+:root.theme-neon.dark-mode {
+    --bg: #05060f;
+}
+
+/* ===================================================================
+   DISPLAY TYPE
+   =================================================================== */
+.heading,
+.sub-heading,
+.hero .title,
+.brand>div>div:first-child,
+.stat-item strong,
+.ring-val,
+.section-hud,
+.btn {
+    font-family: var(--font-display);
+}
+
+.heading,
+.sub-heading,
+.hero .title {
+    letter-spacing: .5px;
+    text-transform: uppercase;
+}
+
+.hero .title {
+    text-transform: none;
+}
+
+/* Small glowing markers either side of a section heading */
+.heading::before,
+.heading::after {
+    content: '';
+    display: inline-block;
+    width: .9rem;
+    height: .9rem;
+    margin: 0 1.6rem;
+    vertical-align: middle;
+    background: var(--accent);
+    border-radius: 2px;
+    transform: rotate(45deg);
+    box-shadow: 0 0 14px var(--accent-glow);
+    opacity: .8;
+}
+
+@media (max-width: 560px) {
+
+    .heading::before,
+    .heading::after {
+        display: none;
+    }
+}
+
+.brand>div>div:first-child {
+    font-weight: 800;
+    letter-spacing: .6px;
+}
+
+.brand small,
+.status-pill,
+.tag,
+.mini-tag,
+.marquee-item,
+.spotlight-org,
+.live-pill,
+.featured-badge,
+.timeline-org,
+.stat-item span {
+    font-family: var(--font-hud);
+    letter-spacing: .8px;
+}
+
+/* ===================================================================
+   HUD PANELS — corner brackets + notched corner on every card
+   =================================================================== */
+.card,
+.project-card,
+.skill-card,
+.service-card,
+.timeline-card,
+.fact-card,
+.prof-card,
+.bento-item,
+.spotlight,
+.hero-player {
+    position: relative;
+    border-radius: 4px;
+    clip-path: polygon(var(--hud-notch) 0,
+            100% 0,
+            100% calc(100% - var(--hud-notch)),
+            calc(100% - var(--hud-notch)) 100%,
+            0 100%,
+            0 var(--hud-notch));
+}
+
+/* A soft accent bloom in the two square corners, instead of hard ticks */
+.card::after,
+.project-card::after,
+.skill-card::after,
+.service-card::after,
+.timeline-card::after,
+.prof-card::after,
+.hero-player::after {
+    content: '';
+    position: absolute;
+    inset: 0;
+    pointer-events: none;
+    z-index: 2;
+    background:
+        radial-gradient(6rem 6rem at 0 0, var(--accent-glow), transparent 70%),
+        radial-gradient(6rem 6rem at 100% 100%, var(--accent-glow), transparent 70%);
+    opacity: .35;
+    transition: opacity .3s var(--ease-out);
+}
+
+.card:hover::after,
+.project-card:hover::after,
+.skill-card:hover::after,
+.service-card:hover::after,
+.timeline-card:hover::after,
+.prof-card:hover::after {
+    opacity: .85;
+}
+
+.project-card:hover,
+.skill-card:hover,
+.service-card:hover,
+.timeline-card:hover,
+.card:hover {
+    box-shadow: 0 0 0 1px var(--accent-glow), 0 24px 60px -30px var(--accent-glow);
+}
+
+/* Bento tiles read as inventory slots */
+.bento-item {
+    --hud-notch: 8px;
+    border: 1px solid var(--border);
+    transition: transform .3s var(--ease-out), box-shadow .3s var(--ease-out);
+}
+
+.bento-item:hover {
+    transform: translateY(-3px);
+    box-shadow: inset 0 0 0 1px var(--accent-glow), 0 0 26px -8px var(--accent-glow);
+}
+
+/* ===================================================================
+   BUTTONS — notched corners, scan sweep on hover
+   =================================================================== */
+.btn {
+    position: relative;
+    overflow: hidden;
+    text-transform: uppercase;
+    font-size: 1.25rem;
+    font-weight: 700;
+    letter-spacing: 1.2px;
+    border-radius: 3px;
+    clip-path: polygon(9px 0, 100% 0, 100% calc(100% - 9px), calc(100% - 9px) 100%, 0 100%, 0 9px);
+}
+
+.btn:not(.link-btn) {
+    box-shadow: 0 0 18px -6px var(--accent-glow);
+}
+
+.btn:not(.link-btn):hover {
+    box-shadow: 0 0 26px -4px var(--accent-glow), inset 0 0 20px -12px var(--accent);
+}
+
+.btn::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: -120%;
+    width: 55%;
+    height: 100%;
+    background: linear-gradient(100deg, transparent, rgba(255, 255, 255, .35), transparent);
+    transform: skewX(-20deg);
+    transition: left .55s var(--ease-out);
+}
+
+.btn:hover::before {
+    left: 140%;
+}
+
+.btn.link-btn {
+    clip-path: none;
+}
+
+.nav-resume {
+    font-family: var(--font-hud);
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    border-radius: 3px;
+    clip-path: polygon(8px 0, 100% 0, 100% calc(100% - 8px), calc(100% - 8px) 100%, 0 100%, 0 8px);
+}
+
+/* ===================================================================
+   TAGS — square HUD chips
+   =================================================================== */
+.tag,
+.mini-tag {
+    border-radius: 2px;
+    padding-left: 1.1rem;
+    border-left: 2px solid var(--accent);
+    text-transform: uppercase;
+    font-size: 1.05rem;
+}
+
+.mini-tag {
+    background: var(--accent-faded);
+}
+
+.status-pill {
+    border-radius: 3px;
+    text-transform: uppercase;
+    font-size: 1.15rem;
+}
+
+/* ===================================================================
+   HERO — player card
+   =================================================================== */
+.hero-player {
+    --hud-notch: 12px;
+    margin: 2.4rem 0 0;
+    padding: 1.8rem 2rem;
+    background: var(--surface);
+    border: 1px solid var(--border);
+    backdrop-filter: blur(8px);
+    -webkit-backdrop-filter: blur(8px);
+}
+
+.hero-player-top {
+    display: flex;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 1.2rem;
+    font-family: var(--font-hud);
+    font-size: 1.25rem;
+    color: var(--text-muted);
+    text-transform: uppercase;
+    letter-spacing: 1px;
+}
+
+.hero-player-top .lvl {
+    font-family: var(--font-display);
+    font-weight: 800;
+    font-size: 1.4rem;
+    color: var(--accent);
+    padding: .3rem 1rem;
+    border: 1px solid var(--accent);
+    border-radius: 2px;
+    box-shadow: inset 0 0 14px -8px var(--accent), 0 0 14px -8px var(--accent);
+}
+
+/* style.css paints every bare <span> with the accent — opt these out */
+.hero-player-top span,
+.xp-label span {
+    color: inherit;
+}
+
+.hero-player-top .sep {
+    opacity: .4;
+    color: var(--text-muted);
+}
+
+.hero-player-top b {
+    color: var(--text);
+    font-weight: 600;
+}
+
+.xp-row {
+    margin-top: 1.4rem;
+}
+
+.xp-label {
+    display: flex;
+    justify-content: space-between;
+    font-family: var(--font-hud);
+    font-size: 1.15rem;
+    color: var(--text-muted);
+    letter-spacing: 1px;
+    margin-bottom: .6rem;
+}
+
+.xp-bar {
+    height: 10px;
+    background: var(--accent-faded);
+    border: 1px solid var(--border);
+    border-radius: 2px;
+    overflow: hidden;
+    position: relative;
+}
+
+.xp-fill {
+    display: block;
+    height: 100%;
+    background: linear-gradient(90deg, var(--accent), var(--accent-secondary));
+    box-shadow: 0 0 14px -2px var(--accent);
+    position: relative;
+}
+
+.xp-fill::after {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: repeating-linear-gradient(115deg,
+            rgba(255, 255, 255, .28) 0 6px,
+            transparent 6px 14px);
+    animation: xp-slide 1.4s linear infinite;
+}
+
+@keyframes xp-slide {
+    to {
+        background-position: 28px 0;
+    }
+}
+
+/* Perks / loadout row */
+.hero-perks {
+    display: flex;
+    flex-wrap: wrap;
+    gap: .8rem;
+    margin-top: 1.6rem;
+}
+
+.perk {
+    display: inline-flex;
+    align-items: center;
+    gap: .6rem;
+    padding: .45rem 1rem;
+    font-family: var(--font-hud);
+    font-size: 1.1rem;
+    letter-spacing: .6px;
+    color: var(--text-muted);
+    background: var(--accent-faded);
+    border: 1px solid var(--border);
+    border-radius: 2px;
+    text-transform: uppercase;
+    transition: color .25s, border-color .25s, box-shadow .25s;
+}
+
+.perk i {
+    color: var(--accent);
+    font-size: 1.4rem;
+}
+
+.perk:hover {
+    color: var(--text);
+    border-color: var(--accent);
+    box-shadow: 0 0 16px -6px var(--accent-glow);
+}
+
+/* ===================================================================
+   STAT STRIP — score readout
+   =================================================================== */
+.stat-strip {
+    position: relative;
+    border-radius: 4px;
+}
+
+.stat-strip::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    height: 2px;
+    width: 100%;
+    background: linear-gradient(90deg, transparent, var(--accent), var(--accent-secondary), transparent);
+    opacity: .9;
+}
+
+.stat-item strong {
+    font-weight: 900;
+    letter-spacing: 1px;
+    text-shadow: 0 0 22px var(--accent-glow);
+}
+
+.stat-item span {
+    text-transform: uppercase;
+    font-size: 1.15rem;
+}
+
+.stat-item i {
+    filter: drop-shadow(0 0 8px var(--accent-glow));
+}
+
+/* ===================================================================
+   MARQUEE — console ticker
+   =================================================================== */
+.marquee {
+    border-top: 1px solid var(--border);
+    border-bottom: 1px solid var(--border);
+    background: var(--accent-faded);
+}
+
+.marquee-item {
+    text-transform: uppercase;
+    font-size: 1.3rem;
+}
+
+/* ===================================================================
+   PROJECT CARDS — quest / loot cards
+   =================================================================== */
+.featured-badge {
+    border-radius: 2px;
+    text-transform: uppercase;
+    letter-spacing: 1.2px;
+    box-shadow: 0 0 20px -4px var(--accent);
+}
+
+.featured-badge::before {
+    content: '★ ';
+}
+
+.project-thumb::after {
+    content: '';
+    position: absolute;
+    inset: 0;
+    pointer-events: none;
+    background: linear-gradient(180deg, transparent 55%, var(--accent-faded));
+    opacity: 0;
+    transition: opacity .35s var(--ease-out);
+}
+
+.project-card:hover .project-thumb::after {
+    opacity: 1;
+}
+
+.projects .project-filter li {
+    font-family: var(--font-hud);
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    border-radius: 2px;
+}
+
+.project-search input {
+    font-family: var(--font-hud);
+}
+
+/* ===================================================================
+   TIMELINE — mission log
+   =================================================================== */
+.timeline-dot {
+    border-radius: 2px;
+    transform: rotate(45deg);
+    box-shadow: 0 0 16px -2px var(--accent-glow);
+}
+
+.timeline-dot i {
+    transform: rotate(-45deg);
+}
+
+.live-pill {
+    text-transform: uppercase;
+    border-radius: 2px;
+}
+
+.live-pill::before {
+    content: '● ';
+}
+
+/* ===================================================================
+   SCROLLBAR
+   =================================================================== */
+::-webkit-scrollbar {
+    width: 10px;
+}
+
+::-webkit-scrollbar-track {
+    background: var(--accent-faded);
+}
+
+::-webkit-scrollbar-thumb {
+    background: linear-gradient(180deg, var(--accent), var(--accent-secondary));
+    border-radius: 0;
+}
+
+/* ===================================================================
+   MOTION SAFETY
+   =================================================================== */
+@media (prefers-reduced-motion: reduce) {
+
+    .xp-fill::after,
+    .btn::before {
+        animation: none;
+        transition: none;
+    }
+}
+
+/* ===================================================================
+   BACKGROUND — HUD LAYER
+   Sits inside .site-bg (hex plating, radar sweep, drifting motes) plus
+   a fixed .hud-frame overlay for the corner brackets and edge ticks.
+   =================================================================== */
+
+/* ─── Dot matrix: soft plating dots instead of a wire lattice ─── */
+.site-bg-hex {
+    position: absolute;
+    inset: 0;
+    opacity: .3;
+    background-image: radial-gradient(circle, var(--accent) 1.4px, transparent 1.6px);
+    background-size: 30px 30px;
+    mask-image: radial-gradient(ellipse 75% 65% at 50% 100%, #000 0%, transparent 70%);
+    -webkit-mask-image: radial-gradient(ellipse 75% 65% at 50% 100%, #000 0%, transparent 70%);
+    animation: hexDrift 40s linear infinite;
+}
+
+:root.dark-mode .site-bg-hex {
+    opacity: .38;
+}
+
+@keyframes hexDrift {
+    from { background-position: 0 0; }
+    to   { background-position: 0 -120px; }
+}
+
+/* ─── Radar sweep: a scan bar crawling down the viewport ─── */
+.site-bg-scan {
+    position: absolute;
+    left: 0;
+    right: 0;
+    height: 26rem;
+    top: -26rem;
+    pointer-events: none;
+    background: linear-gradient(to bottom,
+            transparent 0%,
+            var(--accent-faded) 60%,
+            var(--accent-glow) 100%);
+    opacity: .28;
+    animation: scanSweep 9s cubic-bezier(.5, 0, .5, 1) infinite;
+}
+
+:root.dark-mode .site-bg-scan {
+    opacity: .36;
+    mix-blend-mode: screen;
+}
+
+@keyframes scanSweep {
+    0%        { transform: translateY(0); opacity: 0; }
+    12%       { opacity: .28; }
+    88%       { opacity: .28; }
+    100%      { transform: translateY(calc(100vh + 26rem)); opacity: 0; }
+}
+
+/* ─── 8-bit sprites: invaders, hearts, ghosts and gems drifting up ─── */
+.site-bg-motes {
+    position: absolute;
+    inset: 0;
+    overflow: hidden;
+}
+
+.site-bg-motes span {
+    position: absolute;
+    bottom: -6rem;
+    aspect-ratio: var(--sprite-ratio, 1);
+    background: var(--accent);
+    mask-size: contain;
+    -webkit-mask-size: contain;
+    mask-repeat: no-repeat;
+    -webkit-mask-repeat: no-repeat;
+    filter: drop-shadow(0 0 10px var(--accent-glow));
+    opacity: 0;
+    animation-name: spriteRise;
+    animation-timing-function: linear;
+    animation-iteration-count: infinite;
+}
+
+.site-bg-motes span:nth-child(3n) {
+    background: var(--accent-secondary);
+}
+
+@keyframes spriteRise {
+    0%   { transform: translateY(0) translateX(0) rotate(0deg); opacity: 0; }
+    8%   { opacity: .55; }
+    35%  { transform: translateY(-35vh) translateX(3rem) rotate(6deg); }
+    70%  { transform: translateY(-70vh) translateX(-2rem) rotate(-6deg); }
+    92%  { opacity: .35; }
+    100% { transform: translateY(-108vh) translateX(1rem) rotate(4deg); opacity: 0; }
+}
+
+:root.dark-mode .site-bg-motes span {
+    filter: drop-shadow(0 0 12px var(--accent));
+}
+
+.site-bg-motes .s0 {
+    --sprite-ratio: 1.375;
+    mask-image: url("data:image/svg+xml,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20viewBox%3D%220%200%2011%208%22%20shape-rendering%3D%22crispEdges%22%20fill%3D%22%23000%22%3E%3Crect%20x%3D%222%22%20y%3D%220%22%20width%3D%221%22%20height%3D%221%22%2F%3E%3Crect%20x%3D%228%22%20y%3D%220%22%20width%3D%221%22%20height%3D%221%22%2F%3E%3Crect%20x%3D%223%22%20y%3D%221%22%20width%3D%221%22%20height%3D%221%22%2F%3E%3Crect%20x%3D%227%22%20y%3D%221%22%20width%3D%221%22%20height%3D%221%22%2F%3E%3Crect%20x%3D%222%22%20y%3D%222%22%20width%3D%227%22%20height%3D%221%22%2F%3E%3Crect%20x%3D%221%22%20y%3D%223%22%20width%3D%222%22%20height%3D%221%22%2F%3E%3Crect%20x%3D%224%22%20y%3D%223%22%20width%3D%223%22%20height%3D%221%22%2F%3E%3Crect%20x%3D%228%22%20y%3D%223%22%20width%3D%222%22%20height%3D%221%22%2F%3E%3Crect%20x%3D%220%22%20y%3D%224%22%20width%3D%2211%22%20height%3D%221%22%2F%3E%3Crect%20x%3D%220%22%20y%3D%225%22%20width%3D%221%22%20height%3D%221%22%2F%3E%3Crect%20x%3D%222%22%20y%3D%225%22%20width%3D%227%22%20height%3D%221%22%2F%3E%3Crect%20x%3D%2210%22%20y%3D%225%22%20width%3D%221%22%20height%3D%221%22%2F%3E%3Crect%20x%3D%220%22%20y%3D%226%22%20width%3D%221%22%20height%3D%221%22%2F%3E%3Crect%20x%3D%222%22%20y%3D%226%22%20width%3D%221%22%20height%3D%221%22%2F%3E%3Crect%20x%3D%228%22%20y%3D%226%22%20width%3D%221%22%20height%3D%221%22%2F%3E%3Crect%20x%3D%2210%22%20y%3D%226%22%20width%3D%221%22%20height%3D%221%22%2F%3E%3Crect%20x%3D%223%22%20y%3D%227%22%20width%3D%222%22%20height%3D%221%22%2F%3E%3Crect%20x%3D%226%22%20y%3D%227%22%20width%3D%222%22%20height%3D%221%22%2F%3E%3C%2Fsvg%3E");
+    -webkit-mask-image: url("data:image/svg+xml,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20viewBox%3D%220%200%2011%208%22%20shape-rendering%3D%22crispEdges%22%20fill%3D%22%23000%22%3E%3Crect%20x%3D%222%22%20y%3D%220%22%20width%3D%221%22%20height%3D%221%22%2F%3E%3Crect%20x%3D%228%22%20y%3D%220%22%20width%3D%221%22%20height%3D%221%22%2F%3E%3Crect%20x%3D%223%22%20y%3D%221%22%20width%3D%221%22%20height%3D%221%22%2F%3E%3Crect%20x%3D%227%22%20y%3D%221%22%20width%3D%221%22%20height%3D%221%22%2F%3E%3Crect%20x%3D%222%22%20y%3D%222%22%20width%3D%227%22%20height%3D%221%22%2F%3E%3Crect%20x%3D%221%22%20y%3D%223%22%20width%3D%222%22%20height%3D%221%22%2F%3E%3Crect%20x%3D%224%22%20y%3D%223%22%20width%3D%223%22%20height%3D%221%22%2F%3E%3Crect%20x%3D%228%22%20y%3D%223%22%20width%3D%222%22%20height%3D%221%22%2F%3E%3Crect%20x%3D%220%22%20y%3D%224%22%20width%3D%2211%22%20height%3D%221%22%2F%3E%3Crect%20x%3D%220%22%20y%3D%225%22%20width%3D%221%22%20height%3D%221%22%2F%3E%3Crect%20x%3D%222%22%20y%3D%225%22%20width%3D%227%22%20height%3D%221%22%2F%3E%3Crect%20x%3D%2210%22%20y%3D%225%22%20width%3D%221%22%20height%3D%221%22%2F%3E%3Crect%20x%3D%220%22%20y%3D%226%22%20width%3D%221%22%20height%3D%221%22%2F%3E%3Crect%20x%3D%222%22%20y%3D%226%22%20width%3D%221%22%20height%3D%221%22%2F%3E%3Crect%20x%3D%228%22%20y%3D%226%22%20width%3D%221%22%20height%3D%221%22%2F%3E%3Crect%20x%3D%2210%22%20y%3D%226%22%20width%3D%221%22%20height%3D%221%22%2F%3E%3Crect%20x%3D%223%22%20y%3D%227%22%20width%3D%222%22%20height%3D%221%22%2F%3E%3Crect%20x%3D%226%22%20y%3D%227%22%20width%3D%222%22%20height%3D%221%22%2F%3E%3C%2Fsvg%3E");
+}
+
+.site-bg-motes .s1 {
+    --sprite-ratio: 1.0;
+    mask-image: url("data:image/svg+xml,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20viewBox%3D%220%200%209%209%22%20shape-rendering%3D%22crispEdges%22%20fill%3D%22%23000%22%3E%3Crect%20x%3D%221%22%20y%3D%220%22%20width%3D%222%22%20height%3D%221%22%2F%3E%3Crect%20x%3D%226%22%20y%3D%220%22%20width%3D%222%22%20height%3D%221%22%2F%3E%3Crect%20x%3D%220%22%20y%3D%221%22%20width%3D%224%22%20height%3D%221%22%2F%3E%3Crect%20x%3D%225%22%20y%3D%221%22%20width%3D%224%22%20height%3D%221%22%2F%3E%3Crect%20x%3D%220%22%20y%3D%222%22%20width%3D%229%22%20height%3D%221%22%2F%3E%3Crect%20x%3D%220%22%20y%3D%223%22%20width%3D%229%22%20height%3D%221%22%2F%3E%3Crect%20x%3D%220%22%20y%3D%224%22%20width%3D%229%22%20height%3D%221%22%2F%3E%3Crect%20x%3D%221%22%20y%3D%225%22%20width%3D%227%22%20height%3D%221%22%2F%3E%3Crect%20x%3D%222%22%20y%3D%226%22%20width%3D%225%22%20height%3D%221%22%2F%3E%3Crect%20x%3D%223%22%20y%3D%227%22%20width%3D%223%22%20height%3D%221%22%2F%3E%3Crect%20x%3D%224%22%20y%3D%228%22%20width%3D%221%22%20height%3D%221%22%2F%3E%3C%2Fsvg%3E");
+    -webkit-mask-image: url("data:image/svg+xml,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20viewBox%3D%220%200%209%209%22%20shape-rendering%3D%22crispEdges%22%20fill%3D%22%23000%22%3E%3Crect%20x%3D%221%22%20y%3D%220%22%20width%3D%222%22%20height%3D%221%22%2F%3E%3Crect%20x%3D%226%22%20y%3D%220%22%20width%3D%222%22%20height%3D%221%22%2F%3E%3Crect%20x%3D%220%22%20y%3D%221%22%20width%3D%224%22%20height%3D%221%22%2F%3E%3Crect%20x%3D%225%22%20y%3D%221%22%20width%3D%224%22%20height%3D%221%22%2F%3E%3Crect%20x%3D%220%22%20y%3D%222%22%20width%3D%229%22%20height%3D%221%22%2F%3E%3Crect%20x%3D%220%22%20y%3D%223%22%20width%3D%229%22%20height%3D%221%22%2F%3E%3Crect%20x%3D%220%22%20y%3D%224%22%20width%3D%229%22%20height%3D%221%22%2F%3E%3Crect%20x%3D%221%22%20y%3D%225%22%20width%3D%227%22%20height%3D%221%22%2F%3E%3Crect%20x%3D%222%22%20y%3D%226%22%20width%3D%225%22%20height%3D%221%22%2F%3E%3Crect%20x%3D%223%22%20y%3D%227%22%20width%3D%223%22%20height%3D%221%22%2F%3E%3Crect%20x%3D%224%22%20y%3D%228%22%20width%3D%221%22%20height%3D%221%22%2F%3E%3C%2Fsvg%3E");
+}
+
+.site-bg-motes .s2 {
+    --sprite-ratio: 1.0;
+    mask-image: url("data:image/svg+xml,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20viewBox%3D%220%200%208%208%22%20shape-rendering%3D%22crispEdges%22%20fill%3D%22%23000%22%3E%3Crect%20x%3D%222%22%20y%3D%220%22%20width%3D%224%22%20height%3D%221%22%2F%3E%3Crect%20x%3D%221%22%20y%3D%221%22%20width%3D%226%22%20height%3D%221%22%2F%3E%3Crect%20x%3D%220%22%20y%3D%222%22%20width%3D%222%22%20height%3D%221%22%2F%3E%3Crect%20x%3D%223%22%20y%3D%222%22%20width%3D%222%22%20height%3D%221%22%2F%3E%3Crect%20x%3D%226%22%20y%3D%222%22%20width%3D%222%22%20height%3D%221%22%2F%3E%3Crect%20x%3D%220%22%20y%3D%223%22%20width%3D%222%22%20height%3D%221%22%2F%3E%3Crect%20x%3D%223%22%20y%3D%223%22%20width%3D%222%22%20height%3D%221%22%2F%3E%3Crect%20x%3D%226%22%20y%3D%223%22%20width%3D%222%22%20height%3D%221%22%2F%3E%3Crect%20x%3D%220%22%20y%3D%224%22%20width%3D%228%22%20height%3D%221%22%2F%3E%3Crect%20x%3D%220%22%20y%3D%225%22%20width%3D%228%22%20height%3D%221%22%2F%3E%3Crect%20x%3D%220%22%20y%3D%226%22%20width%3D%228%22%20height%3D%221%22%2F%3E%3Crect%20x%3D%220%22%20y%3D%227%22%20width%3D%221%22%20height%3D%221%22%2F%3E%3Crect%20x%3D%222%22%20y%3D%227%22%20width%3D%221%22%20height%3D%221%22%2F%3E%3Crect%20x%3D%225%22%20y%3D%227%22%20width%3D%221%22%20height%3D%221%22%2F%3E%3Crect%20x%3D%227%22%20y%3D%227%22%20width%3D%221%22%20height%3D%221%22%2F%3E%3C%2Fsvg%3E");
+    -webkit-mask-image: url("data:image/svg+xml,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20viewBox%3D%220%200%208%208%22%20shape-rendering%3D%22crispEdges%22%20fill%3D%22%23000%22%3E%3Crect%20x%3D%222%22%20y%3D%220%22%20width%3D%224%22%20height%3D%221%22%2F%3E%3Crect%20x%3D%221%22%20y%3D%221%22%20width%3D%226%22%20height%3D%221%22%2F%3E%3Crect%20x%3D%220%22%20y%3D%222%22%20width%3D%222%22%20height%3D%221%22%2F%3E%3Crect%20x%3D%223%22%20y%3D%222%22%20width%3D%222%22%20height%3D%221%22%2F%3E%3Crect%20x%3D%226%22%20y%3D%222%22%20width%3D%222%22%20height%3D%221%22%2F%3E%3Crect%20x%3D%220%22%20y%3D%223%22%20width%3D%222%22%20height%3D%221%22%2F%3E%3Crect%20x%3D%223%22%20y%3D%223%22%20width%3D%222%22%20height%3D%221%22%2F%3E%3Crect%20x%3D%226%22%20y%3D%223%22%20width%3D%222%22%20height%3D%221%22%2F%3E%3Crect%20x%3D%220%22%20y%3D%224%22%20width%3D%228%22%20height%3D%221%22%2F%3E%3Crect%20x%3D%220%22%20y%3D%225%22%20width%3D%228%22%20height%3D%221%22%2F%3E%3Crect%20x%3D%220%22%20y%3D%226%22%20width%3D%228%22%20height%3D%221%22%2F%3E%3Crect%20x%3D%220%22%20y%3D%227%22%20width%3D%221%22%20height%3D%221%22%2F%3E%3Crect%20x%3D%222%22%20y%3D%227%22%20width%3D%221%22%20height%3D%221%22%2F%3E%3Crect%20x%3D%225%22%20y%3D%227%22%20width%3D%221%22%20height%3D%221%22%2F%3E%3Crect%20x%3D%227%22%20y%3D%227%22%20width%3D%221%22%20height%3D%221%22%2F%3E%3C%2Fsvg%3E");
+}
+
+.site-bg-motes .s3 {
+    --sprite-ratio: 1.0;
+    mask-image: url("data:image/svg+xml,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20viewBox%3D%220%200%207%207%22%20shape-rendering%3D%22crispEdges%22%20fill%3D%22%23000%22%3E%3Crect%20x%3D%222%22%20y%3D%220%22%20width%3D%223%22%20height%3D%221%22%2F%3E%3Crect%20x%3D%221%22%20y%3D%221%22%20width%3D%225%22%20height%3D%221%22%2F%3E%3Crect%20x%3D%220%22%20y%3D%222%22%20width%3D%227%22%20height%3D%221%22%2F%3E%3Crect%20x%3D%220%22%20y%3D%223%22%20width%3D%227%22%20height%3D%221%22%2F%3E%3Crect%20x%3D%221%22%20y%3D%224%22%20width%3D%225%22%20height%3D%221%22%2F%3E%3Crect%20x%3D%222%22%20y%3D%225%22%20width%3D%223%22%20height%3D%221%22%2F%3E%3Crect%20x%3D%223%22%20y%3D%226%22%20width%3D%221%22%20height%3D%221%22%2F%3E%3C%2Fsvg%3E");
+    -webkit-mask-image: url("data:image/svg+xml,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20viewBox%3D%220%200%207%207%22%20shape-rendering%3D%22crispEdges%22%20fill%3D%22%23000%22%3E%3Crect%20x%3D%222%22%20y%3D%220%22%20width%3D%223%22%20height%3D%221%22%2F%3E%3Crect%20x%3D%221%22%20y%3D%221%22%20width%3D%225%22%20height%3D%221%22%2F%3E%3Crect%20x%3D%220%22%20y%3D%222%22%20width%3D%227%22%20height%3D%221%22%2F%3E%3Crect%20x%3D%220%22%20y%3D%223%22%20width%3D%227%22%20height%3D%221%22%2F%3E%3Crect%20x%3D%221%22%20y%3D%224%22%20width%3D%225%22%20height%3D%221%22%2F%3E%3Crect%20x%3D%222%22%20y%3D%225%22%20width%3D%223%22%20height%3D%221%22%2F%3E%3Crect%20x%3D%223%22%20y%3D%226%22%20width%3D%221%22%20height%3D%221%22%2F%3E%3C%2Fsvg%3E");
+}
+
+/* ─── Photo plate: a real neon arcade shot, desaturated and re-tinted
+       to the current accent so it follows the colour picker ─── */
+.site-bg-photo {
+    position: absolute;
+    inset: 0;
+    background: url("/images/vr-arena.jpg") center / cover no-repeat;
+    filter: grayscale(1) contrast(1.2) brightness(.85);
+    opacity: .16;
+}
+
+.site-bg-photo::after {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: var(--accent);
+    mix-blend-mode: color;
+    opacity: .9;
+}
+
+:root.dark-mode .site-bg-photo {
+    filter: grayscale(1) contrast(1.35) brightness(.6);
+    opacity: .42;
+}
+
+/* ─── Viewport HUD frame: corner blooms, no wireframe ─── */
+.hud-frame {
+    position: fixed;
+    inset: 0;
+    z-index: 2;
+    pointer-events: none;
+}
+
+.hud-corner {
+    position: absolute;
+    width: 16rem;
+    height: 16rem;
+    border-radius: 50%;
+    filter: blur(40px);
+    opacity: .1;
+}
+
+.hud-corner.tl { top: -6rem; left: -6rem; background: radial-gradient(circle, var(--accent), transparent 70%); }
+.hud-corner.tr { top: -6rem; right: -6rem; background: radial-gradient(circle, var(--accent-secondary), transparent 70%); }
+.hud-corner.bl { bottom: -6rem; left: -6rem; background: radial-gradient(circle, var(--accent-secondary), transparent 70%); }
+.hud-corner.br { bottom: -6rem; right: -6rem; background: radial-gradient(circle, var(--accent), transparent 70%); }
+
+:root.dark-mode .hud-corner {
+    opacity: .18;
+}
+
+@media (max-width: 1100px) {
+    .hud-frame,
+    .site-bg-scan,
+    .site-bg-motes {
+        display: none;
+    }
+
+
+    .site-bg-hex {
+        opacity: .12;
+        animation: none;
+    }
+}
+
+@media (prefers-reduced-motion: reduce) {
+    .site-bg-hex,
+    .site-bg-scan,
+    .site-bg-motes span {
+        animation: none !important;
+    }
+
+    .site-bg-scan {
+        display: none;
+    }
+}
+
+/* ─── Override the base wire layers: dots at the top, softer floor ─── */
+.site-bg-grid {
+    background-image: radial-gradient(circle, var(--accent) 1.4px, transparent 1.6px);
+    background-size: 30px 30px;
+    opacity: .3;
+}
+
+:root.dark-mode .site-bg-grid {
+    opacity: .35;
+}
+
+/* The photo already has a lit floor — the wire grid would double up. */
+.site-bg-floor {
+    display: none;
+}
+
+/* The vignette was swallowing the horizon — lift it off the bottom edge. */
+.site-bg-vignette {
+    background: radial-gradient(ellipse at 50% 35%, transparent 45%, var(--bg) 105%);
+    opacity: .55;
+}
+
+/* ─── "In progress" pill — for work that is building, not shipped ─── */
+.wip-pill {
+    display: inline-flex;
+    align-items: center;
+    gap: .6rem;
+    margin: 0 0 1rem;
+    padding: .35rem 1.1rem;
+    font-family: var(--font-hud);
+    font-size: 1.1rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    color: #d97706;
+    background: rgba(217, 119, 6, .14);
+    border: 1px solid rgba(217, 119, 6, .35);
+    border-radius: 2px;
+}
+
+:root.dark-mode .wip-pill {
+    color: #fbbf24;
+    background: rgba(251, 191, 36, .12);
+    border-color: rgba(251, 191, 36, .35);
+}
+
+.wip-pill::before {
+    content: '';
+    width: .7rem;
+    height: .7rem;
+    border-radius: 50%;
+    background: currentColor;
+    box-shadow: 0 0 8px currentColor;
+    animation: wipBlink 1.6s ease-in-out infinite;
+}
+
+@keyframes wipBlink {
+    0%, 100% { opacity: 1; }
+    50%      { opacity: .25; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+    .wip-pill::before {
+        animation: none;
+    }
+}

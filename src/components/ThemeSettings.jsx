@@ -12,6 +12,7 @@ export default function ThemeSettings() {
     { name: "emerald", color: "#059669" },
     { name: "amber", color: "#d97706" },
     { name: "rose", color: "#e11d48" },
+    { name: "neon", color: "#00e5ff" },
   ];
 
   return (

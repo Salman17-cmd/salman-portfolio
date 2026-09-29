@@ -1,10 +1,9 @@
 // src/pages/GameDevExperience.jsx
-import React from "react";
+import React, { useEffect } from "react";
 import { Link } from "react-router-dom";
+import ScrollReveal from "scrollreveal";
 
 import { experience, stats, profile } from "../data/portfolio";
-import { Jobs, Stack } from "../components/Blocks";
-import useReveal from "../hooks/useReveal";
 
 const journey = [
   {
@@ -52,61 +51,98 @@ const journey = [
 ];
 
 export default function GameDevExperience() {
-  useReveal();
+  useEffect(() => {
+    const sr = ScrollReveal();
+    sr.reveal(".sr-up", {
+      distance: "50px",
+      duration: 900,
+      origin: "bottom",
+      interval: 90,
+      cleanup: true,
+    });
+    sr.reveal(".sr-top", { distance: "40px", duration: 900, origin: "top", cleanup: true });
+  }, []);
 
   return (
-    <main id="main" className="page">
-      <div className="wrap">
-        <header className="page-head" data-reveal>
-          <p className="section-kicker mono">
-            <b>Story</b> Game &amp; XR experience
-          </p>
-          <h1 className="page-title">From a racing prototype to online multiplayer</h1>
-          <p>
-            How the work built up, from a university Unity course to enterprise VR on Meta
-            Quest 3 and a released online Android game.
-          </p>
-          <div className="stats" style={{ marginTop: "4.8rem" }}>
-            {stats.map((s) => (
-              <div className="stat" key={s.label}>
+    <main className="page">
+      <div className="container">
+        <h1 className="heading sr-top">
+          Game &amp; XR <span className="gradient-text">Experience</span>
+        </h1>
+        <p className="section-lede sr-top">
+          From a university racing prototype to enterprise VR on Meta Quest 3
+          and a released online Android game. Here is how the work has built up.
+        </p>
+
+        <div className="stat-strip sr-up" style={{ marginTop: 0 }}>
+          {stats.map((s) => (
+            <div className="stat-item" key={s.label}>
+              <i className={s.icon}></i>
+              <div>
                 <strong>{s.value}</strong>
                 <span>{s.label}</span>
               </div>
-            ))}
-          </div>
-        </header>
+            </div>
+          ))}
+        </div>
 
-        <section className="block">
-          <h2 className="block-title" data-reveal>
-            <span className="mono">01</span> The journey
-          </h2>
-          <div className="timeline">
-            {journey.map((step) => (
-              <article className="timeline-step" key={step.title} data-reveal>
-                <span className="mono">{step.date}</span>
-                <div>
-                  <h3>{step.title}</h3>
-                  <p>{step.body}</p>
-                  <Stack items={step.tags} />
+        {/* ── Professional roles ── */}
+        <h2 className="sub-heading sr-top">Professional Roles</h2>
+        <div className="timeline">
+          {experience.map((job) => (
+            <div className="timeline-item sr-up" key={job.role + job.company}>
+              <span className="timeline-dot" />
+              <div className="timeline-card">
+                <div className="timeline-top">
+                  <span className="tag">{job.period}</span>
+                  {job.current && <span className="live-pill">Current</span>}
                 </div>
-              </article>
-            ))}
-          </div>
-        </section>
+                <h3>{job.role}</h3>
+                <strong className="timeline-org">
+                  {job.company} · {job.location}
+                </strong>
+                <p className="subtle">{job.summary}</p>
+                <ul>
+                  {job.points.map((pt, i) => (
+                    <li key={i}>{pt}</li>
+                  ))}
+                </ul>
+                <div className="chip-row">
+                  {job.stack.map((s) => (
+                    <span className="mini-tag" key={s}>{s}</span>
+                  ))}
+                </div>
+              </div>
+            </div>
+          ))}
+        </div>
 
-        <section className="block">
-          <h2 className="block-title" data-reveal>
-            <span className="mono">02</span> Roles in detail
-          </h2>
-          <Jobs experience={experience} />
-        </section>
+        {/* ── The journey ── */}
+        <h2 className="sub-heading sr-top">The Journey</h2>
+        <div className="timeline">
+          {journey.map((step) => (
+            <div className="timeline-item sr-up" key={step.title}>
+              <span className="timeline-dot edu" />
+              <div className="timeline-card">
+                <span className="tag">{step.date}</span>
+                <h3>{step.title}</h3>
+                <p className="subtle">{step.body}</p>
+                <div className="chip-row">
+                  {step.tags.map((t) => (
+                    <span className="mini-tag" key={t}>{t}</span>
+                  ))}
+                </div>
+              </div>
+            </div>
+          ))}
+        </div>
 
-        <div className="page-end">
-          <Link to="/resume" className="btn btn-primary">
-            Full resume
-          </Link>
-          <a href={`mailto:${profile.email}`} className="btn">
-            <i className="bx bx-envelope"></i> Work with me
+        <div className="text-center mt-3">
+          <Link to="/resume" className="btn">
+            <i className="bi bi-file-earmark-person"></i> Full Resume
+          </Link>{" "}
+          <a href={`mailto:${profile.email}`} className="btn ghost">
+            <i className="bi bi-envelope"></i> Work With Me
           </a>
         </div>
       </div>

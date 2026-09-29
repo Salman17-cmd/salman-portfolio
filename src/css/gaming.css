@@ -779,3 +779,16 @@
         animation: none;
     }
 }
+
+/* ─── Shipped variant — same pill, green, for released work ─── */
+.wip-pill.is-live {
+    color: #059669;
+    background: rgba(5, 150, 105, .12);
+    border-color: rgba(5, 150, 105, .35);
+}
+
+:root.dark-mode .wip-pill.is-live {
+    color: #34d399;
+    background: rgba(52, 211, 153, .12);
+    border-color: rgba(52, 211, 153, .35);
+}

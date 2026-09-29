@@ -188,7 +188,11 @@ export default function Resume() {
               <h3>
                 {f.title} <span className="org-note">| {f.org}</span>
               </h3>
-              {f.status && <span className="wip-pill">{f.status}</span>}
+              {f.status && (
+                <span className={`wip-pill ${f.statusType === "live" ? "is-live" : ""}`}>
+                  {f.status}
+                </span>
+              )}
               <p className="subtle">{f.tagline}</p>
               <ul>
                 {f.highlights.map((h) => (

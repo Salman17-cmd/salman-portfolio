@@ -4,7 +4,7 @@
 export const profile = {
   name: "Salman Sadiq",
   title: "Unity Developer",
-  subtitle: "VR, AR & Multiplayer Systems",
+  subtitle: "VR, AR, Android & Multiplayer Systems",
   location: "Lahore, Punjab, Pakistan",
   email: "sadqq.salman@gmail.com",
   phone: "+92 303 4736071",
@@ -13,13 +13,14 @@ export const profile = {
     "Unity Developer",
     "VR / XR Engineer",
     "Multiplayer Systems Dev",
+    "Android Game Developer",
     "AI Avatar & Lip-Sync Dev",
-    "C# Developer",
+    "C# / .NET Developer",
   ],
   summary:
-    "Unity Developer and Associate Software Engineer with 2 years building VR, AR, multiplayer, and AI-driven applications. Core stack: Unity/C#, Meta Quest 2/3, XR Toolkit, Unity Gaming Services, WebRTC, and Azure TTS.",
+    "Unity Developer and Associate Software Engineer with 2 years building VR, AR, Android, multiplayer, and AI-driven applications. Core stack: Unity/C#, Meta Quest 2/3, XR Toolkit, Unity Gaming Services, WebRTC, Azure TTS, Firebase, and .NET backends on Google Cloud.",
   summaryLong:
-    "Recently shipped AI teachers with real-time lip-sync and conversational chat, plus a multiplayer VR meeting room for up to 10 concurrent Quest users with live browser screen sharing - all holding the 72/90 FPS target on standalone hardware.",
+    "Recently shipped AI teachers with real-time lip-sync, a multiplayer VR meeting room for up to 10 Quest users, and Empire Avenue - an online Android board game released on itch.io with AdMob, Google Sign-In, and a self-hosted .NET game server.",
   socials: {
     github: "https://github.com/Salman17-cmd",
     linkedin: "https://linkedin.com/in/salman-sadiq-ab58a4248",
@@ -33,7 +34,7 @@ export const profile = {
 export const stats = [
   { value: "2+", label: "Years building XR", icon: "bx bx-briefcase-alt-2" },
   { value: "10", label: "Concurrent Quest users", icon: "bx bx-group" },
-  { value: "72/90", label: "FPS held on Quest 3", icon: "bx bx-tachometer" },
+  { value: "450+", label: "Tests on my game server", icon: "bx bx-check-shield" },
   { value: "15+", label: "Shipped projects", icon: "bx bx-rocket" },
 ];
 
@@ -42,21 +43,24 @@ export const experience = [
     role: "Associate Software Engineer",
     company: "Ilmversity",
     location: "Lahore, Pakistan",
-    period: "Oct 2025 — Present",
-    current: true,
+    period: "Oct 2025 — Sept 2026",
+    current: false,
     summary:
-      "Building the Da1Ilmverse enterprise VR campus for Meta Quest 3 — AI teachers, multiplayer meeting rooms, and live screen streaming into VR.",
+      "Built the Da1Ilmverse enterprise VR campus for Meta Quest 3 — AI teachers, multiplayer meeting rooms, live screen streaming into VR — plus session recording and replay for the school portal on the web side.",
     points: [
-      "Built conversational AI avatars with real-time lip-sync — three subject teachers for physics, chemistry and programming, plus a guide robot on each of six expo stalls — mapping Azure TTS visemes to facial blendshapes through a JSON-driven framework so each one answers free-form questions with spoken replies.",
-      "Implemented in-world scene transitions that carry a visitor from a stall's miniature model into that model's full-scale environment to explore it.",
+      "Built conversational AI avatars with real-time lip-sync — three subject teachers for physics, chemistry and programming, plus a guide robot on each of six expo stalls — mapping Azure TTS visemes to facial blendshapes through a JSON-driven framework.",
       "Sustained the target 72/90 FPS across every Meta Quest 3 scene using LODs, static/dynamic batching, occlusion culling, baked lightmaps, and shader-driven effects.",
-      "Engineered a multiplayer VR meeting room for up to 10 concurrent Quest users on Unity Gaming Services (Lobby and Relay) and Netcode for GameObjects.",
-      "Integrated Unity Render Streaming with WebRTC to stream a presenter's browser screen into VR, building the Node signaling server and STUN/TURN configuration for cross-network connections.",
+      "Engineered a multiplayer VR meeting room for up to 10 concurrent Quest users on Unity Gaming Services (Lobby and Relay) and Netcode for GameObjects, with Vivox positional voice chat.",
+      "Built session recording and replay for the school admin portal: rrweb captures DOM events (not video) in retrying chunks, a Node.js API gzips them into AWS S3 with 30-day retention, and the super-admin panel can list, replay, delete, or download a recording as a self-contained offline HTML player.",
+      "Integrated Unity Render Streaming with WebRTC to stream a presenter's browser screen into VR, building the Node signaling server, STUN/TURN configuration, and Firebase-backed client log collection that pinpointed why cross-network viewers failed to connect.",
+      "Resolved the AI, TTS and STT provider and its credentials at runtime from Firebase Remote Config rather than baking them into the build, so providers can be switched and keys rotated without shipping a new APK.",
+      "Implemented in-world scene transitions that carry a visitor from a stall's miniature model into that model's full-scale environment to explore it.",
+      "Built interactive VR learning modules: an in-world transform replay system with cinematic cameras and narration for physics lessons, a drag-and-drop block-coding robot puzzle that exports the program as real source code, and a 118-element periodic table that builds each atom from its own data.",
+      "Added Firestore-backed leaderboards across the physics and chemistry level flows, ranking student scores between sessions.",
       "Integrated Model Context Protocol (MCP) tooling into the Unity Editor for automated scene inspection and asset edits, and implemented Data Version Control (DVC) to version AI datasets and model artifacts.",
-      "Worked with rrweb on the web side, capturing browser sessions as DOM mutation and input event streams through a Node.js service so a session can be replayed step by step for debugging and review.",
       "Delivered across two-week Jira sprints, reviewing every merge and tracking cross-team dependencies in Asana.",
     ],
-    stack: ["Unity", "C#", "Meta Quest 3", "Azure TTS", "UGS Lobby & Relay", "Netcode", "WebRTC", "Node.js"],
+    stack: ["Unity", "C#", "Meta Quest 3", "Azure TTS", "Firebase", "UGS Lobby & Relay", "Netcode", "Vivox", "WebRTC", "Node.js", "AWS S3", "rrweb"],
   },
   {
     role: "Games & VR Developer",
@@ -103,44 +107,49 @@ export const skillGroups = [
     skills: ["Unity", "Gameplay Programming", "AI Systems", "UI Systems", "Animation", "Timeline", "Cinematics", "Particle Effects", "URP", "Addressables", "DOTween"],
   },
   {
-    title: "Graphics & Optimization",
-    icon: "bx bx-tachometer",
-    skills: ["LODs", "Batching", "Occlusion Culling", "Baked Lighting & Lightmaps", "Mobile Shaders", "Profiling"],
-  },
-  {
     title: "AR / VR",
     icon: "bx bx-vr",
-    skills: ["XR Toolkit", "MRTK", "Meta Quest 2/3", "Vuforia", "AR Foundation", "VR Interaction Systems"],
+    skills: ["XR Toolkit", "MRTK", "Meta Quest 2/3", "AR Foundation", "Vuforia", "VR Interaction Systems"],
   },
   {
     title: "Multiplayer & Web",
     icon: "bx bx-network-chart",
-    skills: ["Unity Gaming Services (Lobby, Relay)", "Netcode for GameObjects", "Photon PUN", "Server-Authoritative Netcode", "Deterministic Simulation", "WebSockets", "Unity Render Streaming", "WebRTC", "WebGL", "Vercel"],
+    skills: ["Unity Gaming Services (Lobby, Relay)", "Netcode for GameObjects", "Photon PUN", "Vivox Voice", "Server-Authoritative Multiplayer", "WebSockets", "Unity Render Streaming", "WebRTC", "WebGL", "Vercel"],
+  },
+  {
+    title: "Backend & Cloud",
+    icon: "bx bx-server",
+    skills: ["Firebase (Remote Config, Firestore)", ".NET / ASP.NET Core", "Node.js / Express", "REST APIs", "WebSockets", "Google Cloud Compute Engine", "AWS S3", "Linux (systemd)", "Caddy HTTPS", "MySQL"],
+  },
+  {
+    title: "Android & Release",
+    icon: "bx bxl-android",
+    skills: ["IL2CPP / ARM64 Builds", "APK / AAB Signing", "Addressables", "AdMob Rewarded Ads", "UMP Consent", "Server-Side Verification", "Google Sign-In", "Play Policy Compliance", "itch.io Publishing"],
   },
   {
     title: "AI & Speech",
     icon: "bx bx-microphone",
-    skills: ["Azure TTS", "Conversational AI Chat", "Viseme & Blendshape Pipelines"],
+    skills: ["Azure TTS / STT", "GPT & Gemini APIs", "Conversational AI Chat", "Viseme & Blendshape Pipelines"],
   },
   {
-    title: "Backend & Web",
-    icon: "bx bx-server",
-    skills: ["Node.js", "Express", "REST APIs", ".NET / ASP.NET", "React", "Vite", "MySQL", "rrweb (session replay)"],
+    title: "Optimization & Debugging",
+    icon: "bx bx-tachometer",
+    skills: ["Unity Profiler", "Frame Debugger", "Build Report", "ADB Logcat", "LODs", "Batching", "Occlusion Culling", "ASTC Compression", "Baked Lighting", "Mobile Shaders"],
   },
   {
-    title: "Tools",
+    title: "Web & Session Replay",
+    icon: "bx bx-window-alt",
+    skills: ["rrweb Record & Replay", "rrweb-player", "S3 Presigned URLs", "React", "Vite"],
+  },
+  {
+    title: "Tools & Practices",
     icon: "bx bx-wrench",
-    skills: ["Visual Studio", "GitHub", "Jira", "Asana", "Model Context Protocol (MCP)", "Data Version Control (DVC)", "NUnit / Unity Test Framework", "Plastic SCM", "Unity Version Control"],
+    skills: ["Visual Studio", "Git / GitHub", "Plastic SCM", "Jira", "Asana", "NUnit", "Model Context Protocol (MCP)", "Data Version Control (DVC)", "Agile / Scrum", "Code Reviews"],
   },
   {
     title: "Assets & Plugins",
     icon: "bx bx-package",
-    skills: ["RCC", "UFPS", "Opsive Character Controller", "EasyRoads3D"],
-  },
-  {
-    title: "Ways of Working",
-    icon: "bx bx-conversation",
-    skills: ["Agile / Scrum", "Sprint Planning", "Code Reviews", "Cross-Functional Collaboration"],
+    skills: ["RCC", "UFPS", "Opsive Character Controller", "EasyRoads3D", "Blockade Labs SDK"],
   },
 ];
 
@@ -153,11 +162,12 @@ export const proficiencies = [
   { name: "Multiplayer (UGS / Photon)", percent: 85, note: "Lobby, Relay, Netcode, PUN" },
   { name: "AI Speech & Lip-Sync", percent: 85, note: "Azure TTS visemes to blendshapes" },
   { name: "WebRTC & Render Streaming", percent: 82, note: "Signaling servers, STUN/TURN" },
-  { name: "Node.js & APIs", percent: 75, note: "Express services for VR portals" },
+  { name: ".NET & Node.js Backends", percent: 78, note: "Game servers, APIs, S3 & Google Cloud" },
+  { name: "Android Release", percent: 80, note: "IL2CPP, AdMob, Sign-In, Play policy" },
   { name: "C++ & DSA", percent: 75, note: "Systems programming & algorithms" },
 ];
 
-// ── Flagship work (Ilmversity) ──
+// ── Flagship work (Ilmversity + personal) ──
 export const flagships = [
   {
     title: "Da1Ilmverse — VR Campus Platform",
@@ -169,53 +179,92 @@ export const flagships = [
     highlights: [
       {
         name: "V Campus",
-        text: "An explorable campus tuned for standalone VR, holding 72/90 FPS with LODs, batching, occlusion culling and baked lighting.",
+        text: "An explorable campus tuned for standalone VR, holding 72/90 FPS with LODs, batching, occlusion culling and baked lighting — with a dedicated-server shared world for up to 16 players.",
       },
       {
         name: "AI Classroom",
-        text: "Three AI subject teachers lip-sync to their own speech and answer student questions through conversational chat.",
+        text: "Three AI subject teachers lip-sync to their own speech and answer student questions through conversational chat, with the AI and speech providers selected at runtime through Firebase Remote Config.",
       },
       {
         name: "Multiplayer Meeting Room",
-        text: "Up to 10 users join by 6-digit code, with a presenter's browser screen streamed live into VR over WebRTC.",
+        text: "Up to 10 users join by 6-digit code on UGS Lobby & Relay with Vivox positional voice, and a presenter's browser screen is streamed live into VR over WebRTC.",
+      },
+      {
+        name: "Interactive learning modules",
+        text: "Physics lessons replayed in-world with cinematic cameras and narration, a drag-and-drop block-coding robot puzzle that exports real source code, and a 118-element periodic table that builds each atom from data — with Firestore leaderboards.",
       },
     ],
-    stack: ["Unity / C#", "Meta Quest 3", "Azure TTS", "UGS Lobby & Relay", "Netcode", "WebRTC"],
+    stack: ["Unity / C#", "Meta Quest 3", "Azure TTS", "Firebase", "UGS Lobby & Relay", "Netcode", "Vivox", "WebRTC"],
   },
   {
     title: "Empire Avenue",
     org: "Personal Project",
     image: "/images/empire-avenue.jpg",
-    status: "Online multiplayer — in progress",
+    status: "Released on itch.io · Online multiplayer live",
+    statusType: "live",
     tagline:
-      "A 3D property-trading board game for 2-8 players, built in Unity 6 around a pure C# rules engine — with swappable country editions. Local offline play is complete and playable end to end; online multiplayer on a .NET dedicated server is currently in development.",
+      "An online 3D property-trading board game for 2-8 players, built solo in Unity 6 and released for Android on itch.io. Players join a room by code, empty seats are filled by server bots, and every move is validated by a self-hosted .NET 9 game server on Google Cloud.",
     highlights: [
       {
-        name: "Offline play — shipped",
-        text: "A full 2-8 player pass-and-play match runs today: physics dice, property auctions, mortgages, houses and hotels, Chance and Community Chest, and win conditions, all resolved by the rules engine on one device.",
+        name: "Online multiplayer — shipped",
+        text: "Server-authoritative rooms over WebSockets: 4-character join codes or a public room list, host approval for new arrivals, house rules (seats, starting money, time limit), and player-to-player trading. The server rolls the dice and validates every command; clients replay the same deterministic engine and resync from a snapshot if they drift.",
+      },
+      {
+        name: "Reconnect & bots",
+        text: "A dropped player gets the same seat back with a snapshot via a per-seat reconnect token, rooms persist across server restarts, and server bots fill empty seats — or take a disconnected player's turn — so one person is enough for a full table.",
       },
       {
         name: "One rulebook, three homes",
-        text: "All game rules live in a Unity-free C# package, so the exact same assembly runs in the client, in the dedicated server, and in a test runner with 117 NUnit tests.",
+        text: "All game rules live in a Unity-free C# package shared by the Unity client, the ASP.NET Core server and the test runner — covered by 450+ NUnit tests.",
       },
       {
-        name: "Online multiplayer — in progress",
-        text: "The engine is already server-authoritative by design: commands are requests, events are facts, and dice and card order come from a seeded xoshiro256** RNG, so every participant derives the same outcome from one seed - no desync, no client-rolled doubles. The .NET dedicated server and its WebSocket transport are being built on top of that foundation now.",
+        name: "Self-hosted on Google Cloud",
+        text: "A .NET 9 server on a Google Cloud VM (Linux, systemd, Caddy HTTPS/WSS, nightly backups). The server address is fetched at launch, so it can move without rebuilding the game.",
       },
       {
-        name: "Swappable country editions",
-        text: "Pakistan, United Kingdom and United States boards ship as JSON — each with its own 40 tiles, currency symbol and card names — so a new edition is data, not code, and the server can host any of them.",
+        name: "Accounts & monetization",
+        text: "Guest accounts, Google Sign-In through Android Credential Manager, cloud progress sync, in-app account deletion, and AdMob rewarded ads with UMP consent and server-side reward verification.",
       },
       {
-        name: "The game around the rules",
-        text: "8 custom 3D pawns, physics-based dice, 16 Chance and 16 Community Chest cards, a dynamic camera director, and AI-generated skyboxes via the Blockade Labs SDK.",
+        name: "527 MB → ~150 MB",
+        text: "Profiled with the Profiler, Frame Debugger, Build Report and logcat: 202 materials moved to Simple Lit, ASTC compression, texture and mesh budgets, baked occlusion and Addressables — 60 FPS on the board with zero janky frames.",
       },
       {
-        name: "Production pipeline",
-        text: "778 MB of art versioned with DVC on cloud storage while Git keeps a 6-line pointer, plus MCP tooling inside the Unity Editor. Readable room codes are wired for the online build.",
+        name: "Three country editions",
+        text: "Pakistan, United Kingdom and United States boards defined in JSON, 8 custom 3D pawns, physics dice, a living low-poly menu city, and a Google Play policy audit (target SDK 36, 16 KB page size) with 800 MB of art versioned in DVC.",
       },
     ],
-    stack: ["Unity 6", "C#", ".NET Server", "WebSockets", "URP", "DVC", "NUnit"],
+    stack: ["Unity 6", "C#", ".NET 9", "WebSockets", "Google Cloud", "AdMob", "Google Sign-In", "NUnit", "DVC"],
+    links: [
+      { icon: "bx bx-joystick", url: "https://sadqqsalman.itch.io/empire-avenue", label: "Play on itch.io" },
+      { icon: "bi bi-youtube", url: "https://www.youtube.com/watch?v=TEdjsNa90Io", label: "Watch Demo" },
+    ],
+  },
+  {
+    title: "Session Recording & Replay",
+    org: "Ilmversity",
+    image: "/images/session-recording.svg",
+    tagline:
+      "Screen-activity recording for the school admin portal, so the support team can see exactly what an admin did before reporting an issue — recorded as DOM events, not video, so a 10-minute session is only a few megabytes.",
+    highlights: [
+      {
+        name: "Capture that survives crashes",
+        text: "rrweb starts recording on login and ships events in small chunks every few seconds with automatic retries, so a closed tab or crashed browser loses nothing already sent.",
+      },
+      {
+        name: "Node.js + AWS S3 pipeline",
+        text: "The ingest API gzips each chunk (85-93% smaller) into S3, keeps session and chunk metadata in each school's own database, enforces size and rate limits, and deletes everything after 30 days.",
+      },
+      {
+        name: "Replay, delete, download",
+        text: "The super-admin panel lists and replays a school's recordings; the download endpoint assembles every chunk plus a vendored rrweb-player into one self-contained HTML file that plays fully offline.",
+      },
+      {
+        name: "Production debugging",
+        text: "Traced a prod outage where recordings were saved but never visible to a missing per-school API credential, and shipped an idempotent tenant migration that restored every historical recording. Also moved the oversized-chunk check ahead of body parsing so bad uploads are rejected before a byte is parsed.",
+      },
+    ],
+    stack: ["rrweb", "Node.js", "Express", "AWS S3", "MySQL", "Multi-tenant", "REST APIs"],
   },
   {
     title: "Da1Expo Hall",
@@ -255,12 +304,26 @@ export const filters = [
 export const projects = [
   {
     title: "Empire Avenue",
-    tags: ["pc", "android"],
+    tags: ["android"],
     image: "/images/empire-avenue.jpg",
-    status: "Online mode in progress",
+    status: "Released · Online multiplayer",
+    statusType: "live",
     description:
-      "3D property-trading board game for 2-8 players in Unity 6: swappable Pakistan, UK and US boards defined in JSON, physics dice, 8 custom pawns, and a Unity-free C# rules engine. Offline pass-and-play is complete; online multiplayer on a .NET WebSocket server is in development.",
-    stack: ["Unity 6", "C#", ".NET Server", "WebSockets", "DVC"],
+      "Online Android board game for 2-8 players, released on itch.io: join rooms by code, server bots fill empty seats, and a self-hosted .NET 9 server on Google Cloud validates every move. Google Sign-In, cloud saves, AdMob rewarded ads, and 450+ NUnit tests on a shared C# rules engine.",
+    stack: ["Unity 6", "C#", ".NET 9", "WebSockets", "Google Cloud", "AdMob"],
+    links: [
+      { icon: "bx bx-joystick", url: "https://sadqqsalman.itch.io/empire-avenue", label: "Play on itch.io" },
+      { icon: "bi bi-youtube", url: "https://www.youtube.com/watch?v=TEdjsNa90Io", label: "Demo" },
+    ],
+    featured: true,
+  },
+  {
+    title: "Session Recording & Replay",
+    tags: ["web"],
+    image: "/images/session-recording.svg",
+    description:
+      "rrweb recording for a multi-tenant school portal: DOM events stream in chunks to a Node.js API, are gzipped into AWS S3, and can be replayed, deleted, or downloaded as a self-contained offline HTML player from the super-admin panel.",
+    stack: ["rrweb", "Node.js", "AWS S3", "MySQL"],
     links: [],
     featured: true,
   },
@@ -467,7 +530,13 @@ export const services = [
   {
     icon: "bx bx-window-alt",
     title: "Node.js Web & Tooling",
-    text: "Express APIs, React front-ends and developer tooling — including rrweb session capture and replay for reproducing exactly what a user did in the browser.",
+    text: "Express APIs, React front-ends and developer tooling — including rrweb session recording streamed to AWS S3, with replay and offline HTML download for support teams.",
+    link: "/resume",
+  },
+  {
+    icon: "bx bxl-android",
+    title: "Android Games & Release",
+    text: "Online Android games end to end — .NET game servers on Google Cloud, Google Sign-In, AdMob rewarded ads with consent and server-side verification, and Play-policy-ready builds.",
     link: "/resume",
   },
   {
@@ -481,5 +550,6 @@ export const services = [
 export const techMarquee = [
   "Unity", "C#", "Meta Quest 3", "XR Toolkit", "MRTK", "Netcode for GameObjects",
   "UGS Lobby & Relay", "Photon PUN", "Unity Render Streaming", "WebRTC", "Azure TTS",
-  "AR Foundation", "Vuforia", "WebGL", "Node.js", "Express", ".NET", "rrweb", "React", "Shader Graph", "Jira", "DVC", "MCP",
+  "Vivox", "AR Foundation", "Vuforia", "WebGL", "Android", "AdMob", "Firebase", "Node.js", "Express", ".NET 9",
+  "Google Cloud", "AWS S3", "rrweb", "React", "Shader Graph", "Jira", "DVC", "MCP",
 ];

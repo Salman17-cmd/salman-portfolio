@@ -25,15 +25,27 @@ const journey = [
     tags: ["Photon PUN", "Opsive CC", "WebGL", "XR Toolkit", "AR Foundation"],
   },
   {
-    date: "Oct 2025 - Present · Ilmversity",
+    date: "Oct 2025 — Sept 2026 · Ilmversity",
     title: "Associate Software Engineer - Da1Ilmverse",
-    body: "Enterprise VR for Meta Quest 3. Built AI teachers and expo robot guides that lip-sync to Azure TTS through a JSON-driven viseme-to-blendshape framework, a 10-user multiplayer meeting room on UGS Lobby & Relay with Netcode, and a Unity Render Streaming pipeline that puts a presenter's browser screen inside VR — while holding 72/90 FPS with LODs, batching, occlusion culling and baked lightmaps.",
-    tags: ["Meta Quest 3", "Azure TTS", "UGS Lobby & Relay", "Netcode", "WebRTC", "MCP", "DVC"],
+    body: "Enterprise VR for Meta Quest 3. Built AI teachers and expo robot guides that lip-sync to Azure TTS through a JSON-driven viseme-to-blendshape framework, a 10-user multiplayer meeting room on UGS Lobby & Relay with Netcode and Vivox voice, a Unity Render Streaming pipeline that puts a presenter's browser screen inside VR, and interactive physics, chemistry and coding modules with Firestore leaderboards — while holding 72/90 FPS with LODs, batching, occlusion culling and baked lightmaps.",
+    tags: ["Meta Quest 3", "Azure TTS", "Firebase", "UGS Lobby & Relay", "Netcode", "Vivox", "WebRTC", "MCP", "DVC"],
+  },
+  {
+    date: "Sept 2026 · Ilmversity (web)",
+    title: "Session Recording & Replay",
+    body: "On the web side, built rrweb session recording for the school admin portal: chunked, retrying capture streamed to a Node.js API, gzipped into AWS S3 with 30-day retention, and replayed or downloaded as an offline HTML player from the super-admin panel. Also traced and fixed the production issue that kept recordings invisible to the panel.",
+    tags: ["rrweb", "Node.js", "AWS S3", "MySQL"],
+  },
+  {
+    date: "2026 · Personal project",
+    title: "Empire Avenue - released on itch.io",
+    body: "Took a solo Unity 6 board game from offline pass-and-play to a released online Android game: a server-authoritative .NET 9 WebSocket server on Google Cloud, join codes, host approval, reconnect and server bots, Google Sign-In, cloud saves, AdMob rewarded ads with server-side verification, 450+ NUnit tests, and an APK cut from 527 MB to about 150 MB.",
+    tags: ["Unity 6", ".NET 9", "WebSockets", "Google Cloud", "AdMob", "NUnit"],
   },
   {
     date: "Ongoing",
     title: "Web, tooling & AI on the side",
-    body: "Node.js and Express services for the VR portal, this React portfolio with its Gemini-powered assistant, MCP tooling inside the Unity Editor for automated scene inspection, and DVC for versioning AI datasets and model artifacts.",
+    body: "Node.js and Express services, this React portfolio with its Gemini-powered assistant, MCP tooling inside the Unity Editor for automated scene inspection, and DVC for versioning AI datasets, model artifacts and game art.",
     tags: ["Node.js", "React", "Gemini", "MCP", "DVC"],
   },
 ];
@@ -58,8 +70,8 @@ export default function GameDevExperience() {
           Game &amp; XR <span className="gradient-text">Experience</span>
         </h1>
         <p className="section-lede sr-top">
-          From a university racing prototype to enterprise VR on Meta Quest 3 —
-          here is how the work has built up.
+          From a university racing prototype to enterprise VR on Meta Quest 3
+          and a released online Android game — here is how the work has built up.
         </p>
 
         <div className="stat-strip sr-up" style={{ marginTop: 0 }}>

@@ -98,11 +98,32 @@ export default function WebDevExperience() {
         </div>
 
         {/* ========= SECTION 6 ========= */}
-        <div className="timeline-event" data-vtdate="October 2025 - Present">
-          <h3>Backend Developer @ Ilmversity by Da1Ilmverse</h3>
+        <div className="timeline-event" data-vtdate="October 2025 - September 2026">
+          <h3>Associate Software Engineer @ Ilmversity</h3>
           <p>
-            Currently, I am developing the <span>Node.js backend</span> for the <span>Ilmverse VR Portal</span>.
-            My responsibilities include structuring the API, managing database operations, and handling the core backend services for the Da1Ilmverse VR ecosystem.
+            Alongside the VR work, I built <span>Node.js</span> services for the Da1Ilmverse
+            ecosystem, including the signaling server behind Unity Render Streaming.
+            <br />
+            • <span>Session Recording &amp; Replay</span> for the school admin portal — rrweb
+            captures DOM events in retrying chunks, a Node.js API gzips them into
+            <span> AWS S3</span> with per-school metadata and 30-day retention, and the
+            super-admin panel can replay, delete, or download a recording as a
+            self-contained offline HTML player.
+            <br />
+            • Traced a production outage where recordings were saved but never visible,
+            and shipped an idempotent tenant migration that restored every one.
+          </p>
+        </div>
+
+        {/* ========= SECTION 7 ========= */}
+        <div className="timeline-event" data-vtdate="2026">
+          <h3>.NET Game Server for Empire Avenue</h3>
+          <p>
+            Built and self-hosted an <span>ASP.NET Core (.NET 9)</span> WebSocket server
+            for my online Android board game — REST room APIs, Google ID-token
+            verification, AdMob server-side reward verification, and account
+            storage — deployed to a <span>Google Cloud</span> VM with systemd, Caddy
+            HTTPS and nightly backups.
           </p>
         </div>
 

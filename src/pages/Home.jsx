@@ -192,6 +192,7 @@ export default function Home() {
             <div className="hero-chips">
               <span className="tag">Meta Quest 2/3</span>
               <span className="tag">Multiplayer</span>
+              <span className="tag">Android</span>
               <span className="tag">WebRTC</span>
               <span className="tag">Azure TTS</span>
               <span className="tag">WebGL</span>
@@ -280,8 +281,8 @@ export default function Home() {
                 </div>
               </div>
               <div className="bento-item glass">
-                <i className="bx bx-cube-alt"></i>
-                <span>AR Apps</span>
+                <i className="bx bxl-android"></i>
+                <span>Android Games</span>
               </div>
               <div className="bento-item glass">
                 <i className="bx bx-server"></i>
@@ -340,9 +341,10 @@ export default function Home() {
               <h3>{profile.title} — {profile.subtitle}</h3>
               <p className="subtle">{profile.summaryLong}</p>
               <p className="subtle">
-                Day to day that means shipping to Meta Quest 3 against a strict
-                frame budget, wiring sessions over Unity Gaming Services, and
-                turning speech into believable facial animation.
+                Day to day that means shipping to Meta Quest 3 and Android
+                against a strict frame budget, wiring multiplayer sessions from
+                UGS Relay to my own .NET game server, and turning speech into
+                believable facial animation.
               </p>
               <div className="mt-2 about-actions">
                 <Link to="/resume" className="btn">Full Resume</Link>
@@ -354,7 +356,7 @@ export default function Home() {
               <div className="fact-card">
                 <i className="bx bx-briefcase-alt-2"></i>
                 <div>
-                  <strong>Now</strong>
+                  <strong>Latest role</strong>
                   <span>Associate Software Engineer @ Ilmversity</span>
                 </div>
               </div>
@@ -409,8 +411,8 @@ export default function Home() {
             Flagship <span className="gradient-text">Work</span>
           </h2>
           <p className="section-lede sr-top">
-            The two enterprise VR products I build at Ilmversity, plus the
-            multiplayer board game I build on my own time.
+            Enterprise VR and web work from Ilmversity, plus the online
+            multiplayer board game I built and released on my own time.
           </p>
 
           {flagships.map((f, index) => (
@@ -425,7 +427,11 @@ export default function Home() {
 
               <div className="spotlight-body">
                 <h3>{f.title}</h3>
-                {f.status && <span className="wip-pill">{f.status}</span>}
+                {f.status && (
+                  <span className={`wip-pill ${f.statusType === "live" ? "is-live" : ""}`}>
+                    {f.status}
+                  </span>
+                )}
                 <p className="subtle">{f.tagline}</p>
 
                 <ul className="spotlight-points">
@@ -475,7 +481,7 @@ export default function Home() {
             What I <span className="gradient-text">Do</span>
           </h2>
           <p className="section-lede sr-top">
-            Four areas I am hired for most often.
+            The areas I am hired for most often.
           </p>
 
           <div className="service-grid">
@@ -540,7 +546,11 @@ export default function Home() {
 
                 <div className="project-body">
                   <h4>{p.title}</h4>
-                  {p.status && <span className="wip-pill">{p.status}</span>}
+                  {p.status && (
+                    <span className={`wip-pill ${p.statusType === "live" ? "is-live" : ""}`}>
+                      {p.status}
+                    </span>
+                  )}
                   <p>{p.description}</p>
 
                   <div className="chip-row">

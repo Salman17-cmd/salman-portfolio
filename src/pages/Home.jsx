@@ -3,6 +3,8 @@ import React, { useEffect, useMemo, useState } from "react";
 import { Link } from "react-router-dom";
 import ScrollReveal from "scrollreveal";
 
+import ProjectRail from "../components/ProjectRail";
+
 import {
   profile,
   stats,
@@ -50,6 +52,48 @@ function useTypedRole(words, typeSpeed = 90, pause = 1600) {
   }, [text, deleting, wordIndex, words, typeSpeed, pause]);
 
   return text;
+}
+
+/* One card in the Selected Projects rail. `copy` marks the looped duplicate. */
+function renderProject(p, copy) {
+  return (
+    <article className="project-card" key={(copy ? "copy-" : "") + p.title}>
+      <div className={`project-thumb ${p.logo ? "is-logo" : ""}`}>
+        <img src={p.image} alt={p.title} loading="lazy" />
+        {p.featured && <span className="featured-badge">Featured</span>}
+      </div>
+
+      <div className="project-body">
+        <h4>{p.title}</h4>
+        {p.status && (
+          <span className={`wip-pill ${p.statusType === "live" ? "is-live" : ""}`}>
+            {p.status}
+          </span>
+        )}
+        <p>{p.description}</p>
+
+        <div className="chip-row">
+          {p.stack.map((s) => (
+            <span className="mini-tag" key={s}>{s}</span>
+          ))}
+        </div>
+
+        <div className="icon-container">
+          {p.links.map((l) => (
+            <a
+              key={l.label}
+              href={l.url}
+              target="_blank"
+              rel="noopener noreferrer"
+              title={l.label}
+              aria-label={`${p.title}: ${l.label}`}
+            >
+              <i className={l.icon}></i>
+            </a>
+          ))}
+        </div>
+      </div>
+    </article>  );
 }
 
 export default function Home() {
@@ -536,53 +580,17 @@ export default function Home() {
             </div>
           </div>
 
-          <div className="project-grid">
-            {visibleProjects.map((p) => (
-              <article className="project-card" key={p.title}>
-                <div className={`project-thumb ${p.logo ? "is-logo" : ""}`}>
-                  <img src={p.image} alt={p.title} loading="lazy" />
-                  {p.featured && <span className="featured-badge">Featured</span>}
-                </div>
-
-                <div className="project-body">
-                  <h4>{p.title}</h4>
-                  {p.status && (
-                    <span className={`wip-pill ${p.statusType === "live" ? "is-live" : ""}`}>
-                      {p.status}
-                    </span>
-                  )}
-                  <p>{p.description}</p>
-
-                  <div className="chip-row">
-                    {p.stack.map((s) => (
-                      <span className="mini-tag" key={s}>{s}</span>
-                    ))}
-                  </div>
-
-                  <div className="icon-container">
-                    {p.links.map((l) => (
-                      <a
-                        key={l.label}
-                        href={l.url}
-                        target="_blank"
-                        rel="noopener noreferrer"
-                        title={l.label}
-                        aria-label={`${p.title}: ${l.label}`}
-                      >
-                        <i className={l.icon}></i>
-                      </a>
-                    ))}
-                  </div>
-                </div>
-              </article>
-            ))}
-
-            {visibleProjects.length === 0 && (
-              <p className="empty-state">
-                No projects match that search. Try another keyword.
-              </p>
-            )}
-          </div>
+          {visibleProjects.length > 0 ? (
+            <ProjectRail
+              items={visibleProjects}
+              resetKey={`${activeFilter}|${query}`}
+              renderItem={renderProject}
+            />
+          ) : (
+            <p className="empty-state">
+              No projects match that search. Try another keyword.
+            </p>
+          )}
         </div>
       </section>
 

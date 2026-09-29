@@ -684,10 +684,93 @@
     font-size: 1.35rem;
 }
 
-.project-grid {
-    display: grid;
-    grid-template-columns: repeat(auto-fill, minmax(30rem, 1fr));
+/* Selected Projects: one horizontal rail that drifts right-to-left. */
+.project-rail-wrap {
+    position: relative;
+}
+
+.project-rail {
+    overflow-x: auto;
+    overflow-y: hidden;
+    scrollbar-width: none;
+    -webkit-overflow-scrolling: touch;
+    overscroll-behavior-x: contain;
+    /* Soft fade at both edges so cards slide in and out, not get cut. */
+    mask-image: linear-gradient(90deg, transparent, #000 4%, #000 96%, transparent);
+    -webkit-mask-image: linear-gradient(90deg, transparent, #000 4%, #000 96%, transparent);
+    padding-block: 1.2rem 2rem; /* room for the hover lift and shadow */
+}
+
+.project-rail::-webkit-scrollbar {
+    display: none;
+}
+
+.project-track {
+    display: flex;
     gap: 2.4rem;
+    width: max-content;
+    /* Trailing gap equal to the inner gap, so both copies are the same
+       width and the loop jump lands on exactly the same card. */
+    padding-right: 2.4rem;
+}
+
+.project-track-copy {
+    display: contents;
+}
+
+.project-track .project-card {
+    width: min(32rem, 78vw);
+    flex-shrink: 0;
+}
+
+.rail-arrow {
+    position: absolute;
+    /* Centred on the card image (16:10), so it never covers the text. */
+    top: calc(1.2rem + min(32rem, 78vw) * .3125);
+    z-index: 2;
+    width: 4.4rem;
+    height: 4.4rem;
+    display: grid;
+    place-items: center;
+    border-radius: 50%;
+    border: 1px solid var(--border);
+    background: var(--bg);
+    color: var(--accent);
+    font-size: 2.6rem;
+    cursor: pointer;
+    transform: translateY(-50%);
+    box-shadow: 0 6px 20px var(--shadow);
+    transition: background .2s, color .2s, border-color .2s;
+}
+
+.rail-arrow:hover {
+    background: var(--accent);
+    border-color: var(--accent);
+    color: #fff;
+}
+
+.rail-arrow.prev {
+    left: -1.2rem;
+}
+
+.rail-arrow.next {
+    right: -1.2rem;
+}
+
+@media (max-width: 640px) {
+    .rail-arrow {
+        width: 3.8rem;
+        height: 3.8rem;
+        font-size: 2.2rem;
+    }
+
+    .rail-arrow.prev {
+        left: .2rem;
+    }
+
+    .rail-arrow.next {
+        right: .2rem;
+    }
 }
 
 .project-card {

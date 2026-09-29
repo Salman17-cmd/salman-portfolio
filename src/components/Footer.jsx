@@ -8,7 +8,7 @@ export default function Footer() {
       <div className="container footer-top">
         <div className="footer-brand">
           <h3>{profile.name}</h3>
-          <p>{profile.title} — {profile.subtitle}</p>
+          <p>{profile.title} | {profile.subtitle}</p>
           <p className="footer-note">
             Building VR, AR and multiplayer experiences from {profile.location}.
           </p>

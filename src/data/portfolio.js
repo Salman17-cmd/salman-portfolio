@@ -1,5 +1,5 @@
 // src/data/portfolio.js
-// Single source of truth for portfolio content — mirrors Salman Sadiq's CV.
+// Single source of truth for portfolio content; mirrors Salman Sadiq's CV.
 
 export const profile = {
   name: "Salman Sadiq",
@@ -43,12 +43,12 @@ export const experience = [
     role: "Associate Software Engineer",
     company: "Ilmversity",
     location: "Lahore, Pakistan",
-    period: "Oct 2025 — Sept 2026",
+    period: "Oct 2025 - Sept 2026",
     current: false,
     summary:
-      "Built the Da1Ilmverse enterprise VR campus for Meta Quest 3 — AI teachers, multiplayer meeting rooms, live screen streaming into VR — plus session recording and replay for the school portal on the web side.",
+      "Built the Da1Ilmverse enterprise VR campus for Meta Quest 3 (AI teachers, multiplayer meeting rooms, live screen streaming into VR), plus session recording and replay for the school portal on the web side.",
     points: [
-      "Built conversational AI avatars with real-time lip-sync — three subject teachers for physics, chemistry and programming, plus a guide robot on each of six expo stalls — mapping Azure TTS visemes to facial blendshapes through a JSON-driven framework.",
+      "Built conversational AI avatars with real-time lip-sync (three subject teachers for physics, chemistry and programming, plus a guide robot on each of six expo stalls), mapping Azure TTS visemes to facial blendshapes through a JSON-driven framework.",
       "Sustained the target 72/90 FPS across every Meta Quest 3 scene using LODs, static/dynamic batching, occlusion culling, baked lightmaps, and shader-driven effects.",
       "Engineered a multiplayer VR meeting room for up to 10 concurrent Quest users on Unity Gaming Services (Lobby and Relay) and Netcode for GameObjects, with Vivox positional voice chat.",
       "Built session recording and replay for the school admin portal: rrweb captures DOM events (not video) in retrying chunks, a Node.js API gzips them into AWS S3 with 30-day retention, and the super-admin panel can list, replay, delete, or download a recording as a self-contained offline HTML player.",
@@ -66,10 +66,10 @@ export const experience = [
     role: "Games & VR Developer",
     company: "UET Game Studio",
     location: "Lahore, Pakistan",
-    period: "Apr 2024 — Sept 2025",
+    period: "Apr 2024 - Sept 2025",
     current: false,
     summary:
-      "Shipped Unity titles across VR, mobile, PC and WebGL — from vehicle physics to networked shooters — and set up the studio's branching workflow.",
+      "Shipped Unity titles across VR, mobile, PC and WebGL, from vehicle physics to networked shooters, and set up the studio's branching workflow.",
     points: [
       "Built controller interactions and realistic steering wheel physics using Realistic Car Controller (RCC) and XR Toolkit.",
       "Developed wave spawning, state machines, and ragdoll systems for a multiplayer FPS on Opsive Character Controller, networked over Photon PUN.",
@@ -84,13 +84,13 @@ export const education = [
   {
     degree: "Master of Computer Science",
     school: "University of Okara",
-    period: "2021 — 2023",
+    period: "2021 - 2023",
     note: "Advanced computing and software engineering, with a graduation project in vehicle physics simulation.",
   },
   {
     degree: "BSc in Computer Science and Double Math",
     school: "University of the Punjab",
-    period: "2018 — 2020",
+    period: "2018 - 2020",
     note: "Foundations in programming, mathematics, and algorithms.",
   },
 ];
@@ -170,7 +170,7 @@ export const proficiencies = [
 // ── Flagship work (Ilmversity + personal) ──
 export const flagships = [
   {
-    title: "Da1Ilmverse — VR Campus Platform",
+    title: "Da1Ilmverse: VR Campus Platform",
     org: "Ilmversity",
     image: "/images/da1ilmverse.png",
     logo: true,
@@ -179,7 +179,7 @@ export const flagships = [
     highlights: [
       {
         name: "V Campus",
-        text: "An explorable campus tuned for standalone VR, holding 72/90 FPS with LODs, batching, occlusion culling and baked lighting — with a dedicated-server shared world for up to 16 players.",
+        text: "An explorable campus tuned for standalone VR, holding 72/90 FPS with LODs, batching, occlusion culling and baked lighting, with a dedicated-server shared world for up to 16 players.",
       },
       {
         name: "AI Classroom",
@@ -191,7 +191,7 @@ export const flagships = [
       },
       {
         name: "Interactive learning modules",
-        text: "Physics lessons replayed in-world with cinematic cameras and narration, a drag-and-drop block-coding robot puzzle that exports real source code, and a 118-element periodic table that builds each atom from data — with Firestore leaderboards.",
+        text: "Physics lessons replayed in-world with cinematic cameras and narration, a drag-and-drop block-coding robot puzzle that exports real source code, and a 118-element periodic table that builds each atom from data, with Firestore leaderboards.",
       },
     ],
     stack: ["Unity / C#", "Meta Quest 3", "Azure TTS", "Firebase", "UGS Lobby & Relay", "Netcode", "Vivox", "WebRTC"],
@@ -206,16 +206,16 @@ export const flagships = [
       "An online 3D property-trading board game for 2-8 players, built solo in Unity 6 and released for Android on itch.io. Players join a room by code, empty seats are filled by server bots, and every move is validated by a self-hosted .NET 9 game server on Google Cloud.",
     highlights: [
       {
-        name: "Online multiplayer — shipped",
+        name: "Online multiplayer is live",
         text: "Server-authoritative rooms over WebSockets: 4-character join codes or a public room list, host approval for new arrivals, house rules (seats, starting money, time limit), and player-to-player trading. The server rolls the dice and validates every command; clients replay the same deterministic engine and resync from a snapshot if they drift.",
       },
       {
         name: "Reconnect & bots",
-        text: "A dropped player gets the same seat back with a snapshot via a per-seat reconnect token, rooms persist across server restarts, and server bots fill empty seats — or take a disconnected player's turn — so one person is enough for a full table.",
+        text: "A dropped player gets the same seat back with a snapshot via a per-seat reconnect token, rooms persist across server restarts, and server bots fill empty seats (or take a disconnected player's turn), so one person is enough for a full table.",
       },
       {
         name: "One rulebook, three homes",
-        text: "All game rules live in a Unity-free C# package shared by the Unity client, the ASP.NET Core server and the test runner — covered by 450+ NUnit tests.",
+        text: "All game rules live in a Unity-free C# package shared by the Unity client, the ASP.NET Core server and the test runner, covered by 450+ NUnit tests.",
       },
       {
         name: "Self-hosted on Google Cloud",
@@ -227,7 +227,7 @@ export const flagships = [
       },
       {
         name: "527 MB → ~150 MB",
-        text: "Profiled with the Profiler, Frame Debugger, Build Report and logcat: 202 materials moved to Simple Lit, ASTC compression, texture and mesh budgets, baked occlusion and Addressables — 60 FPS on the board with zero janky frames.",
+        text: "Profiled with the Profiler, Frame Debugger, Build Report and logcat: 202 materials moved to Simple Lit, ASTC compression, texture and mesh budgets, baked occlusion and Addressables. Result: 60 FPS on the board with zero janky frames.",
       },
       {
         name: "Three country editions",
@@ -245,7 +245,7 @@ export const flagships = [
     org: "Ilmversity",
     image: "/images/session-recording.svg",
     tagline:
-      "Screen-activity recording for the school admin portal, so the support team can see exactly what an admin did before reporting an issue — recorded as DOM events, not video, so a 10-minute session is only a few megabytes.",
+      "Screen-activity recording for the school admin portal, so the support team can see exactly what an admin did before reporting an issue. It records DOM events, not video, so a 10-minute session is only a few megabytes.",
     highlights: [
       {
         name: "Capture that survives crashes",
@@ -279,7 +279,7 @@ export const flagships = [
       },
       {
         name: "Miniature to full scale",
-        text: "A stall button carries the visitor into that model's full-scale environment — stepping from a resort miniature into the resort itself.",
+        text: "A stall button carries the visitor into that model's full-scale environment, stepping from a resort miniature into the resort itself.",
       },
       {
         name: "JSON-driven framework",
@@ -375,7 +375,7 @@ export const projects = [
     tags: ["vr", "android"],
     image: "/images/HS1.PNG",
     description:
-      "VR zombie shooter with cinematic sequences, particle effects, and immersive environment design — published on Google Play.",
+      "VR zombie shooter with cinematic sequences, particle effects, and immersive environment design, published on Google Play.",
     stack: ["Unity", "VR", "Timeline"],
     links: [
       { icon: "bi bi-google-play", url: "https://play.google.com/store/apps/details?id=com.uetgs.halloweenSurvival", label: "Play Store" },
@@ -397,7 +397,7 @@ export const projects = [
     tags: ["ar"],
     image: "/images/LROP4.PNG",
     description:
-      "AR furniture placement for Android using AR Foundation — plane detection plus touch gestures to move, rotate and scale.",
+      "AR furniture placement for Android using AR Foundation, using plane detection and touch gestures to move, rotate and scale.",
     stack: ["AR Foundation", "Android"],
     links: [
       { icon: "bi bi-play-circle-fill", url: "https://www.linkedin.com/feed/update/urn:li:activity:7358807205472579585/", label: "Demo" },
@@ -431,7 +431,7 @@ export const projects = [
     tags: ["pc", "android"],
     image: "/images/zs2.PNG",
     description:
-      "Multiplayer zombie shooter on UFPS and Photon PUN — lobbies, wave spawning, ragdolls, and cinematics.",
+      "Multiplayer zombie shooter on UFPS and Photon PUN with lobbies, wave spawning, ragdolls, and cinematics.",
     stack: ["Photon PUN", "UFPS"],
     links: [{ icon: "bi bi-play-circle-fill", url: profile.socials.youtube, label: "Video" }],
   },
@@ -512,7 +512,7 @@ export const services = [
   {
     icon: "bx bx-vr",
     title: "VR / AR Development",
-    text: "Standalone Quest 2/3 apps on XR Toolkit and MRTK, AR experiences on AR Foundation and Vuforia — built to hold frame budget on device.",
+    text: "Standalone Quest 2/3 apps on XR Toolkit and MRTK, AR experiences on AR Foundation and Vuforia, built to hold frame budget on device.",
     link: "/game-dev-experience",
   },
   {
@@ -530,13 +530,13 @@ export const services = [
   {
     icon: "bx bx-window-alt",
     title: "Node.js Web & Tooling",
-    text: "Express APIs, React front-ends and developer tooling — including rrweb session recording streamed to AWS S3, with replay and offline HTML download for support teams.",
+    text: "Express APIs, React front-ends and developer tooling, including rrweb session recording streamed to AWS S3, with replay and offline HTML download for support teams.",
     link: "/resume",
   },
   {
     icon: "bx bxl-android",
     title: "Android Games & Release",
-    text: "Online Android games end to end — .NET game servers on Google Cloud, Google Sign-In, AdMob rewarded ads with consent and server-side verification, and Play-policy-ready builds.",
+    text: "Online Android games end to end: .NET game servers on Google Cloud, Google Sign-In, AdMob rewarded ads with consent and server-side verification, and Play-policy-ready builds.",
     link: "/resume",
   },
   {

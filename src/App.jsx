@@ -29,7 +29,7 @@ function NotFound() {
     <main className="page not-found">
       <div className="container text-center">
         <h1 className="heading">
-          404 — <span className="gradient-text">Page Not Found</span>
+          404 | <span className="gradient-text">Page Not Found</span>
         </h1>
         <p className="section-lede">
           That page does not exist. Let&apos;s get you back to the work.

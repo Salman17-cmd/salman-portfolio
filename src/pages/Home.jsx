@@ -338,7 +338,7 @@ export default function Home() {
           <div className="about-grid">
             <div className="card sr-up about-intro">
               <img src="/images/salman.png" alt="Salman Sadiq" />
-              <h3>{profile.title} — {profile.subtitle}</h3>
+              <h3>{profile.title} | {profile.subtitle}</h3>
               <p className="subtle">{profile.summaryLong}</p>
               <p className="subtle">
                 Day to day that means shipping to Meta Quest 3 and Android
@@ -439,7 +439,7 @@ export default function Home() {
                     <li key={h.name}>
                       <i className="bx bx-check-circle"></i>
                       <span>
-                        <strong>{h.name}</strong> — {h.text}
+                        <strong>{h.name}:</strong> {h.text}
                       </span>
                     </li>
                   ))}
@@ -567,7 +567,7 @@ export default function Home() {
                         target="_blank"
                         rel="noopener noreferrer"
                         title={l.label}
-                        aria-label={`${p.title} — ${l.label}`}
+                        aria-label={`${p.title}: ${l.label}`}
                       >
                         <i className={l.icon}></i>
                       </a>

@@ -141,7 +141,7 @@ export default function GraphicExperience() {
           <h3>Co-Lead @MLSA YE</h3>
           <p>
             I joined <span>MLSA YE</span> as a co-lead of the Design 
-            Team — my first leadership position in the designing field.
+            Team, my first leadership position in the designing field.
           </p>
         </div>
 
@@ -158,7 +158,7 @@ export default function GraphicExperience() {
           <h3>Game Designer Intern @KICKS</h3>
           <p>
             I started my first designing internship as a Game Designer at 
-            <span> KICKS</span> (Research Labs) UET Lahore — learning game 
+            <span> KICKS</span> (Research Labs) UET Lahore, learning game 
             character design, environment design, and level design.
           </p>
         </div>

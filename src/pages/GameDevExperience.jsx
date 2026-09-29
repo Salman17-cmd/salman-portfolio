@@ -19,15 +19,15 @@ const journey = [
     tags: ["Timeline", "MRTK", "VR"],
   },
   {
-    date: "2024 — 2025 · Full time",
+    date: "2024 - 2025 · Full time",
     title: "Games & VR Developer - UET Game Studio",
     body: "Promoted to handle client projects and the studio portal. Led Waste Land of Living Dead (pathfinding, wave spawning, ragdolls, Photon PUN multiplayer on Opsive Character Controller), shipped Letter Cascade and Quiz the Globe to WebGL, and built Christmas VR, Car VR Simulation and ARPlace. Also mentored VR interns and rolled out Plastic SCM branching.",
     tags: ["Photon PUN", "Opsive CC", "WebGL", "XR Toolkit", "AR Foundation"],
   },
   {
-    date: "Oct 2025 — Sept 2026 · Ilmversity",
+    date: "Oct 2025 - Sept 2026 · Ilmversity",
     title: "Associate Software Engineer - Da1Ilmverse",
-    body: "Enterprise VR for Meta Quest 3. Built AI teachers and expo robot guides that lip-sync to Azure TTS through a JSON-driven viseme-to-blendshape framework, a 10-user multiplayer meeting room on UGS Lobby & Relay with Netcode and Vivox voice, a Unity Render Streaming pipeline that puts a presenter's browser screen inside VR, and interactive physics, chemistry and coding modules with Firestore leaderboards — while holding 72/90 FPS with LODs, batching, occlusion culling and baked lightmaps.",
+    body: "Enterprise VR for Meta Quest 3. Built AI teachers and expo robot guides that lip-sync to Azure TTS through a JSON-driven viseme-to-blendshape framework, a 10-user multiplayer meeting room on UGS Lobby & Relay with Netcode and Vivox voice, a Unity Render Streaming pipeline that puts a presenter's browser screen inside VR, and interactive physics, chemistry and coding modules with Firestore leaderboards, while holding 72/90 FPS with LODs, batching, occlusion culling and baked lightmaps.",
     tags: ["Meta Quest 3", "Azure TTS", "Firebase", "UGS Lobby & Relay", "Netcode", "Vivox", "WebRTC", "MCP", "DVC"],
   },
   {
@@ -71,7 +71,7 @@ export default function GameDevExperience() {
         </h1>
         <p className="section-lede sr-top">
           From a university racing prototype to enterprise VR on Meta Quest 3
-          and a released online Android game — here is how the work has built up.
+          and a released online Android game. Here is how the work has built up.
         </p>
 
         <div className="stat-strip sr-up" style={{ marginTop: 0 }}>

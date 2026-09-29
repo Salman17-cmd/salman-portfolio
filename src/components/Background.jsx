@@ -3,10 +3,10 @@ import React, { useEffect } from "react";
 /**
  * Site-wide ambient background: a drifting colour mesh, mesh + perspective
  * grids, a star field in dark mode, film grain and a glow that follows the
- * pointer. On top of that sits a game-HUD layer — a dot matrix, a radar
+ * pointer. On top of that sits a game-HUD layer: a dot matrix, a radar
  * sweep, a tinted neon-arcade photo plate, drifting 8-bit sprites and
  * soft accent blooms in the corners.
- * Purely decorative, and theme-aware — every layer reads the accent from
+ * Purely decorative, and theme-aware: every layer reads the accent from
  * CSS variables, so it follows the colour picker.
  */
 

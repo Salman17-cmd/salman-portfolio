@@ -39,7 +39,7 @@ export default function Inspirations() {
               />
               <h3>Islam</h3>
               <p>
-                Being a Muslim, Islam is my biggest inspiration — especially{" "}
+                Being a Muslim, Islam is my biggest inspiration, especially{" "}
                 <b>Prophet Muhammad's (PBUH)</b> teachings. His commitment to
                 justice and compassion guides my actions every day.
               </p>
@@ -81,7 +81,7 @@ export default function Inspirations() {
               <i className="bx bx-bar-chart-alt"></i>
               <h3>Sidhu Moose Wala</h3>
               <p>
-                Sidhu Moose Wala — though Sikh — inspires me through his
+                Sidhu Moose Wala, though Sikh, inspires me through his
                 fearless fusion of Punjabi music and modern themes. His strength
                 and unwavering faith push me to use my voice for positive
                 change.

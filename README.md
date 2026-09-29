@@ -2,7 +2,7 @@
 
 ![Portfolio Banner](public/images/readme_banner.png)
 
-A high-performance, immersive, and fully responsive personal portfolio designed to showcase a diverse range of projects—from **Unity Game Development (PC, Android, XR)** to **Modern Full-Stack Web Applications**.
+A high-performance, immersive, and fully responsive personal portfolio designed to showcase a diverse range of projects, from **Unity Game Development (PC, Android, XR)** to **Modern Full-Stack Web Applications**.
 
 ---
 

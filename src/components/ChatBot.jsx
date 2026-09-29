@@ -4,7 +4,7 @@ import "../css/chatbot.css";
 const GREETING = {
   role: "bot",
   content:
-    "Assalam-o-alaikum! 👋 I'm **Sal**, Salman's assistant.\n\nAsk me anything about his VR work at **Ilmversity**, his multiplayer and WebRTC systems, or how to get in touch. English ya Roman Urdu — jo aap ko comfortable lage.",
+    "Assalam-o-alaikum! 👋 I'm **Sal**, Salman's assistant.\n\nAsk me anything about his VR work at **Ilmversity**, his multiplayer and WebRTC systems, or how to get in touch. English ya Roman Urdu, jo aap ko comfortable lage.",
 };
 
 const QUICK_REPLIES = [
@@ -200,7 +200,7 @@ export default function ChatBot() {
         {
           role: "bot",
           content:
-            "Connection error — the chat service is not responding. Retry in a moment, or email sadqq.salman@gmail.com.",
+            "Connection error. The chat service is not responding. Retry in a moment, or email sadqq.salman@gmail.com.",
           time: timeNow(),
           error: true,
         },
@@ -239,7 +239,7 @@ export default function ChatBot() {
               <h3>Sal · Salman&apos;s Assistant</h3>
               <small>
                 <span className="live-dot" />
-                {isLoading ? "typing…" : "Online — usually instant"}
+                {isLoading ? "typing…" : "Online, usually instant"}
               </small>
             </div>
             <button className="clear-btn" onClick={clearChat} title="Clear chat" aria-label="Clear chat">

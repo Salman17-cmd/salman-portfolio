@@ -40,7 +40,7 @@ export default function Resume() {
               <span className="gradient-text">{profile.name.split(" ")[1]}</span>
             </h1>
             <p className="resume-role">
-              {profile.title} — {profile.subtitle}
+              {profile.title} | {profile.subtitle}
             </p>
             <ul className="resume-contact">
               <li><i className="bx bx-map"></i> {profile.location}</li>
@@ -197,7 +197,7 @@ export default function Resume() {
               <ul>
                 {f.highlights.map((h) => (
                   <li key={h.name}>
-                    <strong>{h.name}</strong> — {h.text}
+                    <strong>{h.name}:</strong> {h.text}
                   </li>
                 ))}
               </ul>

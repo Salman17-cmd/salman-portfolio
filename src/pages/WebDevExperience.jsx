@@ -43,7 +43,7 @@ export default function WebDevExperience() {
           <h3>Started Web Development</h3>
           <p>
             In October 2022, I began my journey in web development. I started
-            learning the basics — <span>HTML</span>, <span>CSS</span>, and{" "}
+            learning the basics: <span>HTML</span>, <span>CSS</span>, and{" "}
             <span>JavaScript</span>.
           </p>
         </div>
@@ -92,7 +92,7 @@ export default function WebDevExperience() {
           <h3>Flask Development</h3>
           <p>
             After .NET, I explored <span>Flask</span> and built projects such as
-            a text editor and a real-time chat app — both integrated with{" "}
+            a text editor and a real-time chat app, both integrated with{" "}
             <span>Firebase</span>.
           </p>
         </div>
@@ -104,7 +104,7 @@ export default function WebDevExperience() {
             Alongside the VR work, I built <span>Node.js</span> services for the Da1Ilmverse
             ecosystem, including the signaling server behind Unity Render Streaming.
             <br />
-            • <span>Session Recording &amp; Replay</span> for the school admin portal — rrweb
+            • <span>Session Recording &amp; Replay</span> for the school admin portal: rrweb
             captures DOM events in retrying chunks, a Node.js API gzips them into
             <span> AWS S3</span> with per-school metadata and 30-day retention, and the
             super-admin panel can replay, delete, or download a recording as a
@@ -120,9 +120,9 @@ export default function WebDevExperience() {
           <h3>.NET Game Server for Empire Avenue</h3>
           <p>
             Built and self-hosted an <span>ASP.NET Core (.NET 9)</span> WebSocket server
-            for my online Android board game — REST room APIs, Google ID-token
+            for my online Android board game: REST room APIs, Google ID-token
             verification, AdMob server-side reward verification, and account
-            storage — deployed to a <span>Google Cloud</span> VM with systemd, Caddy
+            storage, deployed to a <span>Google Cloud</span> VM with systemd, Caddy
             HTTPS and nightly backups.
           </p>
         </div>

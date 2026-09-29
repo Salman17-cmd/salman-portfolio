@@ -1,5 +1,5 @@
 /* ===================================================================
-   SALMAN SADIQ — GAME / HUD SKIN
+   SALMAN SADIQ | GAME / HUD SKIN
    Loaded last. Purely a look-and-feel layer on top of portfolio.css:
    arcade display type, HUD corner brackets, notched neon buttons,
    scanlines and a player-card hero. Every colour reads the accent
@@ -104,7 +104,7 @@
 }
 
 /* ===================================================================
-   HUD PANELS — corner brackets + notched corner on every card
+   HUD PANELS, corner brackets + notched corner on every card
    =================================================================== */
 .card,
 .project-card,
@@ -176,7 +176,7 @@
 }
 
 /* ===================================================================
-   BUTTONS — notched corners, scan sweep on hover
+   BUTTONS, notched corners, scan sweep on hover
    =================================================================== */
 .btn {
     position: relative;
@@ -226,7 +226,7 @@
 }
 
 /* ===================================================================
-   TAGS — square HUD chips
+   TAGS, square HUD chips
    =================================================================== */
 .tag,
 .mini-tag {
@@ -248,7 +248,7 @@
 }
 
 /* ===================================================================
-   HERO — player card
+   HERO, player card
    =================================================================== */
 .hero-player {
     --hud-notch: 12px;
@@ -283,7 +283,7 @@
     box-shadow: inset 0 0 14px -8px var(--accent), 0 0 14px -8px var(--accent);
 }
 
-/* style.css paints every bare <span> with the accent — opt these out */
+/* style.css paints every bare <span> with the accent; opt these out */
 .hero-player-top span,
 .xp-label span {
     color: inherit;
@@ -382,7 +382,7 @@
 }
 
 /* ===================================================================
-   STAT STRIP — score readout
+   STAT STRIP, score readout
    =================================================================== */
 .stat-strip {
     position: relative;
@@ -416,7 +416,7 @@
 }
 
 /* ===================================================================
-   MARQUEE — console ticker
+   MARQUEE, console ticker
    =================================================================== */
 .marquee {
     border-top: 1px solid var(--border);
@@ -430,7 +430,7 @@
 }
 
 /* ===================================================================
-   PROJECT CARDS — quest / loot cards
+   PROJECT CARDS, quest / loot cards
    =================================================================== */
 .featured-badge {
     border-radius: 2px;
@@ -469,7 +469,7 @@
 }
 
 /* ===================================================================
-   TIMELINE — mission log
+   TIMELINE, mission log
    =================================================================== */
 .timeline-dot {
     border-radius: 2px;
@@ -519,7 +519,7 @@
 }
 
 /* ===================================================================
-   BACKGROUND — HUD LAYER
+   BACKGROUND, HUD LAYER
    Sits inside .site-bg (hex plating, radar sweep, drifting motes) plus
    a fixed .hud-frame overlay for the corner brackets and edge ticks.
    =================================================================== */
@@ -724,18 +724,18 @@
     opacity: .35;
 }
 
-/* The photo already has a lit floor — the wire grid would double up. */
+/* The photo already has a lit floor; the wire grid would double up. */
 .site-bg-floor {
     display: none;
 }
 
-/* The vignette was swallowing the horizon — lift it off the bottom edge. */
+/* The vignette was swallowing the horizon; lift it off the bottom edge. */
 .site-bg-vignette {
     background: radial-gradient(ellipse at 50% 35%, transparent 45%, var(--bg) 105%);
     opacity: .55;
 }
 
-/* ─── "In progress" pill — for work that is building, not shipped ─── */
+/* ─── "In progress" pill, for work that is building, not shipped ─── */
 .wip-pill {
     display: inline-flex;
     align-items: center;
@@ -780,7 +780,7 @@
     }
 }
 
-/* ─── Shipped variant — same pill, green, for released work ─── */
+/* ─── Shipped variant, same pill, green, for released work ─── */
 .wip-pill.is-live {
     color: #059669;
     background: rgba(5, 150, 105, .12);

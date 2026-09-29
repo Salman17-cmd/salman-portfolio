@@ -243,15 +243,12 @@ a {
 }
 
 .brand-mark {
-    display: grid;
-    place-items: center;
-    width: 3.4rem;
-    height: 3.4rem;
-    border-radius: var(--radius);
-    background: var(--text);
-    color: var(--bg);
-    font: 700 1.3rem/1 var(--font-mono);
-    letter-spacing: -.02em;
+    width: 3.6rem;
+    height: 3.6rem;
+    border-radius: 50%;
+    object-fit: cover;
+    border: 1px solid var(--line-strong);
+    background: var(--surface-2);
 }
 
 .brand-name {

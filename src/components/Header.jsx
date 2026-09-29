@@ -46,7 +46,7 @@ export default function Header() {
       <a href="#main" className="skip-link">Skip to content</a>
       <div className="wrap header-row">
         <Link to="/" className="brand" onClick={close}>
-          <span className="brand-mark" aria-hidden="true">SS</span>
+          <img className="brand-mark" src="/images/avatar.jpg" alt="" width="36" height="36" />
           <span className="brand-name">
             {profile.name}
             <small>Unity developer</small>

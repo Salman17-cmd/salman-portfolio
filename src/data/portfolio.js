@@ -28,6 +28,7 @@ export const profile = {
     instagram: "https://www.instagram.com/salmansadiq12/?hl=en",
     facebook: "https://www.facebook.com/salman.sadiq.7923",
     whatsapp: "https://wa.me/923034736071",
+    itch: "https://sadqqsalman.itch.io/empire-avenue",
   },
 };
 
@@ -170,34 +171,8 @@ export const proficiencies = [
 // ── Flagship work (Ilmversity + personal) ──
 export const flagships = [
   {
-    title: "Da1Ilmverse: VR Campus Platform",
-    org: "Ilmversity",
-    image: "/images/da1ilmverse.png",
-    logo: true,
-    tagline:
-      "An enterprise VR campus delivered as one product across several environments, built for Meta Quest 3.",
-    highlights: [
-      {
-        name: "V Campus",
-        text: "An explorable campus tuned for standalone VR, holding 72/90 FPS with LODs, batching, occlusion culling and baked lighting, with a dedicated-server shared world for up to 16 players.",
-      },
-      {
-        name: "AI Classroom",
-        text: "Three AI subject teachers lip-sync to their own speech and answer student questions through conversational chat, with the AI and speech providers selected at runtime through Firebase Remote Config.",
-      },
-      {
-        name: "Multiplayer Meeting Room",
-        text: "Up to 10 users join by 6-digit code on UGS Lobby & Relay with Vivox positional voice, and a presenter's browser screen is streamed live into VR over WebRTC.",
-      },
-      {
-        name: "Interactive learning modules",
-        text: "Physics lessons replayed in-world with cinematic cameras and narration, a drag-and-drop block-coding robot puzzle that exports real source code, and a 118-element periodic table that builds each atom from data, with Firestore leaderboards.",
-      },
-    ],
-    stack: ["Unity / C#", "Meta Quest 3", "Azure TTS", "Firebase", "UGS Lobby & Relay", "Netcode", "Vivox", "WebRTC"],
-  },
-  {
     title: "Empire Avenue",
+    platform: "Android · Solo project",
     org: "Personal Project",
     image: "/images/empire-avenue.jpg",
     status: "Released on itch.io · Online multiplayer live",
@@ -237,11 +212,63 @@ export const flagships = [
     stack: ["Unity 6", "C#", ".NET 9", "WebSockets", "Google Cloud", "AdMob", "Google Sign-In", "NUnit", "DVC"],
     links: [
       { icon: "bx bx-joystick", url: "https://sadqqsalman.itch.io/empire-avenue", label: "Play on itch.io" },
-      { icon: "bi bi-youtube", url: "https://www.youtube.com/watch?v=TEdjsNa90Io", label: "Watch Demo" },
+      { icon: "bi bi-youtube", url: "https://youtu.be/sfnRRqS0i98", label: "Watch Demo" },
     ],
   },
   {
+    title: "Da1Ilmverse VR Campus",
+    platform: "Meta Quest 3",
+    org: "Ilmversity",
+    image: "/images/da1ilmverse.png",
+    logo: true,
+    tagline:
+      "An enterprise VR campus delivered as one product across several environments, built for Meta Quest 3.",
+    highlights: [
+      {
+        name: "V Campus",
+        text: "An explorable campus tuned for standalone VR, holding 72/90 FPS with LODs, batching, occlusion culling and baked lighting, with a dedicated-server shared world for up to 16 players.",
+      },
+      {
+        name: "AI Classroom",
+        text: "Three AI subject teachers lip-sync to their own speech and answer student questions through conversational chat, with the AI and speech providers selected at runtime through Firebase Remote Config.",
+      },
+      {
+        name: "Multiplayer Meeting Room",
+        text: "Up to 10 users join by 6-digit code on UGS Lobby & Relay with Vivox positional voice, and a presenter's browser screen is streamed live into VR over WebRTC.",
+      },
+      {
+        name: "Interactive learning modules",
+        text: "Physics lessons replayed in-world with cinematic cameras and narration, a drag-and-drop block-coding robot puzzle that exports real source code, and a 118-element periodic table that builds each atom from data, with Firestore leaderboards.",
+      },
+    ],
+    stack: ["Unity / C#", "Meta Quest 3", "Azure TTS", "Firebase", "UGS Lobby & Relay", "Netcode", "Vivox", "WebRTC"],
+  },
+  {
+    title: "Da1Expo Hall",
+    platform: "Meta Quest 3",
+    org: "Ilmversity",
+    image: "/images/EH.png",
+    tagline:
+      "A VR expo with six themed stalls, each hosting a robot guide that answers questions about the miniature on display.",
+    highlights: [
+      {
+        name: "Six robot guides",
+        text: "Each stall's guide answers free-form questions with spoken replies, driven by Azure TTS visemes mapped to blendshapes.",
+      },
+      {
+        name: "Miniature to full scale",
+        text: "A stall button carries the visitor into that model's full-scale environment, stepping from a resort miniature into the resort itself.",
+      },
+      {
+        name: "JSON-driven framework",
+        text: "One reusable lip-sync and dialogue framework configures every avatar without touching code.",
+      },
+    ],
+    stack: ["Unity / C#", "Meta Quest 3", "Azure TTS", "AI Chat", "Blendshapes"],
+  },
+  {
     title: "Session Recording & Replay",
+    platform: "Web · Node.js",
     org: "Ilmversity",
     image: "/images/session-recording.svg",
     tagline:
@@ -265,28 +292,6 @@ export const flagships = [
       },
     ],
     stack: ["rrweb", "Node.js", "Express", "AWS S3", "MySQL", "Multi-tenant", "REST APIs"],
-  },
-  {
-    title: "Da1Expo Hall",
-    org: "Ilmversity",
-    image: "/images/EH.png",
-    tagline:
-      "A VR expo with six themed stalls, each hosting a robot guide that answers questions about the miniature on display.",
-    highlights: [
-      {
-        name: "Six robot guides",
-        text: "Each stall's guide answers free-form questions with spoken replies, driven by Azure TTS visemes mapped to blendshapes.",
-      },
-      {
-        name: "Miniature to full scale",
-        text: "A stall button carries the visitor into that model's full-scale environment, stepping from a resort miniature into the resort itself.",
-      },
-      {
-        name: "JSON-driven framework",
-        text: "One reusable lip-sync and dialogue framework configures every avatar without touching code.",
-      },
-    ],
-    stack: ["Unity / C#", "Meta Quest 3", "Azure TTS", "AI Chat", "Blendshapes"],
   },
 ];
 
@@ -313,7 +318,7 @@ export const projects = [
     stack: ["Unity 6", "C#", ".NET 9", "WebSockets", "Google Cloud", "AdMob"],
     links: [
       { icon: "bx bx-joystick", url: "https://sadqqsalman.itch.io/empire-avenue", label: "Play on itch.io" },
-      { icon: "bi bi-youtube", url: "https://www.youtube.com/watch?v=TEdjsNa90Io", label: "Demo" },
+      { icon: "bi bi-youtube", url: "https://youtu.be/sfnRRqS0i98", label: "Demo" },
     ],
     featured: true,
   },

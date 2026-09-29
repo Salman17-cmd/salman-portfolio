@@ -1,13 +1,13 @@
 /* src/css/chatbot.css */
 .chatbot-container {
   position: fixed;
-  bottom: 85px;
-  right: 25px;
+  bottom: 24px;
+  right: 24px;
   z-index: 1000;
   display: flex;
   flex-direction: column;
   align-items: flex-end;
-  font-family: 'Poppins', sans-serif;
+  font-family: var(--font-sans);
   transition: all 0.3s ease;
 }
 
@@ -16,7 +16,7 @@
   height: 55px;
   border-radius: 50%;
   background: var(--accent);
-  color: #fff;
+  color: var(--accent-ink);
   border: none;
   cursor: pointer;
   box-shadow: 0 4px 15px var(--accent-glow);
@@ -28,7 +28,7 @@
 }
 
 .chat-toggle:hover {
-  transform: scale(1.1) rotate(5deg);
+  transform: translateY(-2px);
   box-shadow: 0 6px 20px var(--accent-glow);
 }
 
@@ -36,8 +36,6 @@
   width: 350px;
   height: 520px;
   background: var(--bg-card);
-  backdrop-filter: blur(20px);
-  -webkit-backdrop-filter: blur(20px);
   border: 1px solid var(--border);
   border-radius: var(--radius);
   margin-bottom: 15px;
@@ -170,7 +168,7 @@
 .message.user {
   align-self: flex-end;
   background: var(--accent);
-  color: #fff;
+  color: var(--accent-ink);
   border-radius: 18px 18px 2px 18px;
   box-shadow: -2px 2px 8px var(--accent-glow);
   transition: background 0.3s ease, box-shadow 0.3s ease;
@@ -232,7 +230,7 @@
 
 .send-btn {
   background: var(--accent);
-  color: #fff;
+  color: var(--accent-ink);
   border: none;
   width: 40px;
   height: 40px;
@@ -294,7 +292,7 @@
 
 .chat-suggestions button:hover {
   background: var(--accent);
-  color: #fff;
+  color: var(--accent-ink);
   transform: translateY(-2px);
   box-shadow: 0 4px 10px var(--accent-glow);
 }
@@ -418,7 +416,7 @@
 
 .retry-btn:hover {
   background: var(--accent);
-  color: #fff;
+  color: var(--accent-ink);
 }
 
 /* Suggestion chips: one scrollable row */

@@ -1,23 +1,26 @@
 import React, { useEffect } from "react";
 import { Routes, Route, useLocation, Link } from "react-router-dom";
 
-import Background from "./components/Background";
 import Header from "./components/Header";
 import Footer from "./components/Footer";
+import ChatBot from "./components/ChatBot";
 
 import Home from "./pages/Home";
 import WebDevExperience from "./pages/WebDevExperience";
-import Testimonials from "./pages/Testimonials";
 import GameDevExperience from "./pages/GameDevExperience";
 import Resume from "./pages/Resume";
-import ThemeSettings from "./components/ThemeSettings";
-import ChatBot from "./components/ChatBot";
 
 function ScrollToTop() {
   const { pathname, hash } = useLocation();
 
   useEffect(() => {
-    if (hash) return;
+    if (hash) {
+      const el = document.getElementById(hash.slice(1));
+      if (el) {
+        el.scrollIntoView();
+        return;
+      }
+    }
     window.scrollTo(0, 0);
   }, [pathname, hash]);
 
@@ -26,15 +29,14 @@ function ScrollToTop() {
 
 function NotFound() {
   return (
-    <main className="page not-found">
-      <div className="container text-center">
-        <h1 className="heading">
-          404 | <span className="gradient-text">Page Not Found</span>
-        </h1>
-        <p className="section-lede">
-          That page does not exist. Let&apos;s get you back to the work.
-        </p>
-        <Link to="/" className="btn">Back to Home</Link>
+    <main id="main" className="page not-found">
+      <div className="wrap">
+        <p className="mono">Error 404</p>
+        <h1 className="page-title">This level doesn&apos;t exist.</h1>
+        <p className="page-lede">The page you were looking for has moved or never shipped.</p>
+        <div className="page-actions">
+          <Link to="/" className="btn btn-primary">Back to home</Link>
+        </div>
       </div>
     </main>
   );
@@ -42,23 +44,20 @@ function NotFound() {
 
 export default function App() {
   return (
-    <>
+    <div id="top">
       <ScrollToTop />
-      <Background />
       <Header />
 
       <Routes>
         <Route path="/" element={<Home />} />
         <Route path="/web-dev-experience" element={<WebDevExperience />} />
-        <Route path="/testimonials" element={<Testimonials />} />
         <Route path="/game-dev-experience" element={<GameDevExperience />} />
         <Route path="/resume" element={<Resume />} />
         <Route path="*" element={<NotFound />} />
       </Routes>
 
       <Footer />
-      <ThemeSettings />
       <ChatBot />
-    </>
+    </div>
   );
 }

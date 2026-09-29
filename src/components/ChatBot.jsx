@@ -4,16 +4,16 @@ import "../css/chatbot.css";
 const GREETING = {
   role: "bot",
   content:
-    "Assalam-o-alaikum! 👋 I'm **Sal**, Salman's assistant.\n\nAsk me anything about his VR work at **Ilmversity**, his multiplayer and WebRTC systems, or how to get in touch. English ya Roman Urdu, jo aap ko comfortable lage.",
+    "Assalam-o-alaikum! I'm **Sal**, Salman's assistant.\n\nAsk me anything about his VR work at **Ilmversity**, his multiplayer and WebRTC systems, or how to get in touch. English ya Roman Urdu, jo aap ko comfortable lage.",
 };
 
 const QUICK_REPLIES = [
-  { label: "🕶️ VR Campus", text: "Tell me about the Da1Ilmverse VR campus" },
-  { label: "🌐 Multiplayer", text: "How does the multiplayer meeting room and screen streaming work?" },
-  { label: "🤖 AI avatars", text: "How do the AI teachers lip-sync to their speech?" },
-  { label: "⚡ Optimization", text: "How does Salman keep 72/90 FPS on Quest 3?" },
-  { label: "🛠️ Tech stack", text: "What is Salman's core tech stack?" },
-  { label: "📄 Hire him", text: "How can I hire or contact Salman?" },
+  { label: "VR campus", text: "Tell me about the Da1Ilmverse VR campus" },
+  { label: "Multiplayer", text: "How does the multiplayer meeting room and screen streaming work?" },
+  { label: "AI avatars", text: "How do the AI teachers lip-sync to their speech?" },
+  { label: "Optimization", text: "How does Salman keep 72/90 FPS on Quest 3?" },
+  { label: "Tech stack", text: "What is Salman's core tech stack?" },
+  { label: "Hire him", text: "How can I hire or contact Salman?" },
 ];
 
 /* ── Tiny markdown renderer: **bold**, `code`, links, "-" bullets ── */

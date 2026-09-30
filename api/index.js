@@ -206,6 +206,13 @@ PERSONAL PROJECT - EMPIRE AVENUE (released)
 * Optimization: APK cut from 527 MB to about 150 MB (202 materials moved to Simple Lit, ASTC compression, texture and mesh budgets, baked occlusion, Addressables); 60 FPS on the board with zero janky frames on a Pixel 8.
 * Content: Pakistan, United Kingdom and United States boards each defined in JSON, 8 custom 3D pawns (like an Auto Rikshaw and a Daewoo Bus), physics dice, 16 Chance and 16 Community Chest cards, houses, hotels, mortgages, jail and trading, a living low-poly 3D city in the menu, and AI-generated skyboxes via the Blockade Labs SDK. Audited against Google Play policy (target SDK 36, 16 KB page size); about 800 MB of art is versioned with DVC.
 
+PERSONAL PROJECT - ZOO ESCAPE (released)
+* A cozy colour-matching escape puzzle for Android, built solo in Unity 6 with C#, released free on itch.io: https://sadqqsalman.itch.io/zoo-escape. No ads, works offline.
+* Gameplay: tap an animal and it runs the way its arrow points; it can only leave through the gate of its own colour. Rotating gates, 5 zones (Savanna, Jungle, Farm, Arctic, Ocean), beat-the-clock levels, stars, coins, hints, daily rewards and an album of 16 animals.
+* Levels are generated from a seed per level number and are guaranteed solvable: a DFS solver with memoisation checks levels 1-100 and 40 Weekly Cup stages in about 0.5 s (0 unsolvable). The same solver powers hints.
+* Online Weekly Cup on Unity Gaming Services (Leaderboards, anonymous sign-in, generated nicknames); scores are validated server-side by a Cloud Code (JavaScript) script, offline scores are queued, and players can delete their online data.
+* All animal art is drawn in code from signed-distance shapes, zone backdrops are painted on worker threads, and sound effects are synthesised. The runtime allocates 0 bytes per frame and a full board draws in about 16 batches (down from 67). UI is built in UI Toolkit.
+
 NODE.JS & WEB WORK
 * Session Recording & Replay for the Ilmversity school portal (see above).
 * This portfolio site: React + Vite front end, Express API, MySQL logging, and this assistant.

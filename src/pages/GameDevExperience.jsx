@@ -43,6 +43,12 @@ const journey = [
     tags: ["Unity 6", ".NET 9", "WebSockets", "Google Cloud", "AdMob", "NUnit"],
   },
   {
+    date: "2026 · Personal project",
+    title: "Zoo Escape - released on itch.io",
+    body: "A cozy colour-matching puzzle for Android, built solo in Unity 6: seeded procedural levels checked by a DFS solver (0 unsolvable in 140), an online Weekly Cup leaderboard on Unity Gaming Services with Cloud Code score validation, all animal art and sound generated in code, and a zero-allocation runtime for low-end phones.",
+    tags: ["Unity 6", "UI Toolkit", "UGS Leaderboards", "Cloud Code", "Android"],
+  },
+  {
     date: "Ongoing",
     title: "Web, tooling & AI on the side",
     body: "Node.js and Express services, this React portfolio with its Gemini-powered assistant, MCP tooling inside the Unity Editor for automated scene inspection, and DVC for versioning AI datasets, model artifacts and game art.",

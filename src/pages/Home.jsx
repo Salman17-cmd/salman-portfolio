@@ -455,8 +455,8 @@ export default function Home() {
             Flagship <span className="gradient-text">Work</span>
           </h2>
           <p className="section-lede sr-top">
-            Enterprise VR and web work from Ilmversity, plus the online
-            multiplayer board game I built and released on my own time.
+            Enterprise VR and web work from Ilmversity, plus two Android games
+            I built and released on my own time.
           </p>
 
           {flagships.map((f, index) => (

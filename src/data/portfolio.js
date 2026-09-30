@@ -216,6 +216,42 @@ export const flagships = [
     ],
   },
   {
+    title: "Zoo Escape",
+    platform: "Android · Solo project",
+    org: "Personal Project",
+    image: "/images/zoo-escape.jpg",
+    status: "Released on itch.io",
+    statusType: "live",
+    tagline:
+      "A cozy puzzle game for Android, built solo in Unity 6 and released free on itch.io. Tap an animal and it runs the way its arrow points; it can only leave through the gate of its own colour, so the player has to work out the escape order.",
+    highlights: [
+      {
+        name: "Every level is solvable",
+        text: "Levels are generated from a seed per level number: the generator picks an escape order first, then colours each animal to match the gate it will reach. A DFS solver with memoisation checks levels 1 to 100 and 40 Weekly Cup stages in about half a second (0 unsolvable), and the same solver powers the in-game hints.",
+      },
+      {
+        name: "Online Weekly Cup",
+        text: "A live weekly leaderboard on Unity Gaming Services with anonymous sign-in and generated nicknames. Scores go through a Cloud Code script that rejects impossible totals, offline scores are queued and sent later, and players can delete their online data from Settings.",
+      },
+      {
+        name: "Art and sound made in code",
+        text: "All 16 animals are drawn from layered signed-distance shapes, the five zone backdrops are painted on worker threads, and every sound effect is synthesised at startup. The game ships with no image or audio files for its core art.",
+      },
+      {
+        name: "Zero-GC runtime",
+        text: "0 bytes allocated per frame, pooled sprites and animals, no coroutines, and a full 7x8 board drawn in about 16 batches (down from 67), with IL2CPP and engine stripping for low-end phones.",
+      },
+      {
+        name: "Designed to keep players coming back",
+        text: "Rotating gates, five zones (Savanna, Jungle, Farm, Arctic, Ocean), beat-the-clock levels, stars, coins, hints, a daily reward streak, a star chest and an animal album, with a UI built entirely in UI Toolkit.",
+      },
+    ],
+    stack: ["Unity 6", "C#", "UI Toolkit", "UGS Leaderboards", "Cloud Code", "IL2CPP"],
+    links: [
+      { icon: "bx bx-joystick", url: "https://sadqqsalman.itch.io/zoo-escape", label: "Play on itch.io" },
+    ],
+  },
+  {
     title: "Da1Ilmverse VR Campus",
     platform: "Meta Quest 3",
     org: "Ilmversity",
@@ -319,6 +355,20 @@ export const projects = [
     links: [
       { icon: "bx bx-joystick", url: "https://sadqqsalman.itch.io/empire-avenue", label: "Play on itch.io" },
       { icon: "bi bi-youtube", url: "https://youtu.be/sfnRRqS0i98", label: "Demo" },
+    ],
+    featured: true,
+  },
+  {
+    title: "Zoo Escape",
+    tags: ["android"],
+    image: "/images/zoo-escape.jpg",
+    status: "Released on itch.io",
+    statusType: "live",
+    description:
+      "Cozy colour-matching escape puzzle for Android. Procedurally generated levels checked by a solver, an online Weekly Cup leaderboard on Unity Gaming Services with Cloud Code score checks, and all art and sound generated in code.",
+    stack: ["Unity 6", "C#", "UI Toolkit", "UGS", "Cloud Code"],
+    links: [
+      { icon: "bx bx-joystick", url: "https://sadqqsalman.itch.io/zoo-escape", label: "Play on itch.io" },
     ],
     featured: true,
   },
